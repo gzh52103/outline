@@ -132,7 +132,8 @@
         * npm install --production
             > 安装package.json下dependencies的所有依赖
 
-* express
+* express/koa
+    
 * 安装模块
     * 安装最新正式版：
         * npm install express
@@ -145,3 +146,48 @@
 * 模块卸载
     * npm uninstall express
     * yarn remove
+
+* 利用express实现静态资源服务器
+    ```js
+        const app = express();
+        app.use(express.static('./public'))
+        app.listen(2103)
+    ```
+* express中间件middleware
+    * 定义：express中间件是一个封装了某些处理数据功能的函数
+    * 使用：
+        * `app.use(middleware)`   所有的请求都会进入中间件
+        * `app.use(path,middleware1,middleware2,...)`  请求地址匹配path时，进入中间件
+    * 分类
+        * 内置中间件        express自带的中间件
+        * 自定义中间        自己编写的中间件
+        * 第三方中间件      需要下载安装
+    * 定义
+        > 中间件是一个函数，接收request,response,next作为参数
+
+    * 应用
+        * 编写接口（定义路由）
+            > 语义化
+            * RESTful接口规范：利用请求类型与请求路径的不同实现相应的数据接口
+            * 请求类型：CRUD
+                * get       查
+                * post      增
+                * put       改（全部修改）
+                * patch     改（部分修改）
+                * delete    删
+            
+* postman
+* 利用模块化思想编写数据接口
+    * 要点
+        * 模块      ： commonJS
+        * RESTful   : post,delete,put/patch,get
+        * 中间件    : express.Router()
+
+* 练习：创建一个服务器，实现以下接口
+    * 注册
+    * 登录
+    * 检测用于名是否被占用
+    * 商品列表
+    * 商品详情（单独一个商品）
+    * 用户列表
+    * 用户详情（单独一个用户）

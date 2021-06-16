@@ -67,3 +67,81 @@
             * `module.exports`
     * 引入
         * commonJS: `require()`
+
+## day1-2
+
+### 复习
+* 静态资源服务器
+    > 根据不同的请求响应相应的内容
+    * http
+    * url
+    * path
+    * fs
+
+* 请求与响应
+    * request
+    * response
+    * 请求头request header
+    * 响应头reponse header
+
+* 模块化开发
+    * 优点
+        * 复用
+        * 维护
+        * 分工
+    * 规范
+        * AMD
+        * CMD
+        * ESModule      前端
+        * CommonJS      后端
+    * 分类
+        * 内置模块（原生模块）
+        * 自定义模块
+        * 第三方模块
+            > npm install moduleName
+    * 使用
+        * 导入（引用）
+            * require()
+        * 导出（暴露）
+            * module.exports
+### 知识点
+* 模块引入流程
+    > 都是引入一个js文件
+    ```js
+        // 引入内置模块
+        const fs = require('fs');
+
+        // 引入自定义模块
+        const mime = require('./mime');
+
+        // 引入目录
+        const md = require('./module')
+
+        // 引入第三方模块
+        const gulp = require('gulp')
+    ```
+    * package.json  模块配置文件
+        > 当require一个目录时，先查找当前目录下是否存在该配置文件
+        * 属性
+            * main
+            * module
+            * dependencies
+            * devDependencies
+        * npm install
+            > 安装package.json下dependencies与devDependencies下的所有模块
+        * npm install --production
+            > 安装package.json下dependencies的所有依赖
+
+* express
+* 安装模块
+    * 安装最新正式版：
+        * npm install express
+        * yarn add express
+    * 安装指定版本：npm install express@3.21.2
+    * 安装下一个版本：npm install express@next
+    * 安装所有依赖
+        * npm install
+        * yarn
+* 模块卸载
+    * npm uninstall express
+    * yarn remove

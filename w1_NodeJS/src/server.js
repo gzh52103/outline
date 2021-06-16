@@ -13,8 +13,8 @@ const mime = require('./mime')
 const tt = require('./module/tiantian');
 const lx = require('./module/laoxie');
 const mod = require('./module');
-console.log('tt=',tt);
-console.log('lx=',lx);
+// console.log('tt=',tt);
+// console.log('lx=',lx);
 console.log('mod=',mod);
 
 // 创建服务器

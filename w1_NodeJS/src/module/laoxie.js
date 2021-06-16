@@ -1,4 +1,5 @@
 const tt = require('./tiantian')
+const fs = require('fs')
 
 module.exports = {
     userename:'laoxie',

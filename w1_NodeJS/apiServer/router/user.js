@@ -2,13 +2,29 @@ const express = require('express')
 
 const router = express.Router();
 
+
 // 在这里编写的所有接口，路径都基于/user
 // /api/user/login
 router.get('/login',(req,res)=>{
-    res.send('登录成功')
+   const {username,password} = req.query;
+
+   // 根据用户名与密码查询数据库
+    // 有结果：用户名密码正确
+    // 无结果：用户名或密码不正确
+    res.send({
+        username,
+        password,
+        msg:'登录成功'
+    })
 })
 router.post('/reg',(req,res)=>{
-    res.send('注册成功')
+    // 请求体
+    console.log('body=',req.body)
+    res.send({
+        msg:"注册才成功",
+        query:req.query,
+        body:req.body
+    })
 })
 router.get('/check',(req,res)=>{
     res.send('用户可注册')

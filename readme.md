@@ -177,7 +177,7 @@
                 * delete    删
             
 * postman
-* 利用模块化思想编写数据接口
+* 利用模块化思想编写数据接口（重点）
     * 要点
         * 模块      ： commonJS
         * RESTful   : post,delete,put/patch,get
@@ -191,3 +191,34 @@
     * 商品详情（单独一个商品）
     * 用户列表
     * 用户详情（单独一个用户）
+
+## day1-3
+
+### 复习
+* express中间件
+    * 内置
+        * express.static()
+        * express.Router()
+        * express.urlencoded()
+        * express.json()
+        * express.raw()
+        * express.text()
+            > 依赖一个第三方模块body-parser
+
+### 知识点
+* 接收参数
+    * 请求url参数传递： `api/user?id=123`
+        > 只能传递字符类型数据，接收：req.query
+    * 请求体传参
+        > 可以传任意类型数据，接收方式：req.body
+        * 通过请求体可以传递多种类型的数据，需要手动调用中间件把数据格式化到req.body
+            * x-www-form-urlencoded: express.urlencoded()
+            * json : express.json()
+            * raw: express.raw()
+            * text: express.text()
+        * formData
+            * multer
+    * 动态路由: `api/user/123`
+        > 路径为变量的路由，接收方式：req.params，动态路由必须放在所有路由的后面
+    * 请求头 request header
+        * 接收方式：req.get(key)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+
+</head>
+
+<body>
+    <h1>图片上传</h1>
+    <h4>头像上传</h4>
+    <form action="/api/upload/avatar" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <button>上传</button>
+    </form>
+    <h4>商品图片上传（多张）</h4>
+    <form action="/api/upload/goods" method="post" enctype="multipart/form-data">
+        <input type="file" name="goods" multiple />
+        <button>上传</button>
+    </form>
+
+    <h4>Ajax实现图片上传</h4>
+    <!-- <input type="file" id="file" /> -->
+    <input type="file" id="file" multiple />
+    <button id="btnUpload">上传</button>
+    <script>
+        /**
+             *  FormData 
+                * 使用步骤
+                    1. 实例化
+                    2. 把数据存入formData
+                * 常用方法
+                    * append(key,value)
+                    * set(key,value)
+                    * delete(key)
+                    * forEach()
+                    * get(key)      获取key对应的值
+                    * getAll(key)   获取key对应的所有值
+                    * has(key)
+                    
+                    * keys()
+                    * values()
+                    * entries()
+         */
+        const btnUpload = document.querySelector('#btnUpload')
+        const file = document.querySelector('#file')
+        const xhr = new XMLHttpRequest();
+        xhr.onload = ()=>{
+            if(xhr.status == 200){
+                console.log('图片上传成功')
+            }else{
+                alert('不允许上盖改类型文件')
+            }
+        }
+        btnUpload.onclick = ()=>{
+            const fData = new FormData();
+            // 写入文本数据
+            fData.set('username','laoxie')
+
+            // 写入文件数据（二进制数据）
+            // 单张图片（一个键对一个值）
+            // fData.set('avatar',file.files[0])
+            // xhr.open('post','/api/upload/avatar',true)
+
+            // 多张图片（一个键拥有多个值）
+            for(let i=0;i<file.files.length;i++){
+                fData.append('goods',file.files[i])
+            }
+
+            xhr.open('post','/api/upload/goods',true)
+
+            // 设置请求头
+            // 必须在open后设置
+            // xhr.setRequestHeader('Content-type','application/json')
+
+            xhr.send(fData)
+        }
+    </script>
+</body>
+
+</html>

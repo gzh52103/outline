@@ -208,17 +208,56 @@
 ### 知识点
 * 接收参数
     * 请求url参数传递： `api/user?id=123`
-        > 只能传递字符类型数据，接收：req.query
+        > 只能传递字符类型数据，接收：`req.query`
+    * 动态路由: `api/user/:id`
+        > 路径为变量的路由，接收方式：`req.params`，动态路由必须放在所有路由的后面
     * 请求体传参
-        > 可以传任意类型数据，接收方式：req.body
+        > 可以传任意类型数据，接收方式：`req.body`
         * 通过请求体可以传递多种类型的数据，需要手动调用中间件把数据格式化到req.body
             * x-www-form-urlencoded: express.urlencoded()
             * json : express.json()
             * raw: express.raw()
             * text: express.text()
-        * formData
-            * multer
-    * 动态路由: `api/user/123`
-        > 路径为变量的路由，接收方式：req.params，动态路由必须放在所有路由的后面
+        * 非文本类型
+            * 后端：multer 格式化数据到req.file,req.files
+            * 前端：
+                * form表单
+                * FormData
     * 请求头 request header
-        * 接收方式：req.get(key)
+        * 接收方式：`req.get(key)`
+
+## day1-4
+
+### 面试题
+* js中的数据类型有哪些，如何判断是哪种类型
+    * 基本数据类型（栈）
+        * Number
+        * String
+        * Boolean
+        * Undefined
+        * Null
+        * Symbol
+        * BigInt
+    * 引用数据类型（堆）
+        * Object
+
+        ```js
+            var a = 10;
+            var b = a;
+
+            let a = {a:10,b:20}
+            let b = a;
+        ```
+    * typeof判断基本数据类型
+    * Object.prototype.toString
+        ```js
+            a.toString()
+            Object.prototype.toString.call(a)
+            Array.isArray()
+        ```
+
+### 知识点
+* 跨域解决方案
+    * jsonp     json with pending
+        * 缺点：不是ajax请求而是script请求，只能使用get
+    * CORS      cross origin resource sharing

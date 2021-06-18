@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之JSONP</title>
+
+</head>
+
+<body>
+    <h1>跨域解决方案之JSONP</h1>
+    <button id="btn">获取JSONP数据</button>
+    <script>
+        
+        (()=>{
+            /**
+                JSONP
+                    不是ajax请求而是script请求  
+             */
+            const btn = document.getElementById('btn');
+            let script
+            // 1. 定义个**全局函数**
+            window.fetchData = function(data){
+                // 请求返回执行这里的代码
+                console.log(data)
+    
+                // 请求回来后，删除script标签
+                document.body.removeChild(script)
+            }
+            btn.onclick = function(){
+                script = document.createElement('script');
+                // 2. 发送**全局函数名**到后端
+                script.src = "http://localhost:2103/api/jsonp?cb=fetchData"
+                document.body.appendChild(script);
+            }
+            
+
+        })()
+    </script>
+    <!-- <script src="http://localhost:2103/api/jsonp"></script> -->
+</body>
+
+</html>

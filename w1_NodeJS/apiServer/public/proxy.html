@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之服务器代理</title>
+</head>
+
+<body>
+    <h1>跨域解决方案之服务器代理</h1>
+   
+    <script>
+    const xhr = new XMLHttpRequest()
+    // xhr.open('get','https://offer.qfh5.cn/api/iq?sort=hot&total=false',true)
+    xhr.open('get','http://localhost:2103/proxy/api/iq?sort=hot&total=false',true)
+    xhr.send()
+       
+    </script>
+</body>
+
+</html>

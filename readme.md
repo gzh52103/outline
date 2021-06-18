@@ -255,9 +255,50 @@
             Object.prototype.toString.call(a)
             Array.isArray()
         ```
+* 报错：`cannot read the property xxx of undefined`
+    > 不能读取undefined的xxx属性
+    * xxx前端的对象为undefined
+* 如何判断两个对象是否一样
+    ```js
+        var a = {name:'123',age:18}
+        var b = {name:'123',age:19}
+
+        JSON.stringify(a) === JSON.stringify(b)
+        Object.keys()/Object.values()
+    ```
+* git常用命令有哪些
+    * git add
+    * git commit
+    * git push
+    * git pull => git fetch + git merger
+    * git clone
+    * git status
+    * git reset
+    * git log
+    * git reflog
+    * ....
+    * 删除暂存区中的文件
+        - `git rm --cache <file>`：撤销暂存区的修改
+        - `git reset HEAD <file>`：撤销暂存区的修改
+
 
 ### 知识点
 * 跨域解决方案
     * jsonp     json with pending
         * 缺点：不是ajax请求而是script请求，只能使用get
     * CORS      cross origin resource sharing
+        * 核心: 设置响应头
+        * Access-Control-Allow-Origin: 值为`单个域名`或`*`
+        * Access-Control-Allow-Methods: 
+            * OPTIONS   预请求
+        * Access-Control-Allow-Headers: 
+
+    * 服务器代理
+        > 一般用于临时解决方案，使用`http-proxy-middleware`中间件
+* 复杂跨域
+    * 非GET、HEAD、POST请求。
+    * POST请求的Content-Type不是application/x-www-form-urlencoded, multipart/form-data, 或text/plain。
+    * 添加了自定义header，例如Token。
+
+* 练习
+    * 找一个网站，代理这个网站所有的接口，并成功请求回数据

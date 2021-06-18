@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之CORS</title>
+
+</head>
+
+<body>
+    <h1>跨域解决方案之CORS</h1>
+    <button id="btn">获取CORS数据</button>
+    <script>
+        
+        (()=>{
+            /**
+                JSONP
+                    不是ajax请求而是script请求  
+             */
+            const btn = document.getElementById('btn');
+           
+            const xhr = new XMLHttpRequest()
+            xhr.onload = ()=>{
+                if(xhr.status === 200){
+                    console.log(xhr.responseText)
+                }
+            }
+            // xhr.open('post','http://localhost:2103/api/cors',true)
+            xhr.open('post','http://localhost:2103/api/cors',true)
+
+            // content-type设置为其他值会触发复杂跨域
+            // xhr.setRequestHeader("content-type",'application/json')
+            
+            // 自定义请求头会触发复杂跨域
+            xhr.setRequestHeader("token",'xxx')
+            xhr.send()
+        })()
+    </script>
+    <!-- <script src="http://localhost:2103/api/jsonp"></script> -->
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "gulp": "^4.0.2",
+    "http-proxy-middleware": "^2.0.0",
     "multer": "^1.4.2"
   },
   "devDependencies": {

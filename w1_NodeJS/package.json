@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "cheerio": "*",
     "gulp": "^4.0.2",
     "http-proxy-middleware": "^2.0.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "express": "^4.17.1"

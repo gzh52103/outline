@@ -297,8 +297,49 @@
         > 一般用于临时解决方案，使用`http-proxy-middleware`中间件
 * 复杂跨域
     * 非GET、HEAD、POST请求。
-    * POST请求的Content-Type不是application/x-www-form-urlencoded, multipart/form-data, 或text/plain。
+    * POST请求的Content-Type不是`application/x-www-form-urlencoded`, `multipart/form-data`, 或`text/plain`。
     * 添加了自定义header，例如Token。
 
 * 练习
     * 找一个网站，代理这个网站所有的接口，并成功请求回数据
+
+## day1-5
+
+### 复习
+* JSONP
+* CORS
+    * 允许多一个域名跨域访问
+    * 复杂跨域
+        * options预请求
+* 服务器代理
+    > http-proxy-middleware
+
+### 知识点
+* 页面渲染模式
+    * 客户端渲染（BSR: Broswer Side Rendering）：
+        > 页面开始是空的，通过ajax把数据请求回来，然后在客户端生成html结构，并写入页面
+        * 优点
+            * 前后端分离
+            * 局部刷新
+            * 用户体验
+        * 缺点
+            * SEO不友好
+        * 请求步骤
+            1. 请求html文件（空的html）
+            2. 请求js文件，解释js代码
+            3. 发起ajax请求
+            4. 拿到数据生成html结构并写入页面
+    * 服务器渲染（SSR: Server Side Rendering）
+        > 在服务器生成html结构并响应到前端
+        * 优点
+            * SEO友好
+            * 速度快
+        * 缺点
+            * 不能局部刷新
+            * 用户体验不好
+        * 请求步骤
+            1. 请求html文件（html内容在服务器生成，页面静态化）
+            2. 拿到html内容并渲染到页面
+
+* 爬虫
+    > 分析html结构，提取需要的信息

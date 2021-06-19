@@ -3,6 +3,14 @@ const cheerio = require('cheerio');
 const path = require('path')
 const fs = require('fs')
 
+
+let dir = path.join(__dirname, `img/`);
+
+//如果目录不存在，则创建
+if (!fs.accessSync(dir)) {
+    fs.mkdirSync(dir)
+}
+
 // 请求地址，获取html内容
 request({
     url: 'https://www.wbiao.cn/list-97.html',
@@ -45,7 +53,8 @@ request({
 
         // 下载图片到本地
         let filename = path.basename(goods.imgurl);
-        const filePath = path.join(__dirname,`img/${filename}`)
+       
+        const filePath = path.join(dir, filename)
         request('http:' + goods.imgurl).pipe(fs.createWriteStream(filePath))
     });
     console.log('goodslist=', goodslist);

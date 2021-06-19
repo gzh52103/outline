@@ -343,3 +343,83 @@
 
 * 爬虫
     > 分析html结构，提取需要的信息
+    * 操作步骤
+        1. 请求所有html内容
+        2. 筛选所需要的内容
+        3. 生成json数据
+        4. 写入数据库
+        5. 下载图片到本地
+    * 常用模块
+        * request
+        * cheerio
+
+* fs模块
+    * 操作目录
+    * 操作文件
+        * 读取
+        * 写入
+    * Stream
+        > 文件的液体状态，在文件操作过程中，如果不确定文件有多大，尽量采用文件流的方式来进行操作
+        * 读取流
+            ```js
+                const readerStream = fs.createReadStream('tiantian.avi')
+
+                data = []
+
+                // 文件分10次读取，每次会触发一次data事件
+                readerStream.on('data', function(chunk) {
+                    data.push(chunk)
+                });
+
+                readerStream.on('end',function(){
+                    console.log(data);
+                });
+            ```
+        * 写入流
+            ```js
+                var writerStream = fs.createWriteStream('test.txt');
+
+                // 使用 utf8 编码写入数据
+                writerStream.write(data,'UTF8');
+
+                // 标记文件末尾
+                writerStream.end();
+
+                // 处理流事件 --> data, end, and error
+                writerStream.on('finish', function() {
+                    console.log("写入完成。");
+                });
+
+                writerStream.on('error', function(err){
+                    console.log(err.stack);
+                });
+
+            ```
+        * 管道流
+            ```js
+                var fs = require("fs");
+
+                // 创建一个可读流
+                var readerStream = fs.createReadStream('input.txt');
+
+                // 创建一个可写流 
+                var writerStream = fs.createWriteStream('output.txt');
+
+                // 管道读写操作
+                // 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
+                readerStream.pipe(writerStream);
+            ```
+    * 练习：读取本地相册，并显示到页面
+        > 配合img,audio,video实现图片与视频的预览
+
+* 数据库
+    * mysql
+        * 安装mysql
+        * 安装驱动: mysql
+        * 封装查询数据库方法
+        * 拼接sql语句
+* 练习
+    * 找一个网站，
+    * 把网站地址填写到 https://docs.qq.com/sheet/DR21talV1a3NKS29G
+    * 爬取它的数据（包括图片），并写入mysql数据库
+    * 编写数据接口，实现数据的CRUD

@@ -454,6 +454,33 @@
 * 防抖与节流
     * 滚动加载（页面懒加载） 节流优化（保留第一次，忽略后面所有操作）
     * 动画，搜索建议         防抖优化（保留最后一次，忽略前面所有操作）
+* 通过jQuey获取到的元素与通过原生js获取到的元素有什么区别
+    > 它们处在不同的原型中
+    * getElementsByTagName()与querySelectorAll()区别
+        > nodeList与HTMLCollection的区别
+* jQuery中的arrt()与prop()的区别
+    * attr()   设置html元素属性
+    * props()   设置节点属性
+    ```js
+        <div></div>
+        <img>
+
+        // 等效于原生js中的setAttribute('id','box')
+        $('div').attr('id','box') 
+
+        // 等效于原生js中的点语法div.id='box'
+        $('div').prop('id','box') 
+
+        // 设置节点属性(如果这个属性是全局属性或私有属性，则影响html属性)
+        div.username = 'laoxie'
+        $('div').props('username','laoxie')
+
+        // 设置html属性(如果这个属性为全局属性或私有属性，则影响节点属性)
+        div.setAttibute('age',18)
+        $('div').attr('age',18)
+    ```
+* 如何监听用户关闭页面事件
+    * beforeunload
 
 ### 复习
 * 在nodejs中操作mysql
@@ -473,6 +500,31 @@
         * 服务
         * 环境变量
     * 使用
-        * 数据库操作
-        * 集合操作
-        * 文档操作：CRUD
+        * 命令行
+            * 数据库操作
+            * 集合操作
+            * 文档操作：CRUD
+        * 可视化工具：robo3T
+* NodeJS中使用mongodb
+    * 安装驱动: 
+        * 官方驱动：mongodb
+        * mongoose
+    * 使用步骤
+        1. 连接mongoDB
+            ```js
+                MongoClient.connect(url,callback)
+            ```
+        2. 连接数据库
+            ```js
+                MongoClient.connect(url,(err,client)=>{
+                    const db = client.db('laoxie')
+                })
+            ```
+        3. 获取集合
+            ```js
+                 MongoClient.connect(url,(err,clicent)=>{
+                    const db = client.db('laoxie')
+                    const col = db.collection('goods')
+                })
+            ```
+        4. 文档的CRUD

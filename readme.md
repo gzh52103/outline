@@ -423,3 +423,56 @@
     * 把网站地址填写到 https://docs.qq.com/sheet/DR21talV1a3NKS29G
     * 爬取它的数据（包括图片），并写入mysql数据库
     * 编写数据接口，实现数据的CRUD
+
+## day2-1
+
+### 面试题
+* promise如何实现链式调用
+    > 在每个then中返回一个新的promise对象
+    ```js
+        // ajax
+        ajax(url,function(data){
+            // 30 rows
+            ajax(url2,function(data2){
+                // 20 rows
+                ajax(url3,function(data3){
+                    // ...
+                })
+            })
+        })
+        new Promise((resolve,reject)=>{
+
+        }).then(res=>{
+            return promise
+        }).then(()=>{
+            return promise
+        }).then() 
+
+        const pro2 = await pomise1
+        const pro3 = await pro2;
+    ```
+* 防抖与节流
+    * 滚动加载（页面懒加载） 节流优化（保留第一次，忽略后面所有操作）
+    * 动画，搜索建议         防抖优化（保留最后一次，忽略前面所有操作）
+
+### 复习
+* 在nodejs中操作mysql
+    > 安装**驱动**：mysql
+    * mySQL与驱动
+        * mySQL为数据库，需要安装到电脑中
+        * 驱动：为了在某些语言中使用mySQL而安装的工具
+            ```
+                npm install mysql
+            ```
+
+
+### 知识点
+* mongodb
+    * 安装
+    * 配置
+        * 服务
+        * 环境变量
+    * 使用
+        * 数据库操作
+        * 集合操作
+        * 文档操作：CRUD

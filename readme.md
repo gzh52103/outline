@@ -528,3 +528,19 @@
                 })
             ```
         4. 文档的CRUD
+
+## day2-2
+
+### 知识点
+* 封装mongodb的增删改查
+    * find(colName,query)
+        ```js
+            find('user')
+            find('user',{age:18});
+
+            find('goods',{price:{$gt:100}})
+            // 假设共有100条数据，现在需要获取前10条
+            find('goods',{},{limit:10})
+            // 获取第2页的10条
+            find('goods',{},{skip:10,limit:10})
+        ```

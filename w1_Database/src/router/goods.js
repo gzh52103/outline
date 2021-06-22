@@ -28,10 +28,24 @@ const router = express.Router();
 //     res.send(result);
 // });
 
+router.post('/',async (req,res)=>{
+    const result = await mongo.insert('goods',{name:'goods1',price:100,imgurl:''})
+    // mongo.insert('goods',[{name:'goods1',price:100,imgurl:''},{name:'goods2',price:200,imgurl:''},{name:'goods3',price:100,imgurl:''}])
+    if(result){
+        res.send('数据添加成功')
+    }else{
+        res.send('数据添加失败')
+    }
+})
+
 
 // 商品列表
 router.get('/',async (req,res)=>{
-    const data = await mongo.find('goods',{})
+    const {page,size} = req.query;
+    const limit = Number(size);
+    const skip = (page-1)*size
+
+    const data = await mongo.find('goods',{},{skip,limit})
     res.send(data);
 })
 

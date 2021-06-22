@@ -544,3 +544,18 @@
             // 获取第2页的10条
             find('goods',{},{skip:10,limit:10})
         ```
+    * insert(colName,data)
+    * remove(colName,query)
+    * update(colName,query,newData)
+* 统一前后端数据交互格式：json
+    ```js
+        {
+            code,   // 状态码：200成功，400失败
+            data,   // 数据
+            msg,    // 提示信息
+        }
+    ```
+* 注册登录效果
+    > 利用bootstrap实现页面UI效果
+* 作业
+    > 实现用户注册效果

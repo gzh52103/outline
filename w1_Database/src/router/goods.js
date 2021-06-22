@@ -28,25 +28,37 @@ const router = express.Router();
 //     res.send(result);
 // });
 
-router.post('/',async (req,res)=>{
-    const result = await mongo.insert('goods',{name:'goods1',price:100,imgurl:''})
-    // mongo.insert('goods',[{name:'goods1',price:100,imgurl:''},{name:'goods2',price:200,imgurl:''},{name:'goods3',price:100,imgurl:''}])
-    if(result){
-        res.send('数据添加成功')
-    }else{
-        res.send('数据添加失败')
+// 增加商品
+router.post('/', async (req, res) => {
+    const { name, price, imgurl, category, inventory = 10 } = req.body;
+    const data = { name, price, imgurl, category, inventory }
+    data.addtime = new Date();
+
+    const result = await mongo.insert('goods', data)
+    if (result) {
+        res.send(formatData())
+    } else {
+        const data = formatData({
+            code: 400,
+            msg: '数据添加失败',
+        })
+        res.send(data)
     }
 })
 
 
 // 商品列表
-router.get('/',async (req,res)=>{
-    const {page,size} = req.query;
+router.get('/', async (req, res) => {
+    const { page, size } = req.query;
     const limit = Number(size);
-    const skip = (page-1)*size
+    const skip = (page - 1) * size
 
-    const data = await mongo.find('goods',{},{skip,limit})
-    res.send(data);
+    const data = await mongo.find('goods', {}, { skip, limit })
+    res.send({
+        code: 200,
+        msg: 'success',
+        data: data
+    });
 })
 
 module.exports = router;

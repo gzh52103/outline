@@ -573,6 +573,31 @@
     ```
     * 方案一：利用其他二级域名存储数据，并利用postMessage实现通讯
     * 方案二: IndexedDB 或 webSQL
+* 如何给对象设置一个不可修改的属性
+    * Object.defineProperty(target,key,descriptor)   设置属性特性
+    * Object.defineProperties(target,{key:descriptor})   设置多个属性的属性特性
+    * Object.getOwnPropertyDescriptor() 获取属性特性
+    ```js
+        const obj = {
+            name:'laoxie', // 传统添加属性方式，所有属性特性为true
+        }
+        // symbol
+        const s = Symbol('age')
+        obj[s] = 18;
+
+        // 属性特性: 
+        // configurable 可配置性（为其他属性特性的总开关）
+        // writable     可写性
+        // enumerable   可枚举性（可遍历）
+        // Object.defineProperty(target,key,descriptor)，利用这个方式添加的属性，所有属性特性默认为false
+        obj.age = 18;
+        Object.defineProperty(obj,'age',{
+            // writable:false, // 设置该属性不可写
+            enumerable:true,
+            value:18
+        })
+
+    ```
 
 ## 知识点
 * 登录页面
@@ -589,3 +614,31 @@
             > 加密与解密同用一把钥匙
         * 非对称加密
             > 加密和解密使用不同的钥匙（公钥、私钥）
+
+        * https
+            * ssl 证书
+
+* webSocket
+    * 客户端
+        > WebSocket
+        ```js
+            const socket = new WebSocket(url);
+
+            // 客户端->服务端
+            socket.send(msg)
+
+            // 接收消息
+            socket.onmessage = function(e){
+                console.log(e.data)
+            }
+        ```
+    * 服务端
+        * ws模块
+        ```js
+            // 监听客户端发送的消息
+            client.on('message',()=>{
+
+            })
+            // 服务器->客户端
+            client.send(msg)
+        ```

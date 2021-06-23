@@ -48,6 +48,25 @@
                 }
             }
 
+            const xhr_check = new XMLHttpRequest();
+            xhr_check.onload = function(){
+                if(xhr_check.status === 200){
+                    const data = JSON.parse(xhr_check.responseText)
+                    if(data.code === 200){
+
+                    }else if(data.code === 400){
+                        alert('用户名已存在')
+                    }
+                }
+            }
+
+            // 校验用户名是否存在
+            username.onchange = function(){
+                const _username = username.value;
+                xhr_check.open('get','/api/reg/check?username='+_username,true)
+                xhr_check.send()
+            }
+
             btnReg.onclick = function () {
                 const _username = username.value;
                 const _password = password.value;

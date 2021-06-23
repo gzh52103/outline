@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket</title>
+</head>
+<body>
+    <h1>WebSocket</h1>
+    <input type="text" id="msg" />
+    <button id="btnSend">发送消息</button>
+    <script>
+        //连接 socket 服务器
+        var socket = new WebSocket('ws://localhost:1001');
+
+        const msg = document.querySelector('#msg')
+        const btnSend = document.querySelector('#btnSend')
+
+        btnSend.onclick = function(){
+            const _msg = msg.value;
+            socket.send(_msg);
+        }
+
+        // 监听服务器发送消息事件
+        socket.onmessage = function(e){
+            console.log('event',e.data)
+        }
+    </script>
+</body>
+</html>

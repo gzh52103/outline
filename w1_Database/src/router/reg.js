@@ -28,4 +28,14 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.get('/check',async (req,res)=>{
+    const {username} = req.query;
+    const result = await mongo.find('user',{username});
+    if(result.length>0){
+        res.send(formatData({code:400}))
+    }else{
+        res.send(formatData())
+    }
+})
+
 module.exports = router;

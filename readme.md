@@ -559,3 +559,33 @@
     > 利用bootstrap实现页面UI效果
 * 作业
     > 实现用户注册效果
+
+## day2-3
+
+### 面试题
+* cookie与webStorage（localStorage+sessionStorage）存满了如何解决
+    > cookie 4K，webStorage 5M 指的是每个域的容量大小
+    ```js
+        http://laoxie.com
+
+        http://qf.laoxie.com
+        http://gz.laoxie.com
+    ```
+    * 方案一：利用其他二级域名存储数据，并利用postMessage实现通讯
+    * 方案二: IndexedDB 或 webSQL
+
+## 知识点
+* 登录页面
+* 注册页面
+* 加密与解密
+    * 单向加密
+        > 加密后不可解密，但可以暴力破解
+        * 限定输入密码次数
+        * 加盐
+        * 多次加密
+    * 双向加密 
+        > 可以解密操作
+        * 对称加密
+            > 加密与解密同用一把钥匙
+        * 非对称加密
+            > 加密和解密使用不同的钥匙（公钥、私钥）

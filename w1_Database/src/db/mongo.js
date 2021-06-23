@@ -56,6 +56,8 @@ async function remove(colName, query = {}) {
     const col = db.collection(colName);
 
     // 处理ObjectId
+    // query = {_id:{$in:[id1,id2,id3]}}
+    // query = {_id:"5c7632eaa5521b55587a204f"}
     if (query._id) {
         query._id = ObjectId(query._id)
     }
@@ -118,14 +120,14 @@ async function find(colName, query, { limit, skip } = {}) {
 
     let result = col.find(query)
 
-    // 控制数量
-    if (limit) {
-        result = result.limit(limit)
-    }
-
     // 跳过数量
     if (skip) {
         result = result.skip(skip);
+    }
+
+    // 控制数量
+    if (limit) {
+        result = result.limit(limit)
     }
 
     const data = await result.toArray();

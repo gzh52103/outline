@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02.响应式属性的原理</title>
+</head>
+
+<body>
+    <h1>02.响应式属性的原理</h1>
+    <div id="app">
+        <!-- View视图层 -->
+        <p>用户名：{{username}}</p>
+        <p>uid:{{_uid}}</p>
+        <p>爱好:{{hobby}}</p>
+        <!-- <p>班级：{{classname}}</p> -->
+        <p>成绩：{{score}}</p>
+    </div>
+
+    <!-- 响应式属性原理 -->
+    <div>
+        年龄：<span id="age"></span>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // Model数据层
+        const model = {
+            username: 'laoxie',
+            hobby:['女','写代码','深夜写代码'],
+            score:{
+                chinese:100,
+                match:105,
+                english:6,
+            }
+        }
+        // 实例化Vue
+        // ViewModel控制层
+        const vm = new Vue({
+            // 关联视图层
+            el: '#app',
+
+            // 关联数据层
+            data: model
+        })
+
+        // 在实例化Vue过程中，会把数据层中的属性写入到vm实例中
+        // 把数据绑定到视图，其实是把vm实例中的属性绑定到视图，换句话说，只有存在vm中的属性才可以绑定到视图
+
+        // 响应式属性原理：存储器属性（getter&setter）
+
+        let _myage = 18;
+        let _mygender = '男';
+
+        
+
+        let myData = {
+            // 值属性：拥有值的属性
+            username: 'laoxie',
+
+            // 存储器属性
+            get age() {
+                // getter: 获取属性时执行这里的代码
+                console.log('getter')
+                return _myage;
+            },
+            set age(newValue){
+                // setter: 修改属性时执行这里的代码，并传入新的值
+                console.log('setter',newValue)
+                _myage = newValue;
+
+                // 当值有修改时更新视图
+                age.innerText = newValue;
+            }
+        }
+
+        age.innerText = myData.age;
+    // myData.age;// 执行getter
+    // myData.age = 100;// 执行setter
+
+    // 通过Object.defineProperty()设置存储器属性
+    Object.defineProperty(myData,'gender',{
+        configurable:true,
+        enumerable:true,
+        get(){
+            return _mygender
+        },
+        set(newValue){
+            _mygender = newValue
+        }
+    })
+    </script>
+</body>
+
+</html>

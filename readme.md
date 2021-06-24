@@ -645,3 +645,88 @@
         ```
 * 不支持websocket的浏览器如何实现类似效果
     * 轮询：利用定时器不断向服务器发起请求并得到最新数据
+
+
+## day 2-4
+
+### 知识点
+* 前端框架/库发展历程
+    1. jQuery
+    2. Angular
+    3. React
+    4. Vue
+* Vue版本
+    * 按环境分
+        * 开发版本: development
+            > 在开发解决使用的版本，未压缩，方便调试与测试
+        * 生产版本：production
+            > 上线后的版本，特点：压缩
+    * 按构建版本分
+        * 完整版: 运行时（runtime）版 + 编译器
+            > 包含所有功能的版本
+        * 运行时版本：runtime
+    * 按模块类型分
+        * common: commonJS
+        * esm: ESModule
+        * umd：通用模块（支持AMD,commonJS,全局引入等方式引用）
+
+* Vue的使用
+    1. 实例化Vue: Controller
+    2. 关联视图：View
+    3. 关联数据: Model
+
+* 分层
+    * MVC
+        * M: Model数据层
+        * V: View视图层
+        * C: Controller控制层
+    * MVP
+    * MVVM
+        * M: Model数据层
+        * V: View视图层
+        * VM: ViewModel控制层
+            > 双向数据绑定
+
+* 数据绑定
+    > 把数据绑定到视图层，
+    * 单向绑定
+        * {{}}
+    * 双向绑定
+        * v-model
+
+* 指令： html属性
+    * v-model: 双向绑定
+        * Model -> View: 数据层的改变会影响视图层
+        * View -> Model: 视图层改变影响数据层
+
+* 属性特性
+    * 值属性：拥有值的属性
+        * configurable  可配置性
+        * enumerable    可枚举性
+        * writable      可写性
+        * value         值
+    * 存储器属性
+        > 本身并没有值，一般用于代理其他的值
+        * configurable  可配置性
+        * enumerable    可枚举性
+        * get
+        * set
+* 搞懂几个问题
+    * Vue的响应式属性原理？
+        > getter&setter
+    * 数据层中的属性是怎么变成响应式属性并写入vm实例中的？
+        > 实例化Vue时，Vue会遍历data中所有的属性，利用`Object.defineProperty(target,key,discriptor)`方法把它们变成getter&setter，并写入vm实例
+    * Vue中如何设置响应式属性
+        > 响应式属性特点：被修改时自动刷新页面
+        * 初始化时写入data
+        * `Vue.set(target,key,value)`
+            > 适用于对象或数组，target对象不能是 Vue 实例，或者 Vue 实例的根数据对象
+        * 数组特定方法
+            > Vue利用原型链重写部分数组方法，让这些方法实现响应式
+            * push()
+            * pop()
+            * shift()
+            * unshift()
+            * splice()
+            * sort()
+            * reverse()

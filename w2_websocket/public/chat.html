@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多人聊天室</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .msg-list {
+            position: relative;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .msg-list ul {
+            padding: 10px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .msg-list ul h4 {
+            margin: 0;
+        }
+
+        .msg-list li {
+            float: left;
+            clear: both;
+            margin: 10px 0;
+            padding: 5px;
+            line-height: 2;
+            border-radius: 5px;
+            background-color: #efefef;
+        }
+
+        .msg-list li.active {
+            float: right;
+            background-color: #58bc58;
+            color: #fff;
+        }
+
+        .msg-list textarea {
+            display: block;
+            min-height: 50px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .status {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 30px;
+            right: 0;
+            height: 30px;
+            line-height: 30px;
+            padding: 5px 10px;
+            text-align: center;
+            color: #999;
+            background-color: rgba(0, 255, 0, 0.3)
+        }
+
+        .login {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>多人聊天室</h1>
+    <div id="autoAnswer" class="msg-list">
+        <div class="login">
+            <input type="text" name="username" id="username">
+            <button class="btn-login">进入</button>
+            <button class="btn-logout">退出</button>
+        </div>
+        <ul>
+        </ul>
+        <textarea></textarea>
+        <button class="btn-send">提交</button>
+        <div class="status"></div>
+    </div>
+    <script>
+        (() => {
+            /**
+                * 统一发送消息格式: {username,msg,time,code}
+                    * code:
+                        0:退出登录
+                        1:登录成功
+                        2:发送消息
+                     
+             */
+            let autoAnswer = document.querySelector('#autoAnswer');
+            let login = autoAnswer.querySelector('.login');
+            let username = login.children[0];
+            let btnLogin = login.children[1];
+            let btnLogout = login.children[2];
+
+            let msglist = autoAnswer.querySelector('ul');
+            let msg = autoAnswer.querySelector('textarea');
+            let btnSend = autoAnswer.querySelector('.btn-send');
+            let status = autoAnswer.querySelector('.status');
+
+            const url = 'ws://localhost:2103';
+            let socket
+            const messages = [];
+            btnLogin.onclick = function () {
+                const _username = username.value.trim();
+                if (!_username) {
+                    alert('请输入用户名')
+                    return;
+                }
+                if (!socket) {
+                    socket = new WebSocket(url);
+
+                    // 连接成功触发open事件
+                    socket.onopen = function () {
+                        username.disabled = true;
+                        console.log(`${url} 连接成功`)
+                        const data = {
+                            code: 1,
+                            username: _username,
+                            msg: '',
+                            time: Date.now()
+                        }
+                        socket.send(JSON.stringify(data))
+                    }
+
+                    // 与服务器断开连接触发close事件
+                    socket.onclose = function () {
+                        username.disabled = false;
+                        socket = null;
+
+                    }
+
+                    // 接收消息事件触发message事件
+                    socket.onmessage = function (e) {
+                        // data = {code,username,msg,time}
+                        const data = JSON.parse(e.data);
+                        console.log('msg=', data);
+                        switch (data.code) {
+                            // 用户退出
+                            case 0:
+                                // if(data.username === username.value){
+                                //     socket.close()
+                                // }
+                                showStatus(`${data.username}退出聊天室`)
+                                break;
+                            case 1:
+                                showStatus(`${data.username}进入聊天室`)
+                                break;
+                            case 2:
+                                messages.push(data);
+                                render();
+                                break;
+                        }
+                    }
+                }
+
+
+            }
+
+            // 退出
+            btnLogout.onclick = function () {
+                const data = {
+                    code: 0,
+                    username: username.value,
+                    msg: '',
+                    time: Date.now()
+                }
+                socket.send(JSON.stringify(data))
+
+                setTimeout(() => {
+                    socket.close()
+                }, 1000)
+            }
+
+            // 发送消息
+            btnSend.onclick = function () {
+                if (!socket) {
+                    alert('请先登录聊天室');
+                    return;
+                }
+                const _msg = msg.value;
+                const data = {
+                    code: 2,
+                    username: username.value,
+                    msg: _msg,
+                    time: Date.now()
+                }
+                socket.send(JSON.stringify(data))
+
+                // 清空并自动获得焦点
+                msg.value = ''
+                msg.focus();
+            }
+
+            // 渲染消息方法
+            function render() {
+                msglist.innerHTML = messages.map(item => {
+                    return `<li class="${item.username===username.value ? 'active' : ''}">
+                        <h4>${item.username}</h4>
+                        <div>${item.msg}</div>
+                        <time>${new Date(item.time).toLocaleTimeString()}</time>
+                    </li>`
+                }).join('');
+
+                // 把最后一个li滚动到可视区域
+                msglist.lastElementChild.scrollIntoView();
+            }
+
+            function showStatus(msg) {
+                status.style.display = 'block';
+                status.innerHTML = msg;
+                setTimeout(() => {
+                    status.style.display = 'none'
+                }, 2000)
+            }
+
+        })()
+    </script>
+</body>
+
+</html>

@@ -730,3 +730,57 @@
             * splice()
             * sort()
             * reverse()
+
+## day2-5
+
+### 复习
+* 了解Vue
+    * 发展历程
+    * 作者
+* 架构分层
+    * MVC       angular
+    * MVP
+    * MVVM
+* 响应式属性
+    * 属性特性
+        * 值属性
+        * 存储器属性（getter&setter）
+            > 可监听属性的读取与修改操作
+    * 特点：
+        * 数据修改会自动刷新视图
+    * 如何设置响应式属性
+        * 初始化设置data
+        * Vue.set(target,key,value)
+        * 变更方法
+            > Vue利用原型链重写部分数组方法，让这些方法实现响应式
+* 数据绑定
+    > 把数据层中的数据绑定到视图层
+    * 单向
+    * 双向
+
+### 知识点
+* 绑定数据
+    * 单向
+        * 绑定数据到标签内
+            * {{}}      
+            * v-text    等效于innerText
+            * v-html    等效于innerHTML
+        * v-bind    绑定数据到标签属性
+    * 双向
+        * v-model
+* 指令
+    * v-model   双向数据绑定
+    * v-for     列表循环
+        > v-for可以遍历Array,String,Number,Object等
+        * `(item,idx) in data`
+        * `item of data`
+    * v-bind    绑定数据到属性
+        > 只有class、style属性才支持数组与对象写法
+    * v-text
+    * v-html
+    * v-show    是否显示
+    * v-on      绑定事件
+
+* 在Vue使用过程中，要注意思维模式的改变
+    * 以前：节点操作思维
+    * 现在：数据驱动（通过改变数据达到节点操作的目的）

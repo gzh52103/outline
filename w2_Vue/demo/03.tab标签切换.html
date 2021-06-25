@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tab标签切换</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <!-- 能写在这里的数据，必须是vm实例的属性 -->
+        <h1>tab标签切换</h1>
+        <ul class="nav nav-tabs">
+            <li class="nav-item" v-for="(item,idx) in namelist">
+                <!-- <a class="nav-link" v-bind:class="idx===current ? 'active' : ''" href="#">{{item.name}}</a> -->
+                <!-- <a v-bind:class="['nav-link',idx===current ? 'active' : '']" href="#">{{item.name}}</a> -->
+                <a v-bind:class="{'nav-link':true,active:idx===current}" href="#" v-on:click="change(idx)">{{item.name}}</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">tiantian</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">jingjing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">ouyang</a>
+            </li> -->
+        </ul>
+        <div class="p-5" v-for="(item,idx) in namelist" v-show="idx===current">
+            <!-- {{item.description}} -->
+            爱好：{{item.description}}
+        </div>
+
+        <!-- <div>双花括号:{{testData}}</div>
+        <div v-text="testData">v-text</div>
+        <div v-html="testData">v-html</div> -->
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            //配置参数
+            el: '#app',
+            data: {
+                testData:'test <strong style="color:#f00">Data</strong>',
+                namelist: [{
+                    name: 'laoxie',
+                    description: '喜欢写代码'
+                }, {
+                    name: 'tiantian',
+                    description: '喜欢去会所'
+                }, {
+                    name: 'jingjing',
+                    description: '跟tiantian去会所'
+                }, {
+                    name: 'ouyang',
+                    description: '喜欢开车'
+                }],
+                current: 0, //当前tab索引值
+            },
+            methods:{
+                // 实例化Vue时，遍历methods中所有的方法，并写入vm实例
+                change(idx){
+                    console.log('idx=',idx)
+                    this.current = idx
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

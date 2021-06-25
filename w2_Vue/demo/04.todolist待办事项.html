@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04.todolist待办事项</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app" class="container">
+        <h1>04.todolist待办事项</h1>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" v-model="event" ref="input" @keyup.enter="addItem">
+            <div class="input-group-append">
+              <button class="btn btn-success" @click="addItem">添加</button>
+            </div>
+          </div>
+          
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"><input type="checkbox" v-model="checkAll"/></th>
+                <th scope="col">#</th>
+                <th scope="col">待办事项</th>
+                <th scope="col">添加时间</th>
+                <th scope="col">是否完成</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item,idx) in list" @click="checkItem(item.id)">
+                <td><input type="checkbox" v-model="item.checked" /></td>
+                <td>{{idx+1}}</td>
+                <td>{{item.todo}}</td>
+                <td>{{formatDate(item.addtime)}}</td>
+                <td>{{item.complete ? '是' : '否'}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary btn-sm" v-on:click.stop="completeItem(item.id)">完成</button>
+                        <button class="btn btn-outline-danger btn-sm" v-on:click.stop="removeItem(item.id)">删除</button>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        总数：{{list.length}}，完成：{{completelist.length}}，未完成：{{uncompletelist.length}}
+                    </td>
+                </tr>
+            </tfoot>
+          </table>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',// document.querySelector('#app')
+            data: {
+                event:'',
+                // checkAll:true,
+                list: [{
+                    id: 1,
+                    todo: '定个小目标睡一整天',
+                    complete: true,
+                    checked: true,
+                    addtime: Date.now()
+                }, {
+                    id: 2,
+                    todo: '赚他一个亿津巴布韦币',
+                    complete: false,
+                    checked: false,
+                    addtime: Date.now() + 3600*1000
+                }, {
+                    id: 3,
+                    todo: '迎娶白富美，达到人生巅峰',
+                    complete: false,
+                    checked: false,
+                    addtime: Date.now() + 3600 * 1000 * 5
+                }],
+            },
+            // 计算属性：getter&setter
+            // 计算属性中的代码，只有在它依赖的数据发生改变时才会重执行，否则得到缓存值，一般用于一些比较耗时的操作（有一定的性能优化作用）
+            computed:{
+                // getter
+                completelist(){
+                    console.log('completelist')
+                    return this.list.filter(item=>item.complete)
+                },
+                uncompletelist(){
+                    return this.list.filter(item=>!item.complete)
+                },
+                // getter
+                checkAll:{
+                    get(){
+                        return this.list.every(item=>item.checked);
+                    },
+                    set(newValue){
+                        // 监听checkAll的改变
+                        console.log('newValue=',newValue)
+                        this.list.forEach(item=>item.checked = newValue)
+                    }
+                }
+            },
+            methods:{
+                formatDate(date){
+                    return new Date(date).toLocaleDateString()
+                },
+
+                // 完成待办事项
+                completeItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.complete = true;
+                        }
+                    })
+                },
+                // 删除待办事项
+                removeItem(id){
+                    this.list = this.list.filter(item=>item.id!==id)
+
+                    // this.list.splice(idx,1)
+                },
+
+                // 添加待办事项
+                addItem(event){
+                    const data = {
+                        id: parseInt(Math.random()*100000),
+                        todo:this.event,
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now()
+                    }
+                    this.list.unshift(data);
+
+                    // 清空
+                    this.event = ''
+
+                    // 自动获得焦点（只能节点操作）
+                    this.$refs.input.focus();
+                },
+                checkItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.checked = !item.checked
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

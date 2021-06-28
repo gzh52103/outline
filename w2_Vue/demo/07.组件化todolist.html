@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,70 +8,221 @@
     <title>07.组件化todolist</title>
     <link rel="stylesheet" href="css/bootstrap.css">
 </head>
+
 <body>
     <h1>07.组件化todolist</h1>
-    <div id="app">
-       <todolist></todolist>
+    <div id="app" class="container">
+        <todolist></todolist>
     </div>
     <template id="todolist">
         <div class="todolist">
-            TodoList
-            <todo-head></todo-head>
-            <todo-body></todo-body>
-            <todo-foot></todo-foot>
+            <!-- <todo-head v-on:add="addItem" v-bind:todo.sync="todo"></todo-head> -->
+            <todo-head v-on:add="addItem"></todo-head>
+            <!-- <todo-body v-bind:datalist="list" :complete="completeItem" :remove="removeItem"></todo-body> -->
+            <todo-body v-bind:datalist="list"></todo-body>
+            <todo-foot v-bind:datalist="list"></todo-foot>
         </div>
     </template>
     <template id="todoHead">
-        <div class="todoHead">
-            TodoHead
-        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" v-model="event" ref="input" @keyup.enter="addItem">
+            <div class="input-group-append">
+              <button class="btn btn-success" @click="addItem">添加</button>
+            </div>
+          </div>
     </template>
     <template id="todoBody">
-        <div class="todoBody">
-            TodoBody
-        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox" /></th>
+                    <th scope="col">#</th>
+                    <th scope="col">待办事项</th>
+                    <th scope="col">添加时间</th>
+                    <th scope="col">是否完成</th>
+                    <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <todo-item v-for="(item,idx) in datalist" :idx="idx" :item="item"></todo-item> -->
+                <!-- <tr is="todo-item" v-for="(item,idx) in datalist" :idx="idx" :item="item" :remove="remove" :complete="complete"></tr> -->
+                <tr is="todo-item" v-for="(item,idx) in datalist" :idx="idx" :item="item"></tr>
+            </tbody>
+        </table>
     </template>
     <template id="todoFoot">
         <div class="todoFoot">
-            TodoFoot
+            总数：{{datalist.length}}，完成：{{completelist.length}}，未完成：{{uncompletelist.length}}
         </div>
+    </template>
+    <template id="todoItem">
+        <tr>
+            <td><input type="checkbox" v-model="item.checked" /></td>
+            <td>{{idx+1}}</td>
+            <td>{{item.todo}}</td>
+            <td>{{item.addtime}}</td>
+            <td>{{item.complete ? '是' : '否'}}</td>
+            <td>
+                <div class="btn-group">
+                    <!-- <button class="btn btn-outline-primary btn-sm" @click="complete(item.id)">完成</button>
+                    <button class="btn btn-outline-danger btn-sm" @click="remove(item.id)">删除</button> -->
+                    <button class="btn btn-outline-primary btn-sm" @click="completeItem(item.id)">完成</button>
+                    <button class="btn btn-outline-danger btn-sm" @click="removeItem(item.id)">删除</button>
+                </div>
+            </td>
+        </tr>
     </template>
     <script src="../node_modules/vue/dist/vue.js"></script>
     <script>
-        // Todolist
-        Vue.component('todolist',{
-            data(){
-                return {
+        // 事件总线
+        // 为了绑定事件
+        const Bus = new Vue();
 
+        const todoHead = {
+            data() {
+                return {
+                    event: ''
                 }
             },
-            template:'#todolist',
-            components:{
-                todoHead:{
-                    data(){
-                        return {}
-                    },
-                    template:'#todoHead'
-                },
-                todoBody:{
-                    data(){
-                        return {}
-                    },
-                    template:'#todoBody'
-                },
-                todoFoot:{
-                    data(){
-                        return {}
-                    },
-                    template:'#todoFoot'
+            template: '#todoHead',
+            methods:{
+                addItem(){
+                    console.log('todoHead.addItem')
+                    // $emit(事件名,参数)
+                    this.$emit('add',this.event);
+                    this.$emit('update:todo','laoxie')
+
+                    // 清空并自动获得焦点
+                    this.event = ''
+                    this.$refs.input.focus();
                 }
+            }
+        }
+
+        const todoItem = {
+            props: [
+                'item',
+                'idx',
+            // 'complete',
+            // 'remove'
+            ],
+            template: '#todoItem',
+            methods:{
+                removeItem(id){
+                    console.log('todoItem.remove')
+                    Bus.$emit('remove',id)
+                },
+                completeItem(id){
+                    console.log('todoItem.complete')
+                    Bus.$emit('complete',id);
+
+                }
+
+            }
+        }
+        const todoBody = {
+            // 接收父组件数据
+            props: [
+                'datalist', 
+                // 'complete', 
+                // 'remove'
+            ],
+            data() {
+                // this.datalist
+                // this.a;
+                // this.b;
+                return {}
+            },
+            template: '#todoBody',
+            components: {
+                todoItem,
+            }
+        }
+        const todoFoot = {
+            props:['datalist'],
+            data() {
+                return {}
+            },
+            computed:{
+                completelist(){
+                    return this.datalist.filter(item=>item.complete);
+                },
+                uncompletelist(){
+                    return this.datalist.filter(item=>!item.complete);
+                }
+            },
+            template: '#todoFoot'
+        }
+        // Todolist
+        Vue.component('todolist', {
+            data() {
+                return {
+                    todo:'',
+                    list: [{
+                        id: 1,
+                        todo: '定个小目标睡一整天',
+                        complete: true,
+                        checked: true,
+                        addtime: Date.now()
+                    }, {
+                        id: 2,
+                        todo: '赚他一个亿津巴布韦币',
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now() + 3600 * 1000
+                    }, {
+                        id: 3,
+                        todo: '迎娶白富美，达到人生巅峰',
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now() + 3600 * 1000 * 5
+                    }]
+                }
+            },
+            template: '#todolist',
+            components: {
+                todoHead,
+                todoBody,
+                todoFoot,
+            },
+            methods: {
+                // 谁的数据谁修改原则：把修改数据的方法定义在数据所在的组件
+                addItem(todo) { 
+                    console.log('todoList.addItem')
+                    const data = {
+                        id: parseInt(Math.random()*100000),
+                        todo,
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now()
+                    }
+                    this.list.unshift(data);
+                },
+                removeItem(id) {
+                    this.list = this.list.filter(item=>item.id!==id)
+                 },
+                completeItem(id) {
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.complete = true;
+                        }
+                    })
+                 },
+                checkeItem() { }
+            },
+            // created生命周期函数，在组件实例化时执行
+            created(){
+                // 给Bus绑定事件
+                Bus.$on('remove',this.removeItem)
+                Bus.$on('complete',this.completeItem)
             }
         })
         const vm = new Vue({
-            el:'#app',
+            el: '#app'
         })
     </script>
-    
+
     </script>
 </body>
+
 </html>

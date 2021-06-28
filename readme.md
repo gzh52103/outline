@@ -803,3 +803,71 @@
     * data      数据
     * methods   方法
     * computed  计算属性
+
+## day3-1
+
+### 复习
+* 架构分层
+    * MVC
+    * MVP
+    * MVVM
+* 配置选项
+    * el
+    * data
+    * methods
+    * computed  计算属性（需要运算后才得到的值）
+        * 监听
+        * 缓存：依赖的数据发生改变时重新执行计算属性中的代码，否则得到缓存之
+* 全局方法（静态方法）
+    * Vue.set()     设置响应式属性
+    * Vue.delete()  删除响应式属性
+* 实例方法
+    * $set()        Vue.set的别名
+    ```js
+        vm.$set();
+        this.$set();
+    ```
+* 实例属性
+    * 内置属性
+    * 实例化时写入的属性（data,computed,methods等）
+
+* 响应式属性
+    > 当属性有修改时，自动刷新视图（原理：getter&setter）
+    * 如何设置响应式属性
+        * 初始化
+        * Vue.set()
+* 数据绑定
+    * 单向绑定：数据层修改影响视图层
+        * {{}}
+        * v-bind
+        * v-text
+        * v-html
+    * 双向绑定
+        * v-model
+* 指令
+    * v-for
+    * v-bind
+    * v-on
+    * v-show
+    * v-html
+    * v-text
+    * v-model
+
+### 知识点
+* 组件
+    > 定义一个组件，就相当于创建一个标签
+    * 优点
+        * 复用
+        * 分工
+        * 维护
+    * 定义
+        * 全局组件：可在任意地方使用
+            > Vue.component()
+        * 局部组件：只能在定义它所在的组件中使用（组件所在的视图）
+            > components
+
+* 组件化Todolist
+    * TodoHead
+    * TodoBody
+        * TodoItem
+    * TodoFoot

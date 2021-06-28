@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06.组件定义</title>
+</head>
+<body>
+    <h1>06.组件定义</h1>
+    <div id="app">
+        <list>
+            <!-- <list-header></list-header>
+            <list-body></list-body> -->
+        </list>
+    </div>
+    <template id="list">
+        <div>
+            <!-- <listHeader></listHeader> -> <listheader></listheader> -->
+            <list-header></list-header>
+            hello list 
+            <p>count:{{count}}</p>
+
+            <list-body></list-body>
+        </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        /**
+            06.组件定义
+                > Vue中的组件就是一个Vue的实例，它拥有跟Vue实例化时一样的配置
+                    * 
+                * 全局组件: Vue.component(name,options)
+                    * name: 组件名称
+                    * options： 组件配置选项
+            * 组件使用
+                * <list></list>
+                * <list/>
+         */
+        
+         // 全局组件
+         Vue.component('list',{
+             // 组件中的data属性必须为函数形式
+             data:function(){
+                 return {
+                    count:10
+                 }
+             },
+             // 配置选项
+             template:`#list`,
+
+             // 定义局部组件
+             components:{
+                 // 'list-header'
+                //  组件名: 组件配置选项
+                listHeader:{
+                    template:`
+                        <div class="header">
+                            list header    
+                        </div>
+                    `
+                },
+                listBody:{
+                    data(){
+                        return {
+                            name:"body"
+                        }
+                    },
+                    template:`
+                        <div class="body">
+                            <h4>{{name}}</h4>
+                            list body    
+                        </div>
+                    `
+                }
+             }
+         })
+
+
+         const vm = new Vue({
+             el:'#app',
+             data:{
+                 pageName:'组件'
+             },
+            //  template:`<div class="container">template <list/></div>`
+            // 1. 提供template选项，则使用tempate作为视图
+            // 2. 如无template选项，则使用el元素的outerHTML作为template
+            components:{
+
+            }
+         })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07.组件化todolist</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+    <h1>07.组件化todolist</h1>
+    <div id="app">
+       <todolist></todolist>
+    </div>
+    <template id="todolist">
+        <div class="todolist">
+            TodoList
+            <todo-head></todo-head>
+            <todo-body></todo-body>
+            <todo-foot></todo-foot>
+        </div>
+    </template>
+    <template id="todoHead">
+        <div class="todoHead">
+            TodoHead
+        </div>
+    </template>
+    <template id="todoBody">
+        <div class="todoBody">
+            TodoBody
+        </div>
+    </template>
+    <template id="todoFoot">
+        <div class="todoFoot">
+            TodoFoot
+        </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // Todolist
+        Vue.component('todolist',{
+            data(){
+                return {
+
+                }
+            },
+            template:'#todolist',
+            components:{
+                todoHead:{
+                    data(){
+                        return {}
+                    },
+                    template:'#todoHead'
+                },
+                todoBody:{
+                    data(){
+                        return {}
+                    },
+                    template:'#todoBody'
+                },
+                todoFoot:{
+                    data(){
+                        return {}
+                    },
+                    template:'#todoFoot'
+                }
+            }
+        })
+        const vm = new Vue({
+            el:'#app',
+        })
+    </script>
+    
+    </script>
+</body>
+</html>

@@ -921,3 +921,114 @@
 * 生命周期函数（钩子函数）
     > 在组件定义后特定的时间自动的函数
     * created
+
+## day3-2
+
+## 面试题
+* 如何在父组件拿到子组件数据
+    ```js
+        // 父组件代码
+        <input ref="input" />
+        <list ref="list" /> // {data(){return {count:100}},methods,computed}
+
+        // 组件层级
+        this.$children[0].count;// 100
+
+        // ref
+        this.$refs.list.count;//100
+    ```
+
+### 复习
+* 组件
+    * 优点
+    * 通讯
+        * 父->子：props
+        * 子->父：
+            * 自定义事件
+                ```js
+                    <list v-on:add="addItem" />
+
+                    // list组件内部
+                    this.$emit('add',10)
+                    // 在js中绑定自定义事件
+                    this.$on('remove',function(){});// this.$emit('remove')
+                ```
+            * v-bind的sync修饰符
+                ```js
+                    <list v-bind:val.sync="todo">
+
+                    // list组件内部（子组件）
+                    this.$emit('update:val',200)
+                ```
+            * 把父组件的方法传到子组件执行
+        * 多层级通讯
+            * 逐层传递
+            * Bus事件总线
+                > 把事件绑定在任意组件可以访问到的位置
+                ```js
+                    const Bus = new Vue()
+                    Bus.$on()
+                    Bus.$remove()
+                    Bus.$emit()
+                ```
+
+### 知识点
+* 组件层级
+    * $parent
+    * $children
+    * $root
+
+    ```js
+        <list />
+        this.$parent
+        this.$children
+
+        this.$root
+    ```
+* props
+    * 接收属性
+        * 子组件接收：成为子组件实例的属性
+        * 子组件不接收：成为子组件根元素的html属性
+    * 数据类型校验
+        * 普通类型校验：
+            ```js
+                props:{
+                    age:Number
+                }
+            ```
+        * 允许多个类型校验
+            ```js
+                 props:{
+                    age:[Number,String]
+                }
+            ```
+        * 必填
+            ```js
+                 props:{
+                    age:{
+                        type:[Number,String],
+                        required:true
+                    }
+                }
+            ```
+        * 默认值
+            > 默认值如果为引用数据类型，default必须使用函数形式
+            ```js
+                 props:{
+                    age:{
+                        type:[Number,String],
+                        default:18
+
+                    }
+                }
+            ```
+        * 自定义校验规则
+            ```js
+                age:{
+                    type:[Number,String],
+                    // age大于等于18，小于等于30
+                    validator(value){
+                        return value>=18 && value<=30;
+                    }
+                }
+            ```

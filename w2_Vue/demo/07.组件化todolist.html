@@ -110,11 +110,13 @@
             methods:{
                 removeItem(id){
                     console.log('todoItem.remove')
-                    Bus.$emit('remove',id)
+                    // Bus.$emit('remove',id)
+                    this.$root.$emit('remove',id)
                 },
                 completeItem(id){
                     console.log('todoItem.complete')
-                    Bus.$emit('complete',id);
+                    // Bus.$emit('complete',id);
+                    this.$root.$emit('complete',id);
 
                 }
 
@@ -213,8 +215,10 @@
             // created生命周期函数，在组件实例化时执行
             created(){
                 // 给Bus绑定事件
-                Bus.$on('remove',this.removeItem)
-                Bus.$on('complete',this.completeItem)
+                // Bus.$on('remove',this.removeItem)
+                // Bus.$on('complete',this.completeItem)
+                this.$root.$on('remove',this.removeItem)
+                this.$root.$on('complete',this.completeItem)
             }
         })
         const vm = new Vue({

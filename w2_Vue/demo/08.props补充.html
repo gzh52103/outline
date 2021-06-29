@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08.props补充</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <h1>08.props补充</h1>
+    <div id="app" class="container">
+        <list :datalist="list" :count="count" username="laoxie" :age="18" class="mylist"></list>
+
+        <list :datalist="[]" age="16"></list>
+    </div>
+    <template id="list">
+        <div class="list">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(item,idx,index) in datalist">
+                    <h4>{{idx}}-{{index}} : {{item.username || item}}</h4>
+                    <p>技能：{{item.skill || '无'}}</p>
+                </li>
+              </ul>
+              {{mylist}}
+        </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('list',{
+            // props:['datalist','count','age'],
+            // props类型校验
+            props:{
+                // datalist:Array,
+
+                datalist:{
+                    type:Array,
+                    required:true,  // 必填
+                    // 设置默认值
+                    // 如果默认值为引用数据类型，default必须为函数形式
+                    // default(){
+                    //     return []
+                    // }
+                },
+                count:Number,
+
+                // 多类型
+                age:{
+                    type:[Number,String],
+                    // age大于等于18，小于等于30
+                    validator(value){
+                        return value>=18 && value<=30;
+                    }
+                }
+            },
+            data(){
+                console.log('list.data=',this);
+                return {
+                    name:'list'
+                }
+            },
+            computed:{
+                mylist(){
+                    return this.datalist.filter(item=>item.username==='吴亦凡')
+                }
+            },
+            template:`#list`,
+            created(){
+                console.log('list.created=',this);
+            }
+        })
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                count:10,
+                list:[{
+                    username:'蔡徐坤',
+                    skill:'唱跳篮球'
+                },{
+                    username:'吴亦凡',
+                    skill:'free style'
+                },{
+                    username:'郑爽',
+                    skill:'创建一个新单位'
+                }]
+            }
+        });
+
+        
+    </script>
+</body>
+
+</html>

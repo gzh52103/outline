@@ -1032,3 +1032,31 @@
                     }
                 }
             ```
+
+* npm script（npm脚本）
+    > package.json中的scripts命令，可以通过`npm run xxx`运行
+    * start / test： 这两个脚本命令可以使用`npm start`/`npm test`运行
+
+* render渲染函数
+
+* ESModule
+    > ECMAScript2015退出的模块化开发规范
+    * 以前采用的方案
+        * AMD   require.js
+        * CMD   sea.js
+    * 使用
+        * 导出：export
+            > export后只能跟function、class、var、let、const、default、{}
+
+
+        * 引入: import
+            * `import xxx from 'url'`: 引入模块对象中的default属性
+            * `import {username} from 'url'` 引入模块对象中的username属性
+            * `import * as all from 'url'` 引入模块对象中所有属性并赋值给all
+    * 注意事项
+        1. 多次引入会从缓存中读取，不用担心性能问题
+        2. 只支持静态引入（路径不能使用变量）
+        3. 每个模块具有独立作用域，相互之间不影响
+
+
+* Vue单文件组件

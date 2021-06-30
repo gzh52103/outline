@@ -1,32 +1,32 @@
 // 基于webpack的环境
 // webpack编译时会把以下代码编译成：import Vue from '../node_modules/vue/dist/vue.runtime.esm.js
-import Vue from 'vue'
+import Vue from 'vue';// 引入的是vue.runtime.esm.js
 import App from './App.vue'
+console.log('App=',App);
 
+// // 引入模块对象中所有属性并复制给userModule变量
+// import * as userModule from './esm/user';
 
-// 引入模块对象中所有属性并复制给userModule变量
-import * as userModule from './esm/user';
+// // 引入user模块对象中的default属性
+// import myuser from './esm/user.js';
 
-// 引入user模块对象中的default属性
-import myuser from './esm/user.js';
+// // 引入模块对象中的属性
+// import {username as myname} from './esm/user'
 
-// 引入模块对象中的属性
-import {username as myname} from './esm/user'
+// console.log('userModule=',userModule);
+// console.log('myuser=',myuser);
+// // console.log('myname=',myname);
 
-console.log('userModule=',userModule);
-console.log('myuser=',myuser);
-// console.log('myname=',myname);
-
-const username = 'tiantian';
+// const username = 'tiantian';
 
 Vue.config.productionTip = false
 
 new Vue({
   // render: h => h(App),
   // 渲染函数
-  render: function(h){
+  render: function(createElement){
     // h: createElement() 创建虚拟节点
-    return h(App)
+    return createElement(App)
   },
 }).$mount('#app')
 

@@ -1059,4 +1059,52 @@
         3. 每个模块具有独立作用域，相互之间不影响
 
 
+## day3-3
+
+### 面试题
+* RESTful接口规范
+* Vue中如何设置响应式属性
+    * 初始化时在data中设置
+    * Vue.set()/this.$set()
+    * 数组重写方法
+* 紧急绑定修复
+    * master -> hotfix  -> 修复bug -> master/dev 
+
+### 复习
+* VueCLI
+    * 安装：
+        * `npm install -g @vue/cli`
+        * `yarn global add @vue/cli`
+    * 创建项目：vue create 
+    * 配置文件：vue.config.js
+    * npm script
+* ESMdoule
+    * 导出: exports
+        > exports就是给模块对象添加属性
+    * 导入：import
+        > import就是从模块对象中引入属性
+    * 在script标签中使用
+        > type="module"
+
+### 知识点
 * Vue单文件组件
+    > 后缀名为`.vue`的文件
+
+* vue.runtime.esm.js运行时版
+    > 不包含编译器的版本
+    * 编译器的作用：tempalte -> render函数
+
+* 虚拟节点
+    > 结构类似真实节点的js对象
+
+* 内容插槽slot
+    * 核心内容、
+        * 内置组件：`<slot/>`
+        * 指令：`v-slot`
+    * 父->子：插槽
+        * 默认插槽default: `<slot/>` 
+        * 命名插槽：`<slot name="header" />`
+            * v-slot:header
+    * 子->父: 作用域插槽
+        > v-slot:header="scope"
+        * scope保存header插槽中props数据

@@ -2,16 +2,25 @@
   <div>
     <div>Hello H52103</div>
     <p>Vue CLI</p>
+    <!-- <todo-list/> -->
+    <TodoList/>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import TodoList from './components/TodoList/index.vue';
 const username = 'laoxie';
 export default {
   name: "App",
+  data(){
+    return {}
+  },
+  computed:{},
+  methods:{},
   components: {
-    // HelloWorld
+    // HelloWorld,
+    TodoList
   }
 };
 </script>

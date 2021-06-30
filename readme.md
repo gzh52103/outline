@@ -1069,6 +1069,17 @@
     * 数组重写方法
 * 紧急绑定修复
     * master -> hotfix  -> 修复bug -> master/dev 
+* 状态码
+    * 200
+    * 301
+    * 302
+    * 304
+    * 400
+    * 401
+    * 403
+    * 404
+    * 500
+
 
 ### 复习
 * VueCLI
@@ -1098,7 +1109,7 @@
     > 结构类似真实节点的js对象
 
 * 内容插槽slot
-    * 核心内容、
+    * 核心内容
         * 内置组件：`<slot/>`
         * 指令：`v-slot`
     * 父->子：插槽
@@ -1108,3 +1119,33 @@
     * 子->父: 作用域插槽
         > v-slot:header="scope"
         * scope保存header插槽中props数据
+* 生命周期
+    > 组件从创建到销毁的过程
+    * 生命周期函数（钩子函数）： 在生命周期中特定的时间自动执行的函数
+        * 搞懂执行顺序
+        * 搞懂每个钩子函数中适合做什么操作
+    * 生命周期阶段
+        * 创建阶段Create
+            * beforeCreate
+            * created
+        * 挂载阶段Mount
+            * beforeMount
+            * mounted
+        * 更新阶段Update
+            * beforeUpdate
+            * updated
+        * 销毁阶段Destory
+            * beforeDestroy
+            * destroyed
+* 虚拟DOM
+    * 真实DOM
+
+* 页面刷新流程
+    > 真实DOM节点的频繁操作会影响页面性能
+    * 操作真实DOM -> 页面刷新
+    * 修改数据 -> 更新虚拟DOM -> diff算法 -> 操作真实DOM -> 页面刷新
+        * count:10->11->12->11->10
+* 如何销毁一个组件
+    * $destroy()
+    * v-if
+    * 页面切换

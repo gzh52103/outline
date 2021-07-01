@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09.真实DOM节点的频繁操作对页面性能的影响</title>
+</head>
+<body>
+    <h1>09.真实DOM节点的频繁操作对页面性能的影响</h1>
+    <button>0</button>
+    <script>
+        /**
+            节点操作数量        时间
+            30000              1000ms
+            20001              900ms
+            10002              15ms
+            3                  1ms
+         */
+        console.time('tt')
+        const btn = document.querySelector('button');
+        let num = btn.innerText
+        for(let i=0;i<10000;i++){
+            num++;
+        }
+        btn.innerText = num;
+        for(let i=1000;i<0;i--){
+            num--;
+        }
+        btn.innerText = num;
+        console.timeEnd('tt');
+    </script>
+</body>
+</html>

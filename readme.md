@@ -1149,3 +1149,48 @@
     * $destroy()
     * v-if
     * 页面切换
+
+## day3-4
+
+### 面试题
+* 父组件A与子组件B生命周期函数的执行顺序
+    * 初始阶段
+        1. 父组件beforeCreated
+        2. 父组件created
+        3. 父组件beforeMount
+            4. 子组件的beforeCreate
+            5. 子组件的created
+            6. 子组件的beforeMount
+            7. 子组件的mounted
+        8. 父组件的mounted
+    * 更新阶段
+    * 销毁阶段
+
+### 复习
+* 插槽
+    * 默认插槽
+    * 命名插槽
+    * 作用域插槽
+        > 把数据从子组件传到父组件实现更灵活的可定制化
+* 生命周期
+    * 搞懂生命周期中做了哪些操作
+    * 有哪些钩子函数以及它们执行顺序
+    * 在每个钩子函数中适合做什么操作
+
+### 知识点
+* 真实DOM节点的频繁操作会影响页面性能
+* key的作用
+    * Vue的diff算法会根据key值识别与节点的对应关系，如果没有提供key，则采用就地复用原则（因为这样会更加高效）
+    * key必须是唯一且稳定的值
+
+* 单页面应用SPA(single page application)
+
+* 多页面应用MPA(multiple page application)
+* VueRouter
+    * 使用步骤
+        1. 安装引用
+        2. 安装（使用）插件
+        3. 实例化路由并配置路由参数
+        4. 把router实例注入到vue实例中
+        5. 在组件中使用
+            * 显示路由组件：<router-view/>

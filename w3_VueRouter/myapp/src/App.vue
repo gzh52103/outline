@@ -1,43 +1,87 @@
 <template>
   <div id="app">
-      <router-link v-for="item in menu" :key="item.path" :to="item.path" active-class="current">{{item.text}}</router-link>
-      <div>
-        <router-view/>
-      </div>
+    <!-- <button @click="goBack">&lt;返回</button>
+      <button @click="goHome">首页</button>
+      <router-link v-for="item in menu" :key="item.path" :to="item.path" exact-active-class="current" tag="div" >{{item.text}}</router-link> -->
+    <div class="container">
+      <router-view />
+    </div>
+
+    <van-tabbar v-model="active" active-color="#58bc58" route>
+      <van-tabbar-item :icon="item.icon" v-for="item in menu" :key="item.path" :badge="item.badge" :to="item.path">{{item.text}}</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  data(){
+  name: "App",
+  data() {
     return {
-      menu:[
+      active:0,
+      menu: [
         {
-          path:'/home',
-          text:'首页'
+          path: "/home",
+          text: "首页",
+          icon:'wap-home-o'
+        },
+        
+        {
+          path: "/discover",
+          text: "发现",
+          icon:'eye-o'
         },
         {
-          path:'/mine',
-          text:'我的'
+          path: "/cart",
+          text: "购物车",
+          icon:'cart-o',
+          badge:5,
         },
         {
-          path:'/login',
-          text:'登录'
-        },
-        {
-          path:'/reg',
-          text:'注册'
+          path: "/mine",
+          text: "我的",
+          icon:'manager-o'
         },
       ]
+    };
+  },
+  methods: {
+    goBack() {
+      this.$router.back();
+    },
+    goHome() {
+      // this.$router.replace('/home')
+      // this.$router.push('/home')
+      this.$router.push({
+        path: "/home"
+      });
     }
   },
-  components: {
+  components: {},
+  created() {
+    console.log("App.$router", this.$router);
   }
-}
+};
 </script>
 
-<style>
-.current{color:#f00;font-weight: bold}
+<style lang="scss">
+.current {
+  color: #f00;
+  font-weight: bold;
+}
+.container{
+  padding:15px;
+}
+.price{
+  del{
+    color:#999;
+    &::before{
+      content:'￥'
+    }
+  }
+  span{
+    @extend del;
+    color:#f00;
+  }
+}
 </style>

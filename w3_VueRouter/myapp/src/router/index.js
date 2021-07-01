@@ -7,6 +7,9 @@ import Home from '../views/Home.vue'
 import Mine from '../views/Mine.vue'
 import Login from '../views/Login.vue'
 import Reg from '../views/Reg.vue'
+import Cart from '../views/Cart.vue'
+import Discover from '../views/Discover.vue'
+import Goods from '../views/Goods.vue'
 
 // VueRouter的使用
 // 2. 使用插件
@@ -28,6 +31,15 @@ const router = new VueRouter({
   },{
     path:'/reg',
     component:Reg
+  },{
+    path:'/discover',
+    component:Discover
+  },{
+    path:'/cart',
+    component:Cart
+  },{
+    path:'/goods/:id', // goods/456
+    component:Goods
   }]
 })
 

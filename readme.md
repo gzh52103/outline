@@ -1184,13 +1184,74 @@
     * key必须是唯一且稳定的值
 
 * 单页面应用SPA(single page application)
-
 * 多页面应用MPA(multiple page application)
 * VueRouter
     * 使用步骤
         1. 安装引用
+            ```js
+                npm i vue-router
+                import VueRouter from 'vue-router'
+            ```
         2. 安装（使用）插件
+            ```js
+                Vue.use(VueRouter)
+            ```
         3. 实例化路由并配置路由参数
+            ```js
+                const router = new VueRouter({
+                    routes:[{
+                        path:'/home',
+                        component:Home
+                    }]
+                })
+            ```
         4. 把router实例注入到vue实例中
+            ```js
+                new Vue({
+                    router:router
+                    //...
+                })
+            ```
         5. 在组件中使用
-            * 显示路由组件：<router-view/>
+            * 显示路由组件：`<router-view/>`
+            * 路由跳转组件：`<router-link/>`
+* 路由导航
+    * 声明式导航
+        > <router-link to="/home" />
+        * to
+        * tag
+        * active-class
+        * event
+        * replace
+    * 编程式导航（命令式导航）
+        > 利用js代码进行跳转，只要把router实例注入到Vue的跟实例中，在每个组件中就可以获取以下属性：
+        * $router: 路由实例，可以通过它实现页面跳转
+            * push()    等效于没有replace属性的<router-link/>
+            * replace() 等效于拥有replace属性的<router-link/>
+            * back()
+            * forward()
+            * go()
+        * $route: 当前路由信息，可以获取跳转时传入的信息
+
+* Vue的UI组件库
+    * elementUI     饿了么出品
+    * ant-design    蚂蚁金服出品
+    * iView         腾讯出品
+    * VantUI        有赞出品
+    * ...
+    * 使用步骤
+        1. 安装引入
+            ```js
+                npm i xxx
+                import xxx from 'xxx'
+            ```
+        2. 使用插件
+            ```js
+                Vue.use(xxx)
+            ```
+        3. 引用样式
+            ```js
+                import 'xxx.css'
+            ```
+* 在Vue中发起ajax请求
+    * axios

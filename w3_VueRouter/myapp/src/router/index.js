@@ -10,6 +10,7 @@ import Reg from '../views/Reg.vue'
 import Cart from '../views/Cart.vue'
 import Discover from '../views/Discover.vue'
 import Goods from '../views/Goods.vue'
+import NotFound from '../views/NotFound.vue'
 
 // VueRouter的使用
 // 2. 使用插件
@@ -22,7 +23,12 @@ const router = new VueRouter({
     // 当浏览器地址为/home时，渲染Home组件的内容
     path: '/home',
     component: Home
-  }, {
+  }, 
+  {
+    path:'/',
+    redirect:'/home'
+  },
+  {
     path: '/mine',
     component: Mine,
     beforeEnter(to,from,next){
@@ -53,11 +59,15 @@ const router = new VueRouter({
     // },
     // props: true,// 等效于props(route){return route.params}
   },
-    // {
-    //   path:'/goods',
-    //   name:'Goods', // 给路由命名
-    //   component:Goods
-    // }
+    {
+      path:'/notfound',
+      name:'NotFound', 
+      component:NotFound
+    },
+    {
+      path:'*',
+      redirect:'/notfound'
+    }
   ]
 })
 

@@ -24,7 +24,11 @@ const router = new VueRouter({
     component: Home
   }, {
     path: '/mine',
-    component: Mine
+    component: Mine,
+    beforeEnter(to,from,next){
+      console.log('Mine.beforeEnter')
+      next();
+    }
   }, {
     path: '/login',
     component: Login
@@ -38,7 +42,7 @@ const router = new VueRouter({
     path: '/cart',
     component: Cart
   }, {
-    path: '/goods/:id', // goods/456
+    path: '/goods/:id', // goods/123 -> goods/456
     name: 'DGoods',
     component: Goods,
     // 给子组件传递固定数据（props父传子）
@@ -57,4 +61,16 @@ const router = new VueRouter({
   ]
 })
 
+// 全局路由守卫
+router.beforeEach(function(to,from,next){
+  console.log('beforeEach')
+  next();
+})
+router.afterEach(function(to,from){
+  console.log('afterEach')
+})
+router.beforeResolve(function(to,from,next){
+  console.log('beforeResolve')
+  next();
+})
 export default router;

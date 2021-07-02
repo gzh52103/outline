@@ -1296,3 +1296,45 @@
 
 * 数据持久化
     > 页面刷新后数据依然存在
+
+* 动态路由组件监听
+    * watch
+        > 监听实例下任意属性的改变，包括子属性
+    * 路由守卫：beforeRouteUpdate
+        > 注意：进入该路由守卫时，页面并没有跳转成功，所以通过this.$route.prams.id获取到的是之前的值
+* 路由守卫
+    > 路由跳转过程中自动自行的钩子函数
+    * 全局守卫
+        > 所有的路由切换都会执行，一般写在路由配置文件中
+        * router.beforeEach(fn)
+            * to
+            * from
+            * next
+        * router.afterEach(fn)
+            * to
+            * from
+        * router.beforeResolve(fn)
+            * to
+            * from
+            * next
+
+    * 路由独享守卫
+        > 写在路由配置
+        * beforeEnter
+    * 组件内的守卫
+        > 写在路由组件内（类似于生命周期钩子函数）
+        * beforeRouteEnter()    进入路由组件
+        * beforeRouteUpdate()   路由组件更新
+        * beofreRouteLeave()    离开路由组件
+* 路由跳转步骤
+    1. 导航被触发。
+    2. 在**失活组件**里调用beforeRouteLeave离开守卫。
+    3. 调用全局的 beforeEach 守卫。
+        4. 在**重用的组件**里调用 beforeRouteUpdate 守卫 (2.2+)。
+    5. 在路由配置里调用 beforeEnter。
+        6. 解析异步路由组件。
+    7. 在被**激活组件**里调用 beforeRouteEnter。
+    8. 调用全局的 beforeResolve 守卫 (2.5+)。
+    9. 导航被确认。
+    10. 调用全局的 afterEach 钩子。
+    11. 触发 DOM 更新。

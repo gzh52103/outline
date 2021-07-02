@@ -1,11 +1,12 @@
 <template>
-    <div>
+    <div class="goodslist">
         <van-row
             type="flex"
             justify="space-between"
             style="flex-wrap:nowrap"
+            gutter="10"
         >
-            <van-col style="width:100px">
+            <van-col style="width:100px;margin-left:-15px">
                 <van-sidebar
                     v-model="activeKey"
                     @change="changeCategory"
@@ -18,17 +19,19 @@
                 </van-sidebar>
             </van-col>
             <van-col>
+                <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
                 <van-list
                     v-model="loading"
                     :finished="finished"
                     finished-text="没有更多了"
                     @load="loadMore"
+                    offset="50"
                 >
-                    <van-row>
+                    <van-row gutter="10">
                         <van-col
                             span="12"
-                            v-for="item in goodslist"
-                            :key="item._id"
+                            v-for="(item,idx) in goodslist"
+                            :key="item._id+idx"
                             @click="goto(item._id)"
                         >
                             <van-image
@@ -41,6 +44,7 @@
                         </van-col>
                     </van-row>
                 </van-list>
+                </van-pull-refresh>
             </van-col>
         </van-row>
 
@@ -54,7 +58,9 @@ export default {
       categories: [],
       loading: false,
       finished: false,
-      goodslist: []
+      goodslist: [],
+      page: 1,
+      refreshing:false,
     };
   },
   created() {
@@ -72,26 +78,61 @@ export default {
       console.log("data=", data);
       this.categories = data;
 
-      this.getData(data[this.activeKey])
+      this.getData(data[this.activeKey]);
     },
     async getData(current) {
-        const { data } = await this.$request.get("/goods", {
+      if (current === undefined) {
+        current = this.categories[this.activeKey];
+      }
+      this.loading = true;
+      const { data } = await this.$request.get("/goods", {
         params: {
-          category: current.text
+          category: current.text,
+          page: this.page
         }
       });
-      this.goodslist = data.data.result;
+      this.goodslist.push(...data.data.result);
+      this.loading = false;
+      this.refreshing = false;
+      this.finished = this.goodslist.length >= data.data.total;
     },
     changeCategory(index) {
       const currentCategory = this.categories[index];
-      this.getData(currentCategory)
+      this.goodslist = [];
+      this.getData(currentCategory);
     },
-    loadMore() {},
-    goto(id){
-        this.$router.push({
-            path:'/goods/'+id
-        })
+    loadMore() {
+      console.log("loadMore");
+      if(this.categories.length>0){
+          this.getData();
+          this.page++;
+
+      }
+    },
+    goto(id) {
+      this.$router.push({
+        path: "/goods/" + id
+      });
+    },
+    onRefresh(){
+        // 重置数据状态
+        this.finished = false;
+        // 重新加载数据
+        // 将 loading 设置为 true，表示处于加载状态
+        this.loading = true;
+        this.goodslist = [];
+        this.page = 1;
+
+        this.loadMore();
     }
   }
 };
 </script>
+<style scoped>
+.goodslist h4 {
+  font-size: 14px;
+  font-weight: normal;
+  overflow: hidden;
+  max-height: 60px;
+}
+</style>

@@ -65,6 +65,9 @@ export default {
 </script>
 
 <style lang="scss">
+#app{
+  padding-bottom:50px;
+}
 .current {
   color: #f00;
   font-weight: bold;

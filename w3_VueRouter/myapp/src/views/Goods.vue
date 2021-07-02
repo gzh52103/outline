@@ -1,5 +1,12 @@
 <template>
     <div>
+      <van-nav-bar
+        title="商品详情"
+        left-text="返回"
+        right-text="关注"
+        left-arrow
+        @click-left="goBack"
+      />
         <img :src="$baseUrl + data.img_url" />
         <h1>{{data.goods_name}}</h1>
         <div class="price"><del>{{data.price}}</del><span>{{data.sales_price}}</span></div>
@@ -28,6 +35,7 @@
 </template>
 <script>
 export default {
+    // props:['username'],
   data() {
     return {
       data: {}
@@ -42,15 +50,19 @@ export default {
     },
     gotoCart() {
       this.$router.push("/cart");
+    },
+    goBack(){
+      this.$router.back();
     }
   },
   async created() {
     console.log("Goods", this);
     const { id } = this.$route.params;
+    // const { id } = this.$route.query;
 
     const {
       data: { data }
-    } = await this.$axios.get(this.$baseUrl + "/api/goods/" + id);
+    } = await this.$request.get("/goods/" + id);
     console.log("data", data);
     this.data = data;
   },

@@ -18,29 +18,43 @@ Vue.use(VueRouter);
 // 3. 实例化路由并配置路由参数
 const router = new VueRouter({
   // 路由配置信息
-  routes:[{
+  routes: [{
     // 当浏览器地址为/home时，渲染Home组件的内容
-    path:'/home',
-    component:Home
-  },{
-    path:'/mine',
-    component:Mine
-  },{
-    path:'/login',
-    component:Login
-  },{
-    path:'/reg',
-    component:Reg
-  },{
-    path:'/discover',
-    component:Discover
-  },{
-    path:'/cart',
-    component:Cart
-  },{
-    path:'/goods/:id', // goods/456
-    component:Goods
-  }]
+    path: '/home',
+    component: Home
+  }, {
+    path: '/mine',
+    component: Mine
+  }, {
+    path: '/login',
+    component: Login
+  }, {
+    path: '/reg',
+    component: Reg
+  }, {
+    path: '/discover',
+    component: Discover
+  }, {
+    path: '/cart',
+    component: Cart
+  }, {
+    path: '/goods/:id', // goods/456
+    name: 'DGoods',
+    component: Goods,
+    // 给子组件传递固定数据（props父传子）
+    // props:{username:'laoxie'},
+    // props:function(route){
+    //   // route: $route当前路由信息
+    //   return {username:'laoxie'}
+    // },
+    // props: true,// 等效于props(route){return route.params}
+  },
+    // {
+    //   path:'/goods',
+    //   name:'Goods', // 给路由命名
+    //   component:Goods
+    // }
+  ]
 })
 
 export default router;

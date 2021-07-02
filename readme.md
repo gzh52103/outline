@@ -1255,3 +1255,44 @@
             ```
 * 在Vue中发起ajax请求
     * axios
+
+## day3-5
+
+### 复习
+* 路由
+    * VueRouter的使用步骤
+        * 路由组件
+    * 路由跳转
+        * 声明式导航
+            > 利用 `<router-link/>`
+        * 命令式导航（编程式导航）
+            * $router   跳转
+            * $route    当前路由信息
+    * 路由显示
+        `<router-view/>`    动态组件（根据页面路径显示不同的内容）
+* axios
+    * get()
+    * post()
+    * put()
+    * patch()
+    * delete()
+
+### 知识点
+* 路由跳转方式
+    * path
+    * name
+* 路由传参
+    * 跳转时传参
+        * 动态路由传参
+        * query传参
+            > 通过url参数传参
+        * params传参
+            > 只支持name跳转方式，参数在页面刷新后消失（动态路由除外）
+    * 定义路由时传参（了解）
+        > props父传子
+        * Object
+        * Function
+        * Boolean
+
+* 数据持久化
+    > 页面刷新后数据依然存在

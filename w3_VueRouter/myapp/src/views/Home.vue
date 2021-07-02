@@ -7,7 +7,12 @@
             @load="onLoad"
         >
             <van-row>
-                <van-col span="12" v-for="item in goodslist" :key="item._id" @click="goto('/goods/'+item._id)">
+                <van-col 
+                span="12" 
+                v-for="item in goodslist" 
+                :key="item._id" 
+                @click="goto(item._id)"
+                >
                     <van-image
                         width="100"
                         height="100"
@@ -21,7 +26,6 @@
     </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -32,14 +36,25 @@ export default {
   },
   methods: {
     onLoad() {},
-    goto(path){
-        this.$router.push(path);
+    goto(id){
+        // this.$router.push(path);
+        // this.$router.push({
+        //     // path:'/goods',
+        //     name:'Goods',
+        //     query:{id},
+        //     params:{a:10,b:20}
+        // })
+        this.$router.push({
+            // 等效于 $router.push('/goods/'+id)
+            name:'DGoods',
+            params:{id}
+        })
     }
   },
   async created() {
     const {
       data: { data: goodslist }
-    } = await axios.get("http://120.76.247.5:2003/api/goods", {
+    } = await this.$request.get("/goods", {
       params: {
         total: false
       }

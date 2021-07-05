@@ -1383,6 +1383,55 @@
         > 开始先不配置路由，根据用户权限动态添加路由
 
 * token令牌
-    > Token 是服务端生成的一串字符串，以作客户端进行请求的一个令牌，当第一次登录后，服务器生成一个 Token 便将此 Token 返回给客户端，以后客户端只需带上这个 Token 前来请求数据即可，无需再次带上用户名和密码
+    > Token 是服务端生成的一串加密字符串，以作客户端进行请求的一个令牌，当第一次登录后，服务器生成一个 Token 便将此 Token 返回给客户端，以后客户端只需带上这个 Token 前来请求数据即可，无需再次带上用户名和密码
 
     * 目的：Token 的目的是为了减轻服务器的压力，减少频繁的查询数据库，使服务器更加健壮
+
+    * token操作
+        > jsonwebtoken模块
+        * 生成：jwt.sign(data,privateKey)
+
+    * 使用步骤
+        1. 客户端使用用户名和密码登录   
+        2. 服务端校验用户名与密码，并生成 token（加密），然后返回给前端
+        3. 客户端接收到 token，并保存到本地
+        4. 客户端以后的每次请求都在请求头中要携带 token
+        5. 服务端对每一次请求进行 token 验证（解密），相同则放行，不同则拒绝
+    
+* 全局状态：Vuex
+    * 使用步骤
+        1. 安装引入
+            ```js
+                npm i vuex
+                import Vuex from 'vuex'
+            ```
+        2. 安装（使用）插件
+            ```js
+                Vue.use(Vuex);
+            ```
+        3. 实例化
+            ```js
+                const store = new Vuex.Store({
+                    // 核心参数
+                    // 定义共享数据
+                    // 定义修改这些数据的方法
+                })
+            ```
+        4. 注入根实例
+            ```js
+                new Vue({
+                    // ...
+                    store:store,
+                })
+            ```
+        5. 在组件中使用
+            > this.$store
+            * 获取
+            * 修改
+    * Vuex核心参数
+        * state : 全局状态（数据），类似于组件中的data
+            > 组件中获取方式：`this.$store.state.xxx`
+        * getters: 根据state映射出的属性，类似与组件中的computed
+            > 组件中获取方式：`this.$store.getters.xxx`
+        * mutations: 修改状态的唯一方法，类似于组件methods
+            > 组件中调用方式：`this.$store.commit(mutation)`

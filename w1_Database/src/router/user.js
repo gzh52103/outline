@@ -2,7 +2,7 @@ const express = require('express');
 // const mysql = require('mysql');
 // const query = require('../db/mysql')
 const mongo = require('../db/mongo')
-const { formatData } = require('../utils')
+const { formatData, token } = require('../utils')
 const router = express.Router();
 
 // 1. 创建连接对象，并配置参数
@@ -94,6 +94,16 @@ router.put('/:id', async (req, res) => {
     res.send(formatData({
         code: result ? 200 : 400
     }))
+})
+
+router.get('/verify',async (req,res)=>{
+    const authorization = req.get('Authorization');
+    const result = token.verify(authorization);
+    if(result){
+        res.send(formatData())
+    }else{
+        res.send(formatData({code:400}));
+    }
 })
 
 module.exports = router;

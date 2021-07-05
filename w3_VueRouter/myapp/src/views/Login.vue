@@ -29,11 +29,12 @@
                     ></div>
                 </template>
             </van-field>
-            <van-field
-                name="checkbox"
-            >
+            <van-field name="checkbox">
                 <template #input>
-                    <van-checkbox v-model="mdl" shape="square"> 下次免登录</van-checkbox>
+                    <van-checkbox
+                        v-model="mdl"
+                        shape="square"
+                    > 下次免登录</van-checkbox>
                 </template>
             </van-field>
             <div style="margin: 16px;">
@@ -55,7 +56,7 @@ export default {
       password: "",
       vcode: "",
       vcodeSvg: "",
-      mdl:true,
+      mdl: true,
       rules: {
         username: [{ required: true, message: "请填写用户名" }],
         password: [{ required: true, message: "请填写密码" }],
@@ -71,7 +72,10 @@ export default {
         vcode: this.vcode
       });
       if (data.code === 200) {
-        this.$router.push("/mine");
+        // 保存用户信息到本地
+        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        const { target = "/mine" } = this.$route.query;
+        this.$router.replace(target);
       } else if (data.code === 400) {
         this.$toast("验证码不正确");
       } else {

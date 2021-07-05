@@ -12,6 +12,8 @@ import Discover from '../views/Discover.vue'
 import Goods from '../views/Goods.vue'
 import NotFound from '../views/NotFound.vue'
 
+import request from '../utils/request'
+
 // VueRouter的使用
 // 2. 使用插件
 Vue.use(VueRouter);
@@ -23,15 +25,15 @@ const router = new VueRouter({
     // 当浏览器地址为/home时，渲染Home组件的内容
     path: '/home',
     component: Home
-  }, 
+  },
   {
-    path:'/',
-    redirect:'/home'
+    path: '/',
+    redirect: '/home'
   },
   {
     path: '/mine',
     component: Mine,
-    beforeEnter(to,from,next){
+    beforeEnter(to, from, next) {
       console.log('Mine.beforeEnter')
       next();
     }
@@ -46,7 +48,10 @@ const router = new VueRouter({
     component: Discover
   }, {
     path: '/cart',
-    component: Cart
+    component: Cart,
+    meta: {
+      requiresAuth: true,
+    }
   }, {
     path: '/goods/:id', // goods/123 -> goods/456
     name: 'DGoods',
@@ -59,27 +64,73 @@ const router = new VueRouter({
     // },
     // props: true,// 等效于props(route){return route.params}
   },
-    {
-      path:'/notfound',
-      name:'NotFound', 
-      component:NotFound
-    },
-    {
-      path:'*',
-      redirect:'/notfound'
-    }
+  {
+    path: '/notfound',
+    name: 'NotFound',
+    component: NotFound
+  },
+  {
+    path: '*',
+    redirect: '/notfound'
+  }
   ]
 })
 
+console.log('$router', router);
+
 // 全局路由守卫
-router.beforeEach(function(to,from,next){
-  console.log('beforeEach')
-  next();
+router.beforeEach(function (to, from, next) {
+  console.log('beforeEach',to);
+
+  // 判断目标路由是否需要登录权限才可访问
+  if(to.meta.requiresAuth){
+    let userInfo = localStorage.getItem('userInfo');
+      try{
+          userInfo = JSON.parse(userInfo)
+      }catch{
+          userInfo = null
+      }
+      if(userInfo){
+        // 获取到用户信息后，还需要校验用户信息是否被篡改或是否过期
+        // 校验token
+        request.get('/user/verify',{
+          headers:{
+            Authorization:userInfo.authorization
+          }
+        }).then(({data})=>{
+          // 根据token校验结果来决定是否让用户继续访问
+          if(data.code === 400){
+            // 清空用户信息
+            localStorage.removeItem('userInfo');
+            
+            router.push({
+              path:'/login',
+              query:{
+                target:to.fullPath
+              }
+            })
+          }
+        })
+        // 如果有用户信息，不管是否过期或被篡改，先放行
+        next();
+      }else{
+        // router.push('/login')
+        router.push({
+          path:'/login',
+          query:{
+            target:to.fullPath
+          }
+        })
+      }
+  }else{
+
+    next();
+  }
 })
-router.afterEach(function(to,from){
+router.afterEach(function (to, from) {
   console.log('afterEach')
 })
-router.beforeResolve(function(to,from,next){
+router.beforeResolve(function (to, from, next) {
   console.log('beforeResolve')
   next();
 })

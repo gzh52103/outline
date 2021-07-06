@@ -19,6 +19,7 @@
     </div>
 </template>
 <script>
+import {mapState,mapGetters} from 'vuex';
 export default {
   name: "Mine",
   data() {
@@ -27,12 +28,19 @@ export default {
     };
   },
   computed: {
-    isLogin() {
-      return this.$store.getters.isLogin;
-    },
-    userInfo(){
-      return this.$store.state.userInfo;
-    }
+    // isLogin() {
+    //   return this.$store.getters.isLogin;
+    // },
+    // userInfo(){
+    //   return this.$store.state.user.userInfo;
+    // }
+    ...mapState({
+      userInfo(state){
+        return state.user.userInfo;
+      }
+    }),
+    ...mapGetters(['isLogin'])
+    // ...mapGetters({isLogin:'isLogin'})
   },
   methods: {
     goto(path) {

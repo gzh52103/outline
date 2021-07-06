@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+// const result = mapState(['tabbarVisibility']);console.log('result=',result);
 export default {
   name: "App",
   data() {
@@ -46,8 +48,15 @@ export default {
   },
   computed:{
     cartlen(){
-      return this.$store.state.goodslist.length
-    }
+      return this.$store.state.cart.goodslist.length
+    },
+    // ...mapState(['tabbarVisibility'])
+    // ...mapState({
+    //   'visibility':'tabbarVisibility',
+    //   'carLength':function(state){
+    //     return state.cart.goodslist.length;
+    //   }
+    // })
   },
   methods: {
     goBack() {

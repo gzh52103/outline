@@ -1478,3 +1478,21 @@
         > 触发mutation的方式：store.commit(mutaiton,payload)
     * actions
         > 类似与mutations, 执行异步操作，触发action的方式：store.dispatch(action,payload)
+
+* vuex模块化：modules
+    > 模块化后
+    * 默认影响state的获取，不影响getters,mutations,atcions的操作(他们公用一个命名空间，意味着每个模块中的名称不能相同，可以使用命名空间`namespace`解决这个问题)
+    * 在模块中获取其他模块的数据：
+        * 在actions中获取: `context.rootState`
+    
+* 命名空间:`namespaced:true`
+    > 添加`namespaced`属性后，就是把当前模块放到独立的命名空间中，影响getters,mutations,actions的操作
+* 路径别名
+    > 在webpack的环境中，可以用一些符号来代替某些目录，达到简化操作的效果
+    * `@`: 代表`src`目录
+* Vuex映射
+    * mapState()
+    * mapGetters()
+    * mapMutations()
+    * mapActions()
+    > 模块在启用命名空间后，mapState,mapGetters,mapMutations,mapActions的第一个参数可以使用命名空间字符

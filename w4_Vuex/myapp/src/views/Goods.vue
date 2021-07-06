@@ -10,7 +10,7 @@
     <img :src="$baseUrl + data.img_url" />
     <h1>{{data.goods_name}}</h1>
     <div class="price"><del>{{data.price}}</del><span>{{data.sales_price}}</span></div>
-
+    <!-- <button @click="count=10">count:{{count}},{{qty}}</button> -->
     <!-- 同类热门商品 -->
     <h4>同类热门商品</h4>
     <van-row class="hostList">
@@ -60,6 +60,7 @@ export default {
   // props:['username'],
   data() {
     return {
+      count: 10,
       data: {},
       // 同类热门商品
       hotList: []
@@ -67,8 +68,12 @@ export default {
   },
   computed: {
     cartlen() {
-      return this.$store.state.goodslist.length;
+      return this.$store.state.cart.goodslist.length;
     }
+    // qty(){
+    //   console.log('computed=',this.count);
+    //   return this.count;
+    // }
   },
   watch: {
     // '$route.params.id':function(val){
@@ -77,17 +82,24 @@ export default {
     //   this.getData();
     // },
     // hotList(){
+    // },
+    // count(newVal,oldVal){
+    //   console.log('watch=',newVal,oldVal);
     // }
   },
   methods: {
     add2cart() {
       console.log("add2cart");
       const { _id, goods_name, img_url, price, sales_price } = this.data;
-      const { goodslist, userInfo } = this.$store.state;
+      const { goodslist } = this.$store.state.cart;
+      const { userInfo } = this.$store.state.user;
       const hasItem = goodslist.find(item => item._id === _id);
       if (hasItem) {
         // 已存在购物车：数量+1
-        this.$store.dispatch("changeQty", { id: _id, qty: hasItem.qty + 1 });
+        this.$store.dispatch("cart/changeQty", {
+          id: _id,
+          qty: hasItem.qty + 1
+        });
       } else {
         const goods = {
           _id,
@@ -109,7 +121,7 @@ export default {
 
               // 本地操作：直接修改vuex中的数据
               const newGoodslist = [goods, ...goodslist];
-              this.$store.commit("updateCart", newGoodslist);
+              this.$store.commit("cart/updateCart", newGoodslist);
             }
           });
       }
@@ -117,7 +129,7 @@ export default {
     buyNow() {
       console.log("buy now");
       this.add2cart();
-      this.$router.push('/cart');
+      this.$router.push("/cart");
     },
     gotoCart() {
       this.$router.push("/cart");

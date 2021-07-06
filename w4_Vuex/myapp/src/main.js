@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Vant,{Toast} from 'vant';
+import Vant,{Toast,Dialog} from 'vant';
 import request,{baseUrl} from './utils/request'
 
 import 'vant/lib/index.css';
@@ -10,6 +10,7 @@ import 'vant/lib/index.css';
 Vue.prototype.$request = request;
 Vue.prototype.$baseUrl = baseUrl
 Vue.prototype.$toast = Toast;
+Vue.prototype.$dialog = Dialog;
 Vue.config.productionTip = false
 Vue.use(Vant);
 

@@ -73,6 +73,7 @@
   </div>
 </template>
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -88,9 +89,13 @@ export default {
         ) * 100
       );
     },
-    goodslist() {
-      return this.$store.state.goodslist;
-    }
+    // goodslist() {
+    //   return this.$store.state.cart.goodslist;
+    // },
+    // 模块在启用命名空间后，mapState,mapGetters,mapMutations,mapActions的第一个参数可以使用命名空间字符
+    ...mapState("cart", ["goodslist"]),
+    // ...mapGetters(['cart/testGetter']),
+    ...mapGetters("cart", ["testGetter"])
   },
   methods: {
     onSubmit() {
@@ -100,42 +105,57 @@ export default {
     gotoDetail(id) {
       this.$router.push("/goods/" + id);
     },
-    getData() {
-      this.$store.dispatch("getCartlist");
-    },
-    showTabbar(show = true) {
-      this.$store.commit("showTabbar", show);
-    },
-    changeQty(qty, id) {
-      this.$store.dispatch("changeQty", { qty, id });
-    },
+    // showTabbar(show = true) {
+    //   this.$store.commit("showTabbar", show);
+    // },
+    ...mapMutations(["showTabbar"]),
+    // getData() {
+    //   this.$store.dispatch("cart/getCartlist");
+    // },
+    // changeQty(qty, id) {
+    //   this.$store.dispatch("cart/changeQty", { qty, id });
+    // },
+    ...mapActions("cart", {
+      getData: "getCartlist",
+      // changeQty:'changeQty',
+      changeQty(dispatch,qty,id){
+       dispatch("changeQty", { qty, id });
+      }
+    }),
     clearCart() {
-      this.$request
-        .delete("/cart/clear", {
-          data: {
-            userid: this.$store.state.userInfo._id
-          }
+      this.$dialog
+        .confirm({
+          title: "确认操作",
+          message: "是否要清空购物车"
         })
-        .then(({ data }) => {
-          if (data.code === 200) {
-            this.$store.commit("updateCart", []);
-          }
+        .then(() => {
+          this.$request
+            .delete("/cart/clear", {
+              data: {
+                userid: this.$store.state.user.userInfo._id
+              }
+            })
+            .then(({ data }) => {
+              if (data.code === 200) {
+                this.$store.commit("cart/updateCart", []);
+              }
+            });
         });
     },
     deleteGoods(id) {
       this.$request
         .delete("/cart", {
           data: {
-            userid: this.$store.state.userInfo._id,
+            userid: this.$store.state.user.userInfo._id,
             ids: [id]
           }
         })
         .then(({ data }) => {
           if (data.code === 200) {
-            const newGoodslist = this.$store.state.goodslist.filter(
+            const newGoodslist = this.$store.state.cart.goodslist.filter(
               item => item._id !== id
             );
-            this.$store.commit("updateCart", newGoodslist);
+            this.$store.commit("cart/updateCart", newGoodslist);
           }
         });
     }

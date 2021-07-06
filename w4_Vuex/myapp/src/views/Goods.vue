@@ -62,39 +62,71 @@ export default {
     return {
       data: {},
       // 同类热门商品
-      hotList:[]
+      hotList: []
     };
   },
-  computed:{
-    cartlen(){
+  computed: {
+    cartlen() {
       return this.$store.state.goodslist.length;
     }
   },
-  watch:{
+  watch: {
     // '$route.params.id':function(val){
     //   // 当实例下的data属性发生改变时，自动执行这里的代码
     //   // console.log('$route被修改=',newVal,oldVal)
     //   this.getData();
     // },
     // hotList(){
-
     // }
   },
   methods: {
     add2cart() {
       console.log("add2cart");
+      const { _id, goods_name, img_url, price, sales_price } = this.data;
+      const { goodslist, userInfo } = this.$store.state;
+      const hasItem = goodslist.find(item => item._id === _id);
+      if (hasItem) {
+        // 已存在购物车：数量+1
+        this.$store.dispatch("changeQty", { id: _id, qty: hasItem.qty + 1 });
+      } else {
+        const goods = {
+          _id,
+          goods_name,
+          img_url,
+          price,
+          sales_price,
+          qty: 1
+        };
+        this.$request
+          .post("/cart", {
+            goods,
+            userid: userInfo._id
+          })
+          .then(({ data }) => {
+            if (data.code === 200) {
+              // 重新从服务器获取一份购物车数据
+              // this.$store.dispatch('getCartlist')
+
+              // 本地操作：直接修改vuex中的数据
+              const newGoodslist = [goods, ...goodslist];
+              this.$store.commit("updateCart", newGoodslist);
+            }
+          });
+      }
     },
     buyNow() {
       console.log("buy now");
+      this.add2cart();
+      this.$router.push('/cart');
     },
     gotoCart() {
       this.$router.push("/cart");
     },
-    gotoDetail(id){
+    gotoDetail(id) {
       // this.$router.push('/goods/'+id);
       this.$router.push({
-        name:"DGoods",
-        params:{id}
+        name: "DGoods",
+        params: { id }
       });
     },
     goBack() {
@@ -117,38 +149,43 @@ export default {
     async getHotlist() {
       const {
         data: { data }
-      } = await this.$request.get("/goods",{
-        params:{
-          category:this.data.category,
-          sort:'sales_qty',
-          total:false,
+      } = await this.$request.get("/goods", {
+        params: {
+          category: this.data.category,
+          sort: "sales_qty",
+          total: false
         }
       });
       console.log("hotList", data);
       this.hotList = data;
+    },
+    showTabbar(show = true) {
+      this.$store.commit("showTabbar", show);
     }
   },
   created() {
-    console.log('created');
+    console.log("created");
     this.getData();
     this.getHotlist();
   },
   mounted() {
     // document.querySelector(".van-tabbar").style.display = "none";
-    this.$store.commit('showTabbar',false);
+    // this.$store.commit('showTabbar',false);
+    this.showTabbar(false);
   },
   destroyed() {
     // document.querySelector(".van-tabbar").style.display = "flex";
-    this.$store.commit('showTabbar',true);
+    // this.$store.commit('showTabbar',true);
+    this.showTabbar();
   },
 
   // 路由守卫：监听路由变化
-  beforeRouteUpdate(to,from,next){
+  beforeRouteUpdate(to, from, next) {
     // to：目标路由信息对象$route
     // from: 当前路由信息对象$route
     // 注意：进入该路由守卫时，页面并没有跳转成功，所以通过this.$route.prams.id获取到的是之前的值
-    console.log('to,from',to,from,next)
-    this.getData(to.params.id)
+    console.log("to,from", to, from, next);
+    this.getData(to.params.id);
 
     next();
   }

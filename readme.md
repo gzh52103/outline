@@ -1435,3 +1435,46 @@
             > 组件中获取方式：`this.$store.getters.xxx`
         * mutations: 修改状态的唯一方法，类似于组件methods
             > 组件中调用方式：`this.$store.commit(mutation)`
+## day4-2
+
+### 复习
+* Vuex：全局状态管理工具
+    * 作用（好处）
+    * 使用步骤
+    * 核心配置
+        * state   
+            > this.$store.state.xx 
+        * getters
+        * mutations
+            > store.commit(mutation)，mutation中只支持同步操作
+
+        ```js
+            const mutations = {
+                //'username':100,
+                //'showTabbar':function(){}
+                showTabbar(state,payload){},
+                login(){},
+                logout(){}
+            }
+            const state = {
+
+            }
+
+            function commit(m,payload){
+                //
+
+                // mutations.login()
+                // mutations['login']()
+                mutations[m](state,payload);
+            }
+
+            commit('login')
+        ```
+### 知识点
+* 核心配置
+    * state
+    * getters
+    * mutations: 同步操作
+        > 触发mutation的方式：store.commit(mutaiton,payload)
+    * actions
+        > 类似与mutations, 执行异步操作，触发action的方式：store.dispatch(action,payload)

@@ -23,12 +23,15 @@ export default {
   name: "Mine",
   data() {
     return {
-      userInfo: {}
+      
     };
   },
   computed: {
     isLogin() {
-      return !!this.userInfo._id;
+      return this.$store.getters.isLogin;
+    },
+    userInfo(){
+      return this.$store.state.userInfo;
     }
   },
   methods: {
@@ -36,21 +39,13 @@ export default {
       this.$router.push(path);
     },
     logout() {
-      this.userInfo = {};
-      localStorage.removeItem("userInfo");
+      this.$store.commit('logout');
     }
   },
   created() {
     console.log("Mine.created");
 
-    // 获取用户信息
-    let userInfo = localStorage.getItem("userInfo");
-    try {
-      userInfo = JSON.parse(userInfo) || {};
-    } catch {
-      userInfo = {};
-    }
-    this.userInfo = userInfo;
+    
   },
   mounted() {
     console.log("Mine.mounted");

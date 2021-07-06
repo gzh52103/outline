@@ -74,7 +74,8 @@ export default {
       });
       if (data.code === 200) {
         // 保存用户信息到本地
-        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        // localStorage.setItem("userInfo", JSON.stringify(data.data));
+        this.login(data.data);
         const { target = "/mine" } = this.$route.query;
         this.$router.replace(target);
       } else if (data.code === 400) {
@@ -86,6 +87,9 @@ export default {
     async getVcode() {
       const { data } = await this.$request.get("/vcode/picture");
       this.vcodeSvg = data.data;
+    },
+    login(user){
+      this.$store.commit('login',user);
     }
   },
   created() {

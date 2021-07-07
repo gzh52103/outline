@@ -1496,3 +1496,70 @@
     * mapMutations()
     * mapActions()
     > 模块在启用命名空间后，mapState,mapGetters,mapMutations,mapActions的第一个参数可以使用命名空间字符
+
+
+## day4-3
+
+### 面试题
+* 如何让v-model在一个组件中生效
+    > v-model = v-bind:value + v-on:input
+
+* 闭包
+    * 正常函数：代码执行完后，内部变量会被回收
+    * 闭包函数：函数内部的变量被引用，垃圾回收器不回收内部的变量，让其长期驻留内存
+    * 垃圾回收机制
+        * 标记清除法
+        * 引用计数（IE6）
+    * 全局作用域
+    * 页面事件函数
+```js
+    function hello(){
+        var username = 'laoxie'
+        var age=18;
+        age++
+        return `hello ${username}，年龄为${age}`
+    }
+    hello();
+    hello();
+
+    function hello(){
+        var username = 'laoxie'
+        var age=18;
+        var say = function(){
+            age++
+            return `hello ${username}，年龄为${age}`
+        }
+        return say
+    }
+
+    hello()(); // age=19
+    hello()(); // age=19
+
+    var say2 = hello();
+    say2();//age=19
+    say2();//age=20
+
+    var obj1 = {
+        name:'obj1',
+        get(){
+            obj2.name
+        }
+    }
+    var obj2 = {
+        name:'obj2',
+        get(){
+            obj1.name
+        }
+    }
+
+    var obj1 = null;
+
+    window.onload = function(){
+        
+    }
+```
+
+### 项目要求
+* WebApp
+* 后台管理系统
+    > 管理webApp中的数据

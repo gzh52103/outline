@@ -1569,4 +1569,56 @@
 * 解决冲突
     * 在团队协作项目中代码冲突不可避免，但可以通过合理的分工来减少冲突
 
-    
+
+## day4-4
+
+### 面试题
+* Vue组件props数据类型校验
+    ```js
+        {
+            props:['list','index'],
+            props:{
+                //list:Array,
+                list:{
+                    type:Array,
+                    required:true,
+                    //default:[]
+                },
+                index:[Number,String]
+            }
+        }
+    ```
+### 复习
+* 页面访问权限控制
+    * 方式一：先配置完所有路由，然后通过路由守卫来限定页面的访问
+    * 方式二：动态添加路由
+        > router.addRoutes()，先配置基础路由，然后根据用户的权限动态添加指定路由
+### 知识点
+* `<keep-alive/>`
+    ```js
+        <keep-alive>
+            <MyComponent v-if="show"/>
+        </keep-alive>
+        <keep-alive>
+            <router-view/>
+        </keep-alive>
+    ```
+* `<transition/>`/`<transition-group/>`
+    ```js
+        <transition>
+            <div class="box"></div>
+        </transition>
+
+        // style
+        
+        .box{height:100px}
+        // 入场动画
+        .v-enter{width:100px;}
+        .v-enter-to{width:300px;}
+        .v-enter-active{transition:width 2s;}
+
+        // 出场动画
+        .v-leave{width:300px;}
+        .v-leave-to{width:100px}
+        .v-leave-active{transition:width 2s;}
+    ```

@@ -73,7 +73,19 @@ const router = new VueRouter({
     path: '*',
     redirect: '/notfound'
   }
-  ]
+  ],
+
+  // 记录滚动条位置
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    console.log('savedPosition=',savedPosition);
+    return !savedPosition ? {x:0,y:0} : new Promise((resove)=>{
+      setTimeout(()=>{
+        savedPosition.behavior = 'smooth';
+        resove(savedPosition)
+      },1000)
+    })
+  }
 })
 
 console.log('$router', router);

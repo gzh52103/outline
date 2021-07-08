@@ -14,5 +14,6 @@ export default [{
 },
 {
     path: '*',
-    redirect: '/notfound'
-}]
+    redirect: '/login'
+}
+]

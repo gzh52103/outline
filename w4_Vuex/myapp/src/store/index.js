@@ -26,7 +26,7 @@ const store = new Vuex.Store({
     // store.commit('showTabbar',true)
     // store.commit('showTabbar',false)
     mutations: {
-        showTabbar(state, payload) {
+        showTabbar(state, payload=true) {
             state.tabbarVisibility = payload
         },
     },

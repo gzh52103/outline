@@ -75,6 +75,7 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
+  name:'Cart',
   data() {
     return {
       checkAll: false
@@ -160,12 +161,20 @@ export default {
         });
     }
   },
-  created() {
+  activated(){
+    console.log('Cart.activated')
+    this.showTabbar(false);
+  },
+  deactivated(){
+    console.log('Cart.deactivated')
+    this.showTabbar();
+  },
+  created() {console.log('Cart.created')
     // this.$store.commit('showTabbar',false);
     this.showTabbar(false);
     this.getData();
   },
-  destroyed() {
+  destroyed() {console.log('Cart.destroyed')
     this.showTabbar();
     // this.$store.commit('showTabbar',true);
   }

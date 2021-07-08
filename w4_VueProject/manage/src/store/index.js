@@ -11,12 +11,23 @@ import authRoute from '../router/auth'
 // 2. 安装插件
 Vue.use(Vuex);
 
+// 刷新页面先获取本地存储数据
+let userInfo = localStorage.getItem('userInfo');
+try {
+    userInfo = JSON.parse(userInfo) || {}
+} catch (err) {
+    userInfo = {}
+}
+
 // 3. 实例化仓库
 const store = new Vuex.Store({
     state: {
-        userInfo:{}
+        userInfo
     },
     getters: {
+        isLogin(state){
+            return !!state.userInfo.authorization
+        }
     },
     mutations: {
         login(state, userInfo) {
@@ -29,6 +40,8 @@ const store = new Vuex.Store({
             state.userInfo = {}
             // 删除本地存储数据
             localStorage.removeItem('userInfo');
+
+            // 删除权限路由
         },
     },
     actions: {
@@ -52,5 +65,10 @@ const store = new Vuex.Store({
 });
 
 console.log('store',store);
+
+// 如用户已登录，刷新时动态添加权限路由
+if(store.getters.isLogin){
+    router.addRoutes(authRoute)
+}
 
 export default store;

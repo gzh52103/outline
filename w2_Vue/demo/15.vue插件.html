@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>13.mixin</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/home">首页</router-link>
+        <router-link to="/mine">我的</router-link>
+    </div>
+    
+    <script>
+        // 定义一个插件
+        const myPlugin = function(Vue){
+            // 添加全局方法
+            // Vue.xx = function(){}
+
+            // 添加原型方法
+            // Vue.prototype.xxx
+
+            // 全局组件
+            Vue.component('router-view',{
+                data(){
+                    return {}
+                },
+                methods:{
+
+                },
+                template:`<div>router-view</div>`
+            })
+            Vue.component('router-link',{
+                props:{
+                    to:{
+                        type:[String,Object],
+                        required:true
+                    },
+                    tag:{
+                        type:String,
+                        default:'a'
+                    }
+                },
+                data(){
+                    return {}
+                },
+                methods:{
+                    
+                },
+                template:`<a :href="'#'+to"><slot/></a>`
+            });
+
+            // 过滤器
+
+            // mixin
+
+            // ...
+        }
+
+        const yourPlugin = {
+            install:function(Vue){
+                // 
+                // const myComponents= {Button,Table,....}
+                for(var name in myComponents){
+                    Vue.use(name)
+                }
+            }
+        }
+        // 安装一个插件
+        Vue.use(myPlugin);
+        Vue.use(yourPlugin);
+
+        // 使用
+        // <router-link>首页</router-link>
+        
+       const vm = new Vue({
+           el:'#app',
+           data:{
+               name:'App'
+           },
+           created(){
+               console.log('Vue.created',this.name)
+           }
+       })
+        
+    </script>
+</body>
+</html>

@@ -19,5 +19,15 @@ new Vue({
   router,
   // 4. 把store注入到根实例中
   store,
+  // 依赖注入
+  // 父组件共享数据
+  provide:{
+    username:'tiantian'
+  },
+  // provide(){
+  //   return {
+
+  //   }
+  // },
   render: h => h(App),
 }).$mount('#app')

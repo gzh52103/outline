@@ -34,6 +34,7 @@ import { mapState } from "vuex";
 // const result = mapState(['tabbarVisibility']);console.log('result=',result);
 export default {
   name: "App",
+  inject:['username'],
   data() {
     return {
       transitionName: "slide-right",
@@ -96,7 +97,8 @@ export default {
   },
   components: {},
   created() {
-    console.log("App.$router", this.$router);
+    console.log("App", this);
+    console.log('App.created.username=',this.username);
   }
 };
 </script>

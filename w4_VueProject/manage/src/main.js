@@ -5,9 +5,9 @@ import store from './store'
 import request from './utils/request'
 
 // 全局引入
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css'
+// Vue.use(ElementUI)
 
 // 按需引入
 // import Button from 'element-ui/lib/button'

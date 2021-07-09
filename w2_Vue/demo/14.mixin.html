@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>13.mixin</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <navigator/>
+    </div>
+    
+    <script>
+        // Vue.mixin({
+        //     // 组件公共配置
+        //     created(){
+        //         console.log('mixin.created.showTabbar',false,this.name);
+        //     },
+        //     destroyed(){
+        //         console.log('mixin.destroyed.showTabbar',true,this.name);
+        //     }
+        // })
+
+        const myMixin = {
+            computed:{
+                upperName(){
+                    return this.name.toUpperCase()
+                }
+            },
+            mixins:[],
+            directives:{},
+            filters:{}
+        }
+
+        const navHeader = {
+            data(){
+                return {
+                    name:'navHeader'
+                }
+            },
+            mixins:[myMixin],
+            template:`<div>navHeader<p>name:{{name}}</p><p>upperName:{{upperName}}</p></div>`,
+            created(){
+                console.log('navHeader.created',this.name)
+            }, 
+        }
+
+        Vue.component('navigator',{
+            data(){
+                return {
+                    name:'navigator'
+                }
+            },
+            mixins:[myMixin],
+            computed:{
+                upperName(){
+                    return `@`+this.name.toUpperCase()
+                }
+            },
+            created(){
+                console.log('navigator.created',this.name)
+            },
+            template:`<div><h4>navigator</h4><nav-header/><p>upperName:{{upperName}}</p></div>`,
+            components:{
+                navHeader
+            }
+        })
+        
+       const vm = new Vue({
+           el:'#app',
+           data:{
+               name:'App'
+           },
+           created(){
+               console.log('Vue.created',this.name)
+           }
+       })
+        
+    </script>
+</body>
+</html>

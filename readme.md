@@ -1677,11 +1677,18 @@
         > 配合样式解决数据闪现的问题
 * 自定义指令
     > 在Vue中不建议直接操作节点，指令除外
-    * 全局指令：Vue.directive(name,options)
-    * 局部指令: directives
+    * 分类
+        * 全局指令：Vue.directive(name,options)
+        * 局部指令: directives
+    * 钩子函数
+        * bind：初始化时执行（默认）
+        * inserted：元素插入页面时执行
+        * update：所在模板更新时执行
+        * componentUpdated：所在模板完成一次更新周期时调用
+        * unbind：指令与元素解绑时执行
 * 过滤器filter
     * 分类
-        * 全局过滤器：Vue.filter()
+        * 全局过滤器：Vue.filter(name,def)
         * 局部过滤器: filters
     * 过滤器使用场景
         * {{}}
@@ -1695,6 +1702,17 @@
         // \B,\b
         1000000 -> 1,000,000
         total.replace(//,',')
+
+        Vue.filter('formatMoney',(value)=>{
+
+        })
+        Vue.filter('formatPrice',(value,flag="￥")=>{
+            return flag+value;
+        })
+
+        {{total | formatMoney | formatPrice}} // -> formatPrice(formatMoney(total))
+        {{total | formatPrice('$')}} 
+        <div v-bind:total="total | formatMoney">
     ```
     * 零宽断言
         * (?=pattern) ：零宽正向先行断言(zero-width positive lookahead assertion)
@@ -1708,3 +1726,62 @@
 
         * (?<!pattern) ：零宽负向后行断言(zero-width negative lookbehind assertion)
         如果某个字符前面不能匹配pattern，则匹配该字符
+    
+* mixin混入
+    > 提取Vue实例化是的公共配置
+    * 全局mixin: Vue.mixin()
+    * 局部mixin: mixins
+    ```js
+        crated(){
+            this.$store.commit('showTabbar',false);
+        },
+        destroyed(){
+            this.$store.commit('showTabbar',true);
+        }
+
+        // 全局mixin: 影响之后创建的所有组件实例（不推荐）
+        Vue.mixin({
+            // 组件公共配置
+            created(){
+                this.$store.commit('showTabbar',false);
+            },
+            destroyed(){
+                this.$store.commit('showTabbar',true);
+            }
+        })
+
+        // 局部mixin
+    ```
+* 依赖注入
+    * 组件通讯
+        * 父->子：props
+        * 子->父：
+            * 自定义事件
+            * sync是修饰
+            * 把父组件方法传到子组件执行并回传参数
+        * 深层级组件通讯
+            * 逐层传递（不推荐）
+            * Bus：自定义事件（把事件绑定到所有组件都能访问到的实例中）
+        * 插槽
+            * 普通插槽
+            * 作用域插槽
+        * 路由
+            * 定义时传参：props
+            * 跳转时传参
+                * query
+                * params
+        * vuex: 全局状态共享工具
+        * 依赖注入：一般用于深层及组件通讯，不关注组件层级，在任何子组件中方便获取父组件共享的数据
+            > 增强版的props
+            * provide： 父组件提供（共享）数据
+            * inject：子组件注入（接收）数据
+
+    * 插件plugin
+        * 插件类型
+        * 定义: 插件就是一个对象（提供install方法）或一个函数
+            ```js
+                // 定义个Vue插件
+                const myPlugin = function(){
+                    
+                }
+            ```

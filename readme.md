@@ -1593,6 +1593,19 @@
     * 方式一：先配置完所有路由，然后通过路由守卫来限定页面的访问
     * 方式二：动态添加路由
         > router.addRoutes()，先配置基础路由，然后根据用户的权限动态添加指定路由
+* v-bind
+    ```js
+        <div v-bind:index="item.idx" v-bind:class="['box']">
+        <div v-bind:class="{box:false}">
+        {
+            data(){
+                return {
+                    user:{name:'tiantian',age:28,gender:'男'}
+                }
+            }
+        }
+        <div v-bind="user"/> // 等效于 <div v-bind:name="user.name" v-bind:age="user.age" v-bind:gender="user.gender">
+    ```
 ### 知识点
 * `<keep-alive/>`
     ```js
@@ -1622,3 +1635,76 @@
         .v-leave-to{width:100px}
         .v-leave-active{transition:width 2s;}
     ```
+
+## day4-5
+
+### 复习
+* 内置组件
+    * `<slot/>`
+        ```js
+            <todo-list :data="datalist">
+                <div v-for="item in datalist"></div>
+            </todo-list>
+        ```
+        * v-slot
+    * `<keep-alive/>`
+        * include
+        * exclude
+    * `<transition />` / `<transition-group/>`
+        * name: 默认v
+        * 入场动画
+            * v-enter       
+            * v-enter-to
+            * v-enter-active
+        * 出场动画
+            * v-leave
+            * v-leave-to
+            * v-leave-active
+    * `<component/>`    动态组件<router-view/>
+        * is
+
+### 知识点
+* 指令
+    >一个完整的指令格式：v-on:click.stop="handle"
+    * v-once: 绑定的数据只渲染一次，一般用于一些不需要修改的数据绑定（可进行性能优化）
+    * v-pre
+        ```js
+            <pre>
+                <div></div>
+            </pre>
+        ```
+    * v-cloak
+        > 配合样式解决数据闪现的问题
+* 自定义指令
+    > 在Vue中不建议直接操作节点，指令除外
+    * 全局指令：Vue.directive(name,options)
+    * 局部指令: directives
+* 过滤器filter
+    * 分类
+        * 全局过滤器：Vue.filter()
+        * 局部过滤器: filters
+    * 过滤器使用场景
+        * {{}}
+        * v-bind
+
+    ```js
+        // 正则：零宽断言，不能匹配内容，只用于判断
+        // abc
+        // a(?=x) 如果a后面存在x，则匹配a
+        // a(?!x) 如果a后面不存x，则匹配a
+        // \B,\b
+        1000000 -> 1,000,000
+        total.replace(//,',')
+    ```
+    * 零宽断言
+        * (?=pattern) ：零宽正向先行断言(zero-width positive lookahead assertion)
+        如果某个字符后面能匹配pattern，则匹配该字符
+
+        * (?!pattern) ： 零宽负向先行断言(zero-width negative lookahead assertion)
+        如果某个字符后面不能匹配pattern，则匹配该字符
+
+        * (?<=pattern)： 零宽正向后行断言(zero-width positive lookbehind assertion)
+        如果某个字符前面能匹配pattern，则匹配该字符
+
+        * (?<!pattern) ：零宽负向后行断言(zero-width negative lookbehind assertion)
+        如果某个字符前面不能匹配pattern，则匹配该字符

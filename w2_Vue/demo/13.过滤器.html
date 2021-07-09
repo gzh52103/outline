@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>12.自定义指令</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p>用户名：{{username}}</p>
+        <p>computed：{{upperUsername}}</p>
+        <p>methods:{{upper(username)}}</p>
+        <p>filter: {{username | upper}}</p>
+        <p>金额：{{total | formatMoney}}</p>
+    </div>
+    
+    <script>
+       /**
+        * 过滤器filter
+            * 全局：Vue.filter(name,definition)
+            * 局部：filters
+        */
+
+        Vue.filter('upper',function(value){
+            return value.toUpperCase();
+        })
+
+        const vm = new Vue({
+            data:{
+                username:'laoxie',
+                total:100000000000
+            },
+            computed:{
+                upperUsername(){
+                    return this.username.toUpperCase()
+                }
+            },
+            methods:{
+                upper(str){
+                    return str.toUpperCase();
+                }
+            },
+            // 局部过滤器
+            filters:{
+                formatMoney:function(value){
+                    value = value.toString();
+                    // 100,000
+                    return value.replace(/\B(?=(\d{3})+(?!\d))/g,',')
+                }
+            }
+        })
+      
+        vm.$mount('#app')
+        
+    </script>
+</body>
+</html>

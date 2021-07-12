@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-export const baseUrl = 'http://120.76.247.5:2003'
+// process.env.NODE_ENV：环境变量，保存develoment，production
+export const baseUrl = 
+process.env.NODE_ENV=== 'development' ? // 判断环境
+'http://10.3.136.144' // 开发环境接口地址
+:
+'http://120.76.247.5:2003' // 生产环境接口地址
+
+// 测试环境地址（）
+
 export const apiUrl = `${baseUrl}/api`
 // 创建一个axios实例
 const instance = axios.create({

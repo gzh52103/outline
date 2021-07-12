@@ -1785,3 +1785,29 @@
                     
                 }
             ```
+
+## day5-1
+
+### 面试题
+* 为什么数组中的push,pop,shift,unshift,splice,sort,reverse这些方法能更新视图，而其他的不行？
+    > 因为以上方法被Vue在原型中重写
+    ```js
+        {
+            data(){
+                return{
+                    list:[1,2,3],
+                    goodslist:[{name:'xxx',price:9.9}]
+                }
+            }
+        }
+        
+        // this.list的原型不是Array.prototype，而是被Vue重写的对象，对象中包含push,pop,shift,unshift,splice,sort,reverse
+        this.list.push(10);//
+        this.list[3] = 10;
+        this.goodslist[0].price = 100
+    ```
+### 知识点
+* history路由：需要服务器的支持
+    1. mode:'history,
+    2. 服务器支持
+        > 除静态资源外，所有的请求都响应index.html内容

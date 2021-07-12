@@ -20,6 +20,7 @@ Vue.use(VueRouter);
 
 // 3. 实例化路由并配置路由参数
 const router = new VueRouter({
+  mode:'history',
   // 路由配置信息
   routes: [{
     // 当浏览器地址为/home时，渲染Home组件的内容

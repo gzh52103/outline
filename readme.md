@@ -1811,3 +1811,138 @@
     1. mode:'history,
     2. 服务器支持
         > 除静态资源外，所有的请求都响应index.html内容
+
+## day5-2
+
+### 面试题
+* 以最快的速度找出数组arr中两个数的和等于13的数
+    > [1,2,3,4,5,6,7,8,9,10]
+    ```js
+        let arr = [1,2,3,4,5,6,7,8,9,10]
+        arr.forEach(item=>{
+            arr.forEach(it=>{
+                if(item+it===13){
+                    console.log(item,it);
+                }
+            })
+        })
+
+        // 如何一次循环搞定
+        for(let i=0,len=arr.length;i<len;i++){
+
+        }
+    ```
+* js是一门单线程语言
+    * 阻塞
+    * 同步与异步
+    * webAPI
+    * EventLoop 事件循环
+        > 执行栈空闲时，时间循环机制会启动，每一次事件循环都会优先从微任务队列中把代码移入执行栈中执行，只有当微任务队列被清空后才会执行宏任务队列中的代码
+        * 宏任务：setTimeouter,setInterval,ajax,I/O...
+        * 微任务: promise.then
+    ```js
+        console.log(1)
+        for(let i=0;i<1000000;i++){
+            // 5s
+            console.log(3)
+        }
+        console.log(2);
+
+
+        // 1,2,3
+        console.log(1)
+        setTimeout(
+            ()=>{
+                console.log(3)
+            },
+        5000)
+        console.log(2)
+
+        // 1,2,3
+        console.log(1)
+        setTimeout(
+            ()=>{
+                console.log(3)
+            },
+        0)
+        console.log(2)
+
+        // 1,4,2,3
+        console.log(1)
+        setTimeout(
+            ()=>{
+                console.log(3)
+            },
+        0)
+        for(let i=0;i<1000000;i++){
+            // 5s
+            console.log(4)
+        }
+        console.log(2)
+
+
+        // 1,4,2,5,3
+        console.log(1)
+        setTimeout(
+            ()=>{
+                console.log(3)
+            },
+        0)
+        new Promise((resolve,reject)=>{
+            console.log(4);
+            resove(5)
+        }).then((res)=>{
+            console.log(res)
+        })
+        console.log(2);
+
+        // 输出结果：1，4，7，5，2，3，6
+        console.log(1);
+        setTimeout(() => {
+            console.log(2);
+            Promise.resolve().then(() => {
+                console.log(3);
+            });
+        });
+        new Promise((resolve, reject) => {
+            console.log(4);
+            resolve(5);
+        }).then((data) => {
+            console.log(data);
+        });
+        setTimeout(() => {
+            console.log(6);
+        });
+        console.log(7);
+
+        // 练习
+        console.log(1);
+        setTimeout(() => {
+            console.log(2);
+            Promise.resolve().then(() => {
+                console.log(3);
+            });
+        });
+        new Promise((resolve, reject) => {
+            console.log(4);
+            resolve(5);
+        }).then((data) => {
+            console.log(data);
+            Promise.resolve()
+            .then(() => {
+                console.log(6);
+            })
+            .then(() => {
+                console.log(7);
+                setTimeout(() => {
+                    console.log(8);
+                }, 0);
+            });
+        });
+        setTimeout(() => {
+            console.log(9);
+        });
+        console.log(10);
+    ```
+
+## 知识点

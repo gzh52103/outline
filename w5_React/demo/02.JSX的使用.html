@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02.JSX的使用</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+    <h1>02.JSX的使用</h1>
+    <div id="app"></div>
+    <!-- 浏览器默认会忽略script标签type属性不为text/javascript和module的代码 -->
+    <script type="text/babel">
+        // const vNode1 = React.createElement(
+        //     'div',
+        //     {id:'box'},
+        //     [
+        //         React.createElement('h4',{key:4},'Hello React'),
+        //         React.createElement('ul',{className:'list',key:5},[
+        //             React.createElement('li',{key:1},'data1'),
+        //             React.createElement('li',{key:2},'data2'),
+        //             React.createElement('li',{key:3},'data3'),
+        //         ])
+        //     ]
+        // )
+        // console.log('vNode1=',vNode1)
+        const vNode = <div id="box">
+            <h4>Hello JSX</h4>
+            <ul className="list">
+                <li>data1</li>
+                <li>data2</li>
+                <li>data3</li>
+            </ul>
+        </div>
+        console.log('vNode2=',vNode);
+        const handleClick = function(){
+            console.log(666)
+        }
+        const username = 'laoxie'
+        const myStyle = {color:'#f00'}
+        // const a = <div></div>;// React.createElement('div',null,'')
+        const formItem = <div className="form-item">
+            <label htmlFor="username" style={myStyle}>用户名：{username}</label>
+            <input id="username" value={username} />
+            {
+                //<button onClick={handleClick}>点我有惊喜</button>
+            }
+        </div>
+
+        // 循环
+        const datalist  = [{username:'laoxie',age:18},{username:'tiantian',age:28},{username:'jingjing',age:38}]
+
+        const myList = datalist.map(item=>{
+            return <div>{item.username}</div>
+        })
+        console.log('myList',myList)
+        ReactDOM.render(
+            myList,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>

@@ -1827,9 +1827,25 @@
             })
         })
 
-        // 如何一次循环搞定
-        for(let i=0,len=arr.length;i<len;i++){
+        // 24次循环后找到3和10
+        wai:for(var i=0;i<arr.length-1;i++){
+            for(var j=i+1;j<arr.length;j++){
+                if(arr[i]+arr[j]===13){
+                    console.log(arr[i],arr[j]);
+                    break;
+                }
+            }
+        }
 
+        // 如何一次循环搞定
+        let obj={};//{1:1,2:1,3:1,4:1,5:1,6:1,7:1}
+        for(let i=0,len=arr.length;i<len;i++){console.log(666)
+            obj[arr[i]] = 1;
+            const val = 13 - arr[i];
+            if(obj[val] !== undefined){
+                console.log(val,arr[i])
+                break;
+            }
         }
     ```
 * js是一门单线程语言
@@ -1944,5 +1960,115 @@
         });
         console.log(10);
     ```
-
+* history路由
+    1. mode="history"
+    2. 服务器支持
+    ```js
+        // <script src="/js/app.xxx.js" />
+        app.use(express.static());// 静态资源服务器
+        app.use('/api',allRouter);
+        // 支持history路由的中间件
+        app.use(function(req,res){
+            res.send('index.html的内容')
+        })
+    ```
+* vuex中mapState,mapGetters,mapMutations,mapActions等方法的作用
+    > 简化操作,把vuex中的数据或修改方法映射到组件
+* event事件对象中target与currentTarget的区别
+    * target: 触发事件的元素
+    * currentTarget: 绑定事件的元素
 ## 知识点
+* React
+    * 渲染节点：ReactDOM.render(vNode,target)
+    * 创建虚拟节点: React.createElement(type,props,children)
+* JSX规则
+    * 在JSX中使用js变量必须使用`{}`花括号
+    * 不能使用js关键字
+        * class -> className
+        * for   -> htmlFor
+    * 多个单词的属性必须使用驼峰形式
+        * onkeyup -> onKeyUp
+        * autofocus->autoFocus
+        * ...
+    * 必须结束标签
+        * `<input>` -> `<input />`
+        * `<img>`  -> `<img />`
+    * style只能使用对象形式
+    * 使用 js 语法注释（如{/*注释内容*/}，//注释内容）
+
+* 把数据写入JSX结构
+
+* 组件化开发
+    * 分类
+        > 优先使用函数组件，因为它有更快的速度
+        * 函数组件
+            > 必须有返回值，一般用于UI展示
+        * 类组件
+            > 必须包含render函数，且必须有返回值
+            * 状态: state
+                * 获取：this.state.xxx
+                * 修改：this.setState()
+                    > 覆盖式的修改: 用一个新的值覆盖旧的值
+            * this
+                > 默认在constructor,render,生命周期函数中才有this指向，自定义方法默认没有this指向
+    * 要求
+        * 首字母大写
+        * 只能有一个根元素
+* 组件通讯
+    * 父->子：props
+        1. 父组件传递数据
+        2. 子组件接收
+            * 函数组件：函数的第一个参数为props
+            * 类组件
+                * constructor第一个参数
+                * this.props
+    * 子->父: 把父组件方法到子组件中执行，并回传参数
+        
+
+* 受控组件与非受控组件
+    * 受控组件：利用组件状态控制表单的值
+    * 非受控组件：通过节点操作方式控制表单的值
+
+* 事件处理函数
+    * event
+    * this
+      >改变this指向：call(),apply(),bind()
+
+* ref
+    * 
+
+
+* react组件的数据挂载方式
+    * state     组件的状态（类组件专属）
+    * props     父组件传入的数据
+    * 条件渲染：三元运算
+    * 列表循环
+        * map
+        * key
+    * 事件处理
+        * 驼峰写法
+        * event: 事件处理函数的最后一个参数
+        * this
+            > 默认没有this指向，需要通过bind方法指定
+        * 传参
+    * ref
+        > ref属性用在普通元素中，得到对应的dom节点，用在组件上，得到组件实例
+        * 回调函数写法
+        * React.createRef()
+        ```js
+            // 只能在类组件中使用
+            render(){
+                return (
+                    <input ref={(el)=>this.input=el}>
+
+                )
+            }
+
+            function MyComponent(){
+                return (
+                    <input ref={el=>}>
+                )
+            }
+        ```
+    * html内容
+        > `<div dangerouslySetInnerHTML={{ __html: htmlString}}></div>`

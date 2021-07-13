@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05.todolist</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+
+<body>
+    <h1>05.todolist</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        
+        class TodoHead extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    todo:''
+                }
+            }
+            render(){
+                const {todo} = this.state;
+                const {addItem} = this.props;
+                return (
+                    <div className="input-group mb-3">
+                        <input type="text" ref={(el)=>this.input=el} className="form-control" value={todo}  onChange={(e)=>{
+                            this.setState({
+                                todo:e.currentTarget.value
+                            })
+                        }} />
+                        <div className="input-group-append">
+                            <button className="btn btn-success" onClick={()=>{
+                                // const value = document.getElementById('input').value;
+                                // console.log('value=',value)
+                                // console.log('value',todo)
+                                addItem(todo)
+
+                                // 清空并自动获得焦点
+                                this.setState({
+                                    todo:''
+                                });
+                                this.input.focus();
+                            }}>添加</button>
+                        </div>
+                    </div>
+                )
+            }
+        }
+        const TodoItem = function({item,idx}){
+            return (
+                <tr>
+                    <td><input type="checkbox" /></td>    
+                    <td>{idx+1}</td>    
+                    <td>{item.todo}</td>    
+                    <td>{item.addtime}</td>    
+                    <td>{item.complete ? '是':'否'}</td>    
+                    <td>
+                        <button>完成</button>    
+                        <button>删除</button>    
+                    </td>    
+                </tr>
+            )
+        }
+        function TodoBody(props){
+            
+            const {list} = props;
+            console.log('TodoBody.props',props);
+            return (
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" /></th>
+                            <th>#</th>
+                            <th>待办事项</th>
+                            <th>添加时间</th>
+                            <th>是否完成</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            list.map((item,idx)=>{
+                                return <TodoItem key={item.id} item={item} idx={idx} />
+                            })
+                        }
+                    </tbody>
+                </table>
+            )
+        }
+        class TodoList extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    list: [{
+                        id: 1,
+                        todo: '定个小目标睡一整天',
+                        complete: true,
+                        checked: true,
+                        addtime: Date.now()
+                    }, {
+                        id: 2,
+                        todo: '赚他一个亿津巴布韦币',
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now() + 3600 * 1000
+                    }, {
+                        id: 3,
+                        todo: '迎娶白富美，达到人生巅峰',
+                        complete: false,
+                        checked: false,
+                        addtime: Date.now() + 3600 * 1000 * 5
+                    }],
+
+                    htmlContent:'<strong style="color:#58bc58">tiantian</strong> strong'
+                }
+
+
+                // 改变函数this指向
+                // bind改变this指向，并返回一个函数
+                this.addItem = this.addItem.bind(this)
+            }
+
+            // 这里定义的方法会成为原型方法
+            addItem(todo){console.log('this=',this);
+                const {list} = this.state;
+                const newItem = {
+                    id: parseInt(Math.random()*100000),
+                    todo,
+                    complete: false,
+                    checked: false,
+                    addtime: Date.now()
+                }
+                this.setState({
+                    list:[newItem,...list]
+                })
+            }
+            complete(){
+
+            }
+            removeItem(){
+
+            }
+            render(){
+                const input = React.createRef();console.log('refinput',input);
+                const {list} = this.state;
+                return (
+                    <div>
+                        <h2>TodoList待办事项</h2>
+                        <TodoHead addItem={this.addItem} ref={input}/>
+                        <TodoBody list={list}/>
+                        {
+                            /*{this.state.htmlContent}
+                            <div dangerouslySetInnerHTML={{ __html: this.state.htmlContent}}></div>*/
+                        }
+                    </div>
+                )
+            }
+        }
+        
+        ReactDOM.render(
+            <TodoList/>
+            ,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+
+</html>

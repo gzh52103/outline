@@ -2109,3 +2109,39 @@
                         > 一般在JSX中使用
                     * contextType
                         > 设置子组件contextType静态属性，然后通过this.context.xxx获取共享数据，一般在js代码中使用
+* 使用React
+    * script引入：浏览器实时编译，效率较低
+        * react.js
+        * react-dom.js
+        * babel.js 
+    * webpack环境
+        > 构建工具： grunt -> gulp -> webpack
+        * gulp: 基于任务的构建工具
+        ```js
+            // gulp.task('build')
+            export.build = function(){
+                gulp.src('./src/sass/*.scss')
+                .pipe(sass())
+                // ...
+                .pie(gulp.dest('./dist'))
+            }
+        ```
+        * webpack:基于配置的构建工具
+            > 所有需要配置写入`webpack.config.js`文件
+* 从0配置基于Webpack的React环境
+    1. 创建目录与文件
+    2. 安装依赖
+        * react & react-dom
+        * @babel/core & babel-loader & @babel/preset-react
+        * webpack & webpack-cli & webpack-dev-server
+        * html-webpack-plugin
+    3. 配置webpack
+        > 项目根目录下webpack.config.js，核心配置：
+        * entry     入口
+        * output    出口
+        * devServer 测试服务器
+        * loader    加载器
+            > module.rules
+        * plugin    插件
+
+* 练习：从0配置基于Webpack的Vue环境

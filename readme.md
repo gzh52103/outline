@@ -2034,8 +2034,6 @@
     * this
       >改变this指向：call(),apply(),bind()
 
-* ref
-    * 
 
 
 * react组件的数据挂载方式
@@ -2049,7 +2047,7 @@
         * 驼峰写法
         * event: 事件处理函数的最后一个参数
         * this
-            > 默认没有this指向，需要通过bind方法指定
+            > 默认没有this指向，需要通过bind方法指定（bind改变this指向只生效第一次）
         * 传参
     * ref
         > ref属性用在普通元素中，得到对应的dom节点，用在组件上，得到组件实例
@@ -2072,3 +2070,42 @@
         ```
     * html内容
         > `<div dangerouslySetInnerHTML={{ __html: htmlString}}></div>`
+
+## day5-4
+
+### 知识点
+* 组件通讯
+    * 父->子：props
+    * 子->父：把父组件方法传到子组件执行，并回传参数
+    * 深层级组件通讯
+        * props逐层传递（不推荐）
+        * Context组件共享
+            1. 创建context
+                ```js
+                    const context = React.createContext(defaults)
+                    // defaults默认值在没有第2步（没有Provider时）是得到
+                ```
+            2. 父组件共享数据: Provider
+                ```js
+                    <context.Provider value={data}>
+                        // 子组件
+                    </context.Provider>
+                ```
+            3. 子组件接收
+                * 函数
+                    * Consumer
+                    ```js
+                        <context.Consumer>
+                            {
+                                (data)=>{
+                                    // data就是provider共享的数据
+                                }
+                            }
+                        </context.Consumer>
+                    ```
+                    * Hooks
+                * 类组件
+                    * Consumer
+                        > 一般在JSX中使用
+                    * contextType
+                        > 设置子组件contextType静态属性，然后通过this.context.xxx获取共享数据，一般在js代码中使用

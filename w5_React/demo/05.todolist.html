@@ -9,32 +9,101 @@
     <script src="../node_modules/react/umd/react.development.js"></script>
     <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
     <script src="js/browser.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 
 <body>
-    <h1>05.todolist</h1>
-    <div id="app"></div>
+    <h1 class="mb-5">05.todolist</h1>
+    <div id="app" class="container">
+
+    </div>
     <script type="text/babel">
-        
-        class TodoHead extends React.Component{
-            constructor(){
-                super();
-                this.state = {
-                    todo:''
+        function formDate(date,fmt="YYYY/MM/DD"){
+            const d = new Date(date);
+
+            // 预订字符对应时间
+            var o = {
+                "M+": d.getMonth() + 1, //月份 
+                "D+": d.getDate(), //日 
+                "h+": d.getHours(), //小时 
+                "m+": d.getMinutes(), //分 
+                "s+": d.getSeconds(), //秒 
+                "q+": Math.floor((d.getMonth() + 3) / 3), //季度 
+                "S": d.getMilliseconds() //毫秒 
+            };
+
+            // 匹配年份
+            // 年份比较特殊，所以单独处理
+            // test方法如果返回true，RegExp.$1得到匹配的字符
+            if(/(Y+)/.test(fmt)){
+                // YYYY => 2021
+                // YY => 21
+                var res = String(d.getFullYear()).substr(4 - RegExp.$1.length);
+
+                // 替换年份
+                // YYYY/MM/DD -> 2021/MM/DD
+                fmt = fmt.replace(RegExp.$1,res);
+            }
+
+            for(var str in o){
+                // 创建正则时设定分组，以便获取匹配到的字符
+                // RegExp.$1
+                var reg = new RegExp('(' + str + ')');
+
+                // 如果有匹配则把fmt中匹配到的字符替换成o中对应的时间，根据fmt中的字符决定是否补0
+                // YYYYMMDD => 20170813
+                // YYYY-MM-DD hh:mm:ss => 2017-08-13 20:12:30
+                if(reg.test(fmt)){
+                    // 得到匹配字符对应的时间
+                    // YYYY/M/D -> 7
+                    // YYYY/MM/DD
+                    var res = RegExp.$1.length>1 ? ('00' + o[str]).substr(String(o[str]).length) : o[str];
+
+                    // 2021/MM/DD -> 2021/07/DD
+                    // 2021/07/DD -> 2021/07/15
+                    // 2021/07/15 hh:mm:ss -> 2021/07/15 10:mm:ss
+                    // ...
+                    fmt = fmt.replace(RegExp.$1,res);
                 }
             }
-            render(){
-                const {todo} = this.state;
-                const {addItem} = this.props;
+
+            return fmt;
+        }
+        
+        const defaultData = {username:'laoxie',password:123456}
+        const context = React.createContext(defaultData);
+        
+        class TodoHead extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    todo: ''
+                }
+                this.addItem = this.addItem.bind(this)
+            }
+            addItem(){
+                this.context.add(this.state.todo)
+
+                // 清空并自动获得焦点
+                this.setState({
+                    todo: ''
+                });
+                this.input.focus();
+            }
+            render() {console.log('TodoHead.context',this.context)
+                const { todo } = this.state;
+                const { addItem } = this.props;
+
                 return (
                     <div className="input-group mb-3">
-                        <input type="text" ref={(el)=>this.input=el} className="form-control" value={todo}  onChange={(e)=>{
+                        <input type="text" ref={(el) => this.input = el} className="form-control" value={todo} onChange={(e) => {
                             this.setState({
-                                todo:e.currentTarget.value
+                                todo: e.currentTarget.value
                             })
                         }} />
                         <div className="input-group-append">
-                            <button className="btn btn-success" onClick={()=>{
+                            {/*<button className="btn btn-success" 
+                            onClick={() => {
                                 // const value = document.getElementById('input').value;
                                 // console.log('value=',value)
                                 // console.log('value',todo)
@@ -42,36 +111,61 @@
 
                                 // 清空并自动获得焦点
                                 this.setState({
-                                    todo:''
+                                    todo: ''
                                 });
                                 this.input.focus();
-                            }}>添加</button>
+                            }}
+                            >添加</button>*/}
+                            <button className="btn btn-success" onClick={this.addItem}>添加</button>
                         </div>
                     </div>
                 )
             }
         }
-        const TodoItem = function({item,idx}){
+        TodoHead.contextType = context;
+
+        const TodoItem = function ({ item, idx,handle }) {
             return (
-                <tr>
-                    <td><input type="checkbox" /></td>    
-                    <td>{idx+1}</td>    
-                    <td>{item.todo}</td>    
-                    <td>{item.addtime}</td>    
-                    <td>{item.complete ? '是':'否'}</td>    
-                    <td>
-                        <button>完成</button>    
-                        <button>删除</button>    
-                    </td>    
-                </tr>
+                <context.Consumer>
+                    {
+                        (data)=>{
+                            return (
+                                <tr>
+                                    <td><input type="checkbox" /></td>
+                                    <td>{idx + 1}</td>
+                                    <td>{item.todo}</td>
+                                    <td>{formDate(item.addtime)}</td>
+                                    <td>{item.complete ? '是' : '否'}</td>
+                                    <td>
+                                        {/*<button 
+                                        className="btn btn-outline-primary btn-sm" 
+                                        // onClick={handle.completeItem} // 无法传参
+                                        // onClick={()=>{
+                                        //     handle.completeItem(item.id)
+                                        // }}
+                                        // onClick={handle.completeItem.bind(null,item.id)}
+                                        onClick={handle.completeItem(item.id)}
+                                        >完成</button>
+                                        <button className="btn btn-outline-danger btn-sm" onClick={handle.removeItem.bind(null,item.id)}>删除</button>*/}
+                                        
+                                        <button 
+                                        className="btn btn-outline-primary btn-sm" onClick={data.complete(item.id)}>完成</button>
+                                        <button className="btn btn-outline-danger btn-sm" onClick={data.remove.bind(null,item.id)}>删除</button>
+                                    </td>
+                                </tr>
+                            )
+                        }
+                    }
+                
+                </context.Consumer>
             )
         }
-        function TodoBody(props){
-            
-            const {list} = props;
-            console.log('TodoBody.props',props);
+        function TodoBody(props) {
+
+            const { list,handle } = props;
+            console.log('TodoBody.props', props);
             return (
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <th><input type="checkbox" /></th>
@@ -84,16 +178,25 @@
                     </thead>
                     <tbody>
                         {
-                            list.map((item,idx)=>{
-                                return <TodoItem key={item.id} item={item} idx={idx} />
+                            list.map((item, idx) => {
+                                return <TodoItem key={item.id} item={item} idx={idx} handle={handle} />
                             })
                         }
                     </tbody>
                 </table>
             )
         }
-        class TodoList extends React.Component{
-            constructor(){
+        function TodoFoot({list}){
+            const completeList = list.filter(item=>item.complete);
+            const uncompleteList = list.filter(item=>!item.complete);
+            return (
+                <div>
+                    总数：{list.length}, 完成：{completeList.length}，未完成：{uncompleteList.length}
+                </div>
+            )
+        }
+        class TodoList extends React.Component {
+            constructor() {
                 super();
                 this.state = {
                     list: [{
@@ -116,54 +219,82 @@
                         addtime: Date.now() + 3600 * 1000 * 5
                     }],
 
-                    htmlContent:'<strong style="color:#58bc58">tiantian</strong> strong'
+                    htmlContent: '<strong style="color:#58bc58">tiantian</strong> strong'
                 }
 
 
                 // 改变函数this指向
                 // bind改变this指向，并返回一个函数
                 this.addItem = this.addItem.bind(this)
+                this.removeItem = this.removeItem.bind(this)
+                this.completeItem = this.completeItem.bind(this)
             }
 
             // 这里定义的方法会成为原型方法
-            addItem(todo){console.log('this=',this);
-                const {list} = this.state;
+            addItem(todo) {
+                console.log('this=', this);
+                const { list } = this.state;
                 const newItem = {
-                    id: parseInt(Math.random()*100000),
+                    id: parseInt(Math.random() * 100000),
                     todo,
                     complete: false,
                     checked: false,
                     addtime: Date.now()
                 }
                 this.setState({
-                    list:[newItem,...list]
+                    list: [newItem, ...list]
                 })
             }
-            complete(){
+            completeItem(id) {
+                // 返回事件处理函数
+                return ()=>{console.log('事件处理函数',id)
+                    let { list } = this.state;
+                    list = list.map(item => {
+                        if (item.id === id) {
+                            item.complete = true;
+                        }
+                        return item;
+                    })
+                    this.setState({
+                        list
+                    })
 
+                }
             }
-            removeItem(){
-
+            removeItem(id) {
+                let { list } = this.state;
+                list = list.filter(item => item.id !== id);
+                this.setState({
+                    list
+                })
             }
-            render(){
-                const input = React.createRef();console.log('refinput',input);
-                const {list} = this.state;
+            render() {
+                const input = React.createRef(); console.log('refinput', input);
+                const { removeItem, completeItem,addItem } = this;
+                const { list } = this.state;
                 return (
                     <div>
                         <h2>TodoList待办事项</h2>
-                        <TodoHead addItem={this.addItem} ref={input}/>
-                        <TodoBody list={list}/>
-                        {
-                            /*{this.state.htmlContent}
-                            <div dangerouslySetInnerHTML={{ __html: this.state.htmlContent}}></div>*/
-                        }
+                        <context.Provider value={{
+                            remove:removeItem,
+                            complete:completeItem,
+                            add:addItem
+                        }}>
+                            <TodoHead addItem={this.addItem} ref={input} />
+                            <TodoBody list={list} handle={{ removeItem, completeItem }} />
+                            {
+                                /*{this.state.htmlContent}
+                                <div dangerouslySetInnerHTML={{ __html: this.state.htmlContent}}></div>*/
+                            }
+                            <TodoFoot list={list}/>
+                        </context.Provider>
                     </div>
                 )
             }
         }
-        
+
         ReactDOM.render(
-            <TodoList/>
+            <TodoList />
             ,
             document.getElementById('app')
         )

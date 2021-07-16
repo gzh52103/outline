@@ -20,7 +20,7 @@ Vue.use(VueRouter);
 
 // 3. 实例化路由并配置路由参数
 const router = new VueRouter({
-  mode:'history',
+  mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
   // 路由配置信息
   routes: [{
     // 当浏览器地址为/home时，渲染Home组件的内容
@@ -77,14 +77,14 @@ const router = new VueRouter({
   ],
 
   // 记录滚动条位置
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     // return 期望滚动到哪个的位置
-    console.log('savedPosition=',savedPosition);
-    return !savedPosition ? {x:0,y:0} : new Promise((resove)=>{
-      setTimeout(()=>{
+    console.log('savedPosition=', savedPosition);
+    return !savedPosition ? { x: 0, y: 0 } : new Promise((resove) => {
+      setTimeout(() => {
         savedPosition.behavior = 'smooth';
         resove(savedPosition)
-      },1000)
+      }, 1000)
     })
   }
 })
@@ -93,49 +93,49 @@ console.log('$router', router);
 
 // 全局路由守卫
 router.beforeEach(function (to, from, next) {
-  console.log('beforeEach',to);
+  console.log('beforeEach', to);
 
   // 判断目标路由是否需要登录权限才可访问
-  if(to.meta.requiresAuth){
+  if (to.meta.requiresAuth) {
     let userInfo = localStorage.getItem('userInfo');
-      try{
-          userInfo = JSON.parse(userInfo)
-      }catch{
-          userInfo = null
-      }
-      if(userInfo){
-        // 获取到用户信息后，还需要校验用户信息是否被篡改或是否过期
-        // 校验token
-        request.get('/user/verify',{
-          headers:{
-            Authorization:userInfo.authorization
-          }
-        }).then(({data})=>{
-          // 根据token校验结果来决定是否让用户继续访问
-          if(data.code === 400){
-            // 清空用户信息
-            localStorage.removeItem('userInfo');
-            
-            router.push({
-              path:'/login',
-              query:{
-                target:to.fullPath
-              }
-            })
-          }
-        })
-        // 如果有用户信息，不管是否过期或被篡改，先放行
-        next();
-      }else{
-        // router.push('/login')
-        router.push({
-          path:'/login',
-          query:{
-            target:to.fullPath
-          }
-        })
-      }
-  }else{
+    try {
+      userInfo = JSON.parse(userInfo)
+    } catch {
+      userInfo = null
+    }
+    if (userInfo) {
+      // 获取到用户信息后，还需要校验用户信息是否被篡改或是否过期
+      // 校验token
+      request.get('/user/verify', {
+        headers: {
+          Authorization: userInfo.authorization
+        }
+      }).then(({ data }) => {
+        // 根据token校验结果来决定是否让用户继续访问
+        if (data.code === 400) {
+          // 清空用户信息
+          localStorage.removeItem('userInfo');
+
+          router.push({
+            path: '/login',
+            query: {
+              target: to.fullPath
+            }
+          })
+        }
+      })
+      // 如果有用户信息，不管是否过期或被篡改，先放行
+      next();
+    } else {
+      // router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          target: to.fullPath
+        }
+      })
+    }
+  } else {
 
     next();
   }

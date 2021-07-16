@@ -2188,5 +2188,68 @@
         * componentWillReceiveProps() -> UNSAFE_componentWillReceiveProps()
         * shouldComponentUpdate()
 
+* 组件刷新条件
+    * state改变
+    * props改变
+    * 父组件刷新
+    * 强制刷新
+        * react: this.foreceUpdate()
+        * vue: this.$foreUpdate()
+
+* 组件性能优化
+    * shouldComponentUpdate()
+    * PureComponent 
+        > 一个做了shouldComponentUpdate优化后的React.Component
+
+* ReactRouter
+    * 路由类型
+        * HashRouter
+        * BrowserRouter
+    * 路由渲染
+        * Route
+            * path
+            * component
+            * exact
+        * Redirect
+            * from
+            * to
+            * exact
+        * Switch
+    * 导航
+        * 声明式导航
+            * Link
+            * NavLink
+        * 编程式导航
+            * history
+                * push()
+                * replace()
+            * 如何获取history,location,match
+                * Route组件的component属性渲染组件
+                * withRouter高阶组件
+
+* 高阶组件HOC（High Order Component）
+    > 高阶组件并不是一个React组件，而是一个**纯函数**，
+    * 接收目标组件
+    * 返回一个新的组件
+* 纯函数
+    * 不修改传入的参数
+    * 固定输入有固定输出
+    ```js
+        function add(a,b){
+            return a + b;
+        }
+        add(10,20);//30
+        add(10,20);//30
+
+        function randomNumber(min,max){
+            return parseInt(Math.random()*(max-min+1))+min
+        }
+        randomNumber(10,20);//11
+        randomNumber(10,20);//18
+    ```
+* 函数柯里化
+    > 通过函数调用继续返回函数的方式，实现多次接收参数后统一处理的函数编码形式
+
 ### 练习
 * 把todolist案例移植到webpack环境
+* withStorage高阶组件实现多参数传递

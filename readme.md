@@ -2144,4 +2144,49 @@
             > module.rules
         * plugin    插件
 
-* 练习：从0配置基于Webpack的Vue环境
+### 练习
+* 从0配置基于Webpack的Vue环境
+
+## day5-5
+
+### 复习
+* webpack
+    * 工作原理：从入口开始，根据依赖分析项目所有文件，并利用配置好的加载器、插件等把模块编译成浏览器识别的代码
+    * 核心配置
+        * entry
+        * output
+        * loader
+            > 写在module.rules中，每一类文件都需要配置一个加载器
+            * test  匹配文件
+            * use/loader    加载器
+        * plugins   插件
+            * html-webpack-plugin
+            * clean-webpack-plugin
+        * devServer 测试服务器
+            > webpack-dev-server
+
+        * resolve
+            * extensions: 默认扩展名
+            * alias:  路径别名
+
+### 知识点
+* 类组件生命周期
+    1. 搞懂生命周期执行过程
+    2. 搞懂生命周钩子函数适合是什么操作
+* 钩子函数
+    * Initial: 初始化阶段
+        * constructor()
+    * Mounting：挂载阶段
+        * componentWillMount()  -> UNSAFE_componentWillMount()
+        * componentDidiMount()
+    * Updating：更新阶段
+        * componentWillUpdate() -> UNSAFE_componentWillUpdate()
+        * componentDidUpdate()
+    * Unmounting：卸载阶段
+        * componentWillUnmount()
+    * 特殊生命周期函数
+        * componentWillReceiveProps() -> UNSAFE_componentWillReceiveProps()
+        * shouldComponentUpdate()
+
+### 练习
+* 把todolist案例移植到webpack环境

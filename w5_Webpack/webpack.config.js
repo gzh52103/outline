@@ -22,7 +22,10 @@ module.exports = {
     devServer:{
         // 设置网站根目录
         // contentBase:'./public', // webpack-dev-server@4不支持
-        public:'./public',
+        // public:'./public',
+        // hot:true,
+        // port:2103,
+        // open:true,
     },
 
     // 加载器：loader

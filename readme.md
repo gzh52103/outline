@@ -2253,3 +2253,61 @@
 ### 练习
 * 把todolist案例移植到webpack环境
 * withStorage高阶组件实现多参数传递
+
+## day5-6
+
+### 面试题
+* js严格模式
+    ```js
+        (()=>{
+            'use strict'
+        })()
+    ```
+
+### 复习
+* 路由
+    * 常用组件
+        * HashRouter
+        * BrowserRouter
+        * Route
+        * Redirect
+        * Switch
+        * Link
+        * NavLink
+    * 导航
+        * 声明式导航
+        * 编程式导航
+            * 核心对象
+                * history
+                * location
+                * match
+            * 获取核心对象
+                * Route的component渲染
+                * withRouter
+* 高阶组件
+    * 提取公共代码
+    * 属性代理
+
+### 知识点
+* 扩展运算符：`...`
+    * 扩展操作
+        > 用于数据的复制，函数的执行
+        ```js
+            const arr = [10,20,30]
+            const res = [...arr,40,50]
+            res.push(...arr);// 等效于res.push(10,20,30)
+        ```
+    * 剩余操作
+        > 用于函数的定义，解构
+        ```js
+            function add(a,...arr){
+
+            }
+            add(10,20);
+            add(10,20,30)
+
+            const arr = [10,20,30]
+            const [a,...b] = arr;
+            const obj = {username:'tiantian',password:123,role:'vip',age:28}
+            const {username,password,...o} = obj;
+        ```

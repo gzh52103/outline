@@ -2311,3 +2311,39 @@
             const obj = {username:'tiantian',password:123,role:'vip',age:28}
             const {username,password,...o} = obj;
         ```
+* 权限控制
+    > 权限列表
+    * 页面权限控制
+        * Vue
+            * 路由守卫
+            * 动态添加路由
+        * React
+            * 高阶组件
+            * 条件判断
+    * 按钮级别权限控制
+        ```js
+            // user:{username,_id,auth:{complete:true,delete:false}}
+            // react
+            <button>完成</button>
+            <button disabled={!user.auth.delete}>删除</button>
+            {
+                user.auth.delete ? 
+                <button>删除</button>
+                :null
+            }
+
+            // vue
+            <button v-auth:complete>完成</button>
+            <button v-auth:delete>删除</button>
+
+            Vue.directive('auth',{
+                bind(el,binding){
+                    if(!user.auth[binding.arg]){
+                        el.disabled = true;// 禁用
+                        // el.parentNode.removeChild(el);// 隐藏按钮
+                    }
+                }
+            })
+        ```
+* reactUI框架
+    * ant-design

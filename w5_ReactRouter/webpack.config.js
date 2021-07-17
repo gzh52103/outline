@@ -23,6 +23,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 // use:'babel-loader',
+                exclude:path.join(__dirname,'node_modules'),
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -35,6 +36,24 @@ module.exports = {
                         ]
                     }
                 }
+            },
+            // css加载器
+            {
+                test:/\.css$/,
+                use:[
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+
+            // sass加载器
+            {
+                test:/\.s[ac]ss$/,
+                use:[
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },

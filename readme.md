@@ -2347,3 +2347,8 @@
         ```
 * reactUI框架
     * ant-design
+
+* ajax请求
+    * XMLHttpRequest
+    * axios
+    * fetch

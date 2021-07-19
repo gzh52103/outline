@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
 import { Menu, Layout, Breadcrumb, Row, Col, Button, Avatar } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined,HomeOutlined,SolutionOutlined,TeamOutlined,OneToOneOutlined, } from '@ant-design/icons'
+import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined,HomeOutlined,SolutionOutlined,TeamOutlined,OneToOneOutlined,UserSwitchOutlined, } from '@ant-design/icons'
 
 import Home from './views/Home'
 import Login from './views/Login'
@@ -83,6 +83,20 @@ class App extends React.Component {
                         text: '添加分校'
                     },
                 ]
+            }, {
+                path: '/admin',
+                text: '管理员管理',
+                icon:<UserSwitchOutlined />,
+                children: [
+                    {
+                        path: '/list',
+                        text: '管理员列表'
+                    },
+                    {
+                        path: '/add',
+                        text: '添加管理员'
+                    },
+                ]
             }]
         }
 
@@ -113,11 +127,11 @@ class App extends React.Component {
                             </div>
                         </Col>
                         <Col span={17}>
-                            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                            {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                                 <Menu.Item key="1">nav 1</Menu.Item>
                                 <Menu.Item key="2">nav 2</Menu.Item>
                                 <Menu.Item key="3">nav 3</Menu.Item>
-                            </Menu>
+                            </Menu> */}
                         </Col>
                         <Col span={3} style={{ textAlign: 'right' }}>
                             <Avatar size="small" icon={<UserOutlined />} />

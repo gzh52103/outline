@@ -27,6 +27,7 @@ function request(url,data={},config={}){
         if(config.headers === undefined){
             config.headers = {}
         }
+        // config.headers['Authrization'] = token;
         config.headers['Content-type'] = 'application/json'
     }
 

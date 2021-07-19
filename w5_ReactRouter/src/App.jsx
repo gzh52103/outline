@@ -112,7 +112,10 @@ class App extends React.Component {
         console.log('changeMenu=',item, key, keyPath)
         this.props.history.push(key);
     }
-
+    logout = ()=>{
+        localStorage.removeItem('userInfo');
+        this.forceUpdate();
+    }
     render() {
 
         console.log('App.render.props', this.props);
@@ -135,7 +138,7 @@ class App extends React.Component {
                         </Col>
                         <Col span={3} style={{ textAlign: 'right' }}>
                             <Avatar size="small" icon={<UserOutlined />} />
-                            <Button type="link">退出</Button>
+                            <Button type="link" onClick={this.logout}>退出</Button>
                         </Col>
                     </Row>
 
@@ -182,15 +185,18 @@ class App extends React.Component {
                         >
                             <Switch>
                                 {/* /home -> Home */}
+                                {/* <Route path="/login" component={Login} /> 
+                                <Route path="/manage" component={Manage} />
+                                
+                                */}
                                 <Route path="/home" component={Home} />
-                                <Route path="/login" component={Login} />
                                 <Route path="/class" component={Class} />
                                 <Route path="/student">
                                     <Student />
                                 </Route>
                                 <Route path="/notfound" component={() => <div>404</div>} />
-                                <Redirect from="/" to="/login" exact />
-                                <Redirect from="*" to="/notfound" />
+                                <Redirect from="/" to="/home" exact />
+                                <Redirect from="*" to="/home" />
                             </Switch>
                         </Content>
                     </Layout>

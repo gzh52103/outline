@@ -2355,3 +2355,50 @@
 
 ## day6-2
 
+### 面试题
+* React中如何获取组件标签内的内容
+    > 类似于Vue插槽，在React中通过`props.children`获取，一般用`React.Children`下的方法配置使用
+
+### 知识点
+* Redux使用步骤
+    1. 安装
+    2. 引入
+        ```js
+            import {createStore} from 'redux'
+        ```
+    3. 创建仓库
+        > 在创建仓库之前，需要初始化state和定义修改state的方法
+        ```js
+            const initState = {
+                userInfo:{}
+            }
+            const reducer = function(state,action){
+                // 这里实现如何修改state
+                return newState
+            }
+            const store = createStore(reducer,initState)
+        ```
+    4. 在组件中使用
+        > 利用store提供的方法实现以下操作
+        * 获取：`store.getState()`
+        * 修改: `store.dispatch(action)`
+        * 监听: `store.subscribe(fn)`
+
+* Redux的核心
+    * store    仓库（存放共享数据的地方）
+    * state    状态
+    * reducer  修改state的方式
+        > 是一个纯函数，接收state与action作为参数，必须返回一个新的state
+    * action   命令
+        > 格式：`{type:'login'}`
+
+* 组件刷新场景
+    * state被修改
+    * props被修改
+    * 父组件刷新
+    * 强制刷新
+* react组件与redux结合
+    > 利用高阶组件实现redux数据共享，让代码有更好的**可维护性**
+
+* react-redux
+    > 利用高阶组件与Context实现数据共享

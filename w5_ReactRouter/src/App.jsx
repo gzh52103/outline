@@ -134,7 +134,6 @@ class App extends React.Component {
         })
     }
     render() {
-
         console.log('App.render.props', this.props);
         const { menu,currentOpen,currentSelect } = this.state;
         return (
@@ -152,6 +151,10 @@ class App extends React.Component {
                                 <Menu.Item key="2">nav 2</Menu.Item>
                                 <Menu.Item key="3">nav 3</Menu.Item>
                             </Menu> */}
+                            {
+                                // React.Children.count(this.props.children)
+                               
+                            }
                         </Col>
                         <Col span={3} style={{ textAlign: 'right' }}>
                             <Avatar size="small" icon={<UserOutlined />} />
@@ -209,7 +212,7 @@ class App extends React.Component {
                                 <Route path="/home" component={Home} />
                                 <Route path="/class" component={Class} />
                                 <Route path="/student">
-                                    <Student />
+                                    <Student></Student>
                                 </Route>
                                 <Route path="/notfound" component={() => <div>404</div>} />
                                 <Redirect from="/" to="/home" exact />

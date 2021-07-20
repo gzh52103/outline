@@ -14,15 +14,17 @@ function request(url,data={},config={}){
     config.method = config.method.toLowerCase();
 
     // get,delete通过url传参
-    if(['get','delete'].includes(config.method)){
+    if(['get'].includes(config.method)){
         const params = [];
         for(let key in data){
             params.push(`${key}=${data[key]}`)
         }
-        url = url + (url.includes('?') ? '&' : '?') + params.join('&')
+        if(params.length>0){
+            url = url + (url.includes('?') ? '&' : '?') + params.join('&')
+        }
     }
     // 通过请求体传参
-    else if(['post','put','patch'].includes(config.method)){
+    else if(['post','put','patch','delete'].includes(config.method)){
         config.body = JSON.stringify(data);
         if(config.headers === undefined){
             config.headers = {}

@@ -1,5 +1,5 @@
 {
-  "name": "w5_webpack",
+  "name": "w5_reactrouter",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
@@ -19,6 +19,7 @@
     "@ant-design/icons": "^4.6.2",
     "antd": "^4.16.7",
     "axios": "^0.21.1",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"

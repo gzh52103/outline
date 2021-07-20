@@ -2352,3 +2352,6 @@
     * XMLHttpRequest
     * axios
     * fetch
+
+## day6-2
+

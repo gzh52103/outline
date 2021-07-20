@@ -2262,7 +2262,7 @@
   dependencies:
     "minimist" "^1.2.5"
 
-"moment@^2.24.0", "moment@^2.25.3":
+"moment@^2.24.0", "moment@^2.25.3", "moment@^2.29.1":
   "integrity" "sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M="
   "resolved" "https://registry.nlark.com/moment/download/moment-2.29.1.tgz"
   "version" "2.29.1"

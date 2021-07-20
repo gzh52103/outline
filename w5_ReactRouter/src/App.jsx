@@ -116,10 +116,27 @@ class App extends React.Component {
         localStorage.removeItem('userInfo');
         this.forceUpdate();
     }
+    UNSAFE_componentWillMount(){
+        // 刷新页面获取当前路由信息
+        const {pathname} = this.props.location; // /class/add
+        const currentOpen = pathname.split(/(?<=[a-z])\//)
+        this.setState({
+            currentSelect:pathname,
+            currentOpen
+        })
+
+    }
+    componentDidMount(){
+
+        this.props.history.listen((location)=>{
+            // 路由改变时会触发这里的方法
+            console.log('===routechange',location)
+        })
+    }
     render() {
 
         console.log('App.render.props', this.props);
-        const { menu } = this.state;
+        const { menu,currentOpen,currentSelect } = this.state;
         return (
             <Layout>
                 <Header className="header" style={{ padding: '0 20px', color: '#fff' }}>
@@ -149,8 +166,8 @@ class App extends React.Component {
 
                         <Menu
                             mode="inline"
-                            defaultSelectedKeys={['1']}
-                            defaultOpenKeys={['/class']}
+                            defaultSelectedKeys={currentSelect}
+                            defaultOpenKeys={currentOpen}
                             style={{ height: '100%', borderRight: 0 }}
                             onClick={this.changeMenu}
                         >

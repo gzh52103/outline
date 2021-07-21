@@ -1,3 +1,5 @@
+import store from '@/store'
+
 export const baseUrl = process.env.NODE_ENV === 'production' ? 
 'http://120.76.247.5:2002/'  // 生产环境
 : 
@@ -29,7 +31,7 @@ function request(url,data={},config={}){
         if(config.headers === undefined){
             config.headers = {}
         }
-        // config.headers['Authrization'] = token;
+        config.headers['Authorization'] = store.getState().userInfo.authorization;
         config.headers['Content-type'] = 'application/json'
     }
 

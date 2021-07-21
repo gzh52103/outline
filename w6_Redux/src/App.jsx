@@ -3,7 +3,7 @@ import { HashRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from '
 
 import { Menu, Layout, Breadcrumb, Row, Col, Button, Avatar } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined, HomeOutlined, SolutionOutlined, TeamOutlined, OneToOneOutlined, UserSwitchOutlined, } from '@ant-design/icons'
-
+import { connect } from 'react-redux'
 import Home from './views/Home'
 import Login from './views/Login'
 import Class from './views/Class'
@@ -18,8 +18,30 @@ import 'antd/dist/antd.css'
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
+// App = withUser(App);
+// App = withRouter(App)
+// 映射redux中的数据到组件的props
+const mapStateToProps = function(state){
+    // state: redux中的数据
+    console.log('state=',state);
+    return {
+        userInfo:state.userInfo,
+        role:state.role,
+    }
+}
+// 映射修改方法到组件的props
+// 如设置该函数，dipatch会自动传入组件的props
+const mapDispatchToProps = function(dispatch){
+    return {
+        logout(){
+            dispatch({type:'logout'})
+        },
+    }
+}
+
 @withRouter
-@withUser
+// @withUser
+@connect(mapStateToProps,mapDispatchToProps)
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -139,11 +161,13 @@ class App extends React.Component {
         // store.subscribe(()=>{
         //     this.forceUpdate();
         // })
+
+        // this.props.dispatch({type:'logout'})
     }
     render() {
         console.log('App.render.props', this.props);
         const { menu, currentOpen, currentSelect } = this.state;
-        const { userInfo,logout } = this.props;
+        const { userInfo, logout } = this.props;
         const isLogin = !!userInfo._id;
         return (
             !isLogin ?
@@ -241,7 +265,6 @@ class App extends React.Component {
     }
 }
 
-// App = withUser(App);
-// App = withRouter(App)
 
+// App = connect(mapStateToProps,mapDispatchToProps)(App)
 export default App;

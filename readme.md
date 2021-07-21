@@ -2362,6 +2362,9 @@
 ### 知识点
 * Redux使用步骤
     1. 安装
+        ```js
+            npm i redux
+        ```
     2. 引入
         ```js
             import {createStore} from 'redux'
@@ -2374,6 +2377,9 @@
             }
             const reducer = function(state,action){
                 // 这里实现如何修改state
+                switch(action.type){
+
+                }
                 return newState
             }
             const store = createStore(reducer,initState)
@@ -2399,6 +2405,12 @@
     * 强制刷新
 * react组件与redux结合
     > 利用高阶组件实现redux数据共享，让代码有更好的**可维护性**
+    * withUser
 
 * react-redux
-    > 利用高阶组件与Context实现数据共享
+    > 利用高阶组件+Context实现redux数据共享
+    * connect()
+    * Provider
+    * 使用步骤
+        1. 利用react-redux提供的组件`Provider`共享store
+        2. 在我们的组件中利用`connnect()`高阶组件定义传入的数据和修改方法

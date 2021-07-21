@@ -1,9 +1,14 @@
 import React from 'react';
 import { Select, Form, Input, Button, message } from 'antd'
 import request from '@/utils/request';
+import {connect} from 'react-redux'
 import { withStorages } from '../../utils/hoc'
 
-@withStorages('userInfo')
+// @withStorages('userInfo')
+const mapStateToProps = state=>({
+    userInfo:state.userInfo
+})
+@connect(mapStateToProps)
 class Add extends React.Component {
     state = {
         name: '',
@@ -14,9 +19,9 @@ class Add extends React.Component {
         const { userInfo } = this.props;
         console.log('onFinish=', values);
         const data = await request.post('/class', values, {
-            headers: {
-                Authorization: userInfo.authrization
-            }
+            // headers: {
+            //     Authorization: userInfo.authrization
+            // }
         });
         console.log('data', data);
 

@@ -1,10 +1,15 @@
 import React from 'react';
 import {Form,Input,Checkbox,Button} from 'antd'
 import request from '@/utils/request';
+import {connect,useDispatch,useSelector} from 'react-redux';
 import './login.scss';
-import store from '../store';
+// import store from '../store';
 
 function Login(props) {
+    // Hook
+    // const userInfo = useSelector(function(state){
+    //     return state.userInfo;
+    // })
     const onFinish = async function(values){
         console.log('onFinish=',values);
         const data = await request.post('/login',values);
@@ -12,7 +17,9 @@ function Login(props) {
 
         if(data.code === 200){
             // localStorage.setItem('userInfo',JSON.stringify(data.data))
-            store.dispatch({type:'login',user:data.data})
+            // store.dispatch({type:'login',user:data.data})
+
+            props.login(data.data)
             props.history.push('/home');
         }
     }
@@ -65,4 +72,14 @@ function Login(props) {
     )
 }
 
+const mapStateToProps = state => ({
+    
+})
+const mapDispatchToProps = dispatch=>({
+    login(user){
+        dispatch({type:'login',user})
+    }
+})
+
+Login = connect(mapStateToProps,mapDispatchToProps)(Login)
 export default Login

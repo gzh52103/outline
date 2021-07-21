@@ -5,10 +5,12 @@ try{
     userInfo = JSON.parse(userInfo) || {}
 }catch(err){
     userInfo = {}
+    
 }
 
 const initState = {
-    userInfo
+    userInfo,
+    role:{}
 }
 
 const reducer = function (state, action) {

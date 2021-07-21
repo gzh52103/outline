@@ -6,6 +6,51 @@ import Login from './views/Login'
 import App from './App'
 import store from './store'
 
+// 测试简化版redux
+import {createStore} from './miniRedux'
+const initState = {
+    userInfo:{
+        username:'laoxie'
+    }
+}
+const reducer = function(state,action){
+    switch(action.type){
+        case 'login':
+            return {
+                ...state,
+                userInfo:action.user
+            }
+        case 'logout':
+            return {
+                ...state,
+                userInfo:{}
+            }
+        default:
+            return state;
+    }
+}
+const miniStore = createStore(reducer,initState);
+// 获取
+console.log('miniState1=',miniStore.getState())
+// 监听
+miniStore.subscribe(function(){
+    console.log('监听ministate')
+})
+const unsubscribe = miniStore.subscribe(function(){
+    console.log('再次监听ministate')
+})
+//修改
+miniStore.dispatch({type:'login',user:{username:'tt',authorization:'sjdflasj',role:'vip'}})
+console.log('miniState2=',miniStore.getState())
+
+// 取消监听
+unsubscribe()
+
+miniStore.dispatch({type:'logout'})
+console.log('miniState3=',miniStore.getState())
+
+
+
 // 根据环境自动切换路由类型
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter: HashRouter
 

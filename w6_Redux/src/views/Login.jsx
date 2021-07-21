@@ -2,6 +2,9 @@ import React from 'react';
 import {Form,Input,Checkbox,Button} from 'antd'
 import request from '@/utils/request';
 import {connect,useDispatch,useSelector} from 'react-redux';
+
+import userAction from '@/store/actions/user'
+
 import './login.scss';
 // import store from '../store';
 
@@ -77,7 +80,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch=>({
     login(user){
-        dispatch({type:'login',user})
+        // dispatch({type:'login',user})
+        dispatch(userAction.login(user))
     }
 })
 

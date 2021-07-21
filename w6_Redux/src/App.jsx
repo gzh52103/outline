@@ -8,6 +8,8 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Class from './views/Class'
 import Student from './views/Student'
+import {bindActionCreators} from 'redux'
+import userAction from '@/store/actions/user'
 
 import { withUser } from './utils/hoc'
 
@@ -25,18 +27,26 @@ const mapStateToProps = function(state){
     // state: redux中的数据
     console.log('state=',state);
     return {
-        userInfo:state.userInfo,
-        role:state.role,
+        // userInfo:state.userInfo,
+        userInfo:state.user.userInfo,
+        role:state.admin.role,
     }
 }
 // 映射修改方法到组件的props
 // 如设置该函数，dipatch会自动传入组件的props
 const mapDispatchToProps = function(dispatch){
-    return {
-        logout(){
-            dispatch({type:'logout'})
-        },
-    }
+    // return {
+    //     logout(){
+    //         // dispatch({type:'logout'})
+    //         dispatch(userAction.logout())
+    //     },
+    //     login(user){
+    //         dispatch(userAction.login(user))
+    //     }
+    // }
+
+    // 等效于以上代码
+    return bindActionCreators(userAction,dispatch)
 }
 
 @withRouter

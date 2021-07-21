@@ -2414,3 +2414,17 @@
     * 使用步骤
         1. 利用react-redux提供的组件`Provider`共享store
         2. 在我们的组件中利用`connnect()`高阶组件定义传入的数据和修改方法
+
+* redux模块化（reducer模块化）
+    * combineReducers把多个reducer组合成一个大的reducer
+    * 把初始数据写入到reducer中
+
+* Action Creator
+    > action构造器，一个用于创建action的函数，主要用于简化操作
+
+* Redux设计和使用的三项基本原则
+    1. 唯一数据源：一个应用只能有一个store
+    2. 只有store能改变自己的内容
+        > store.dispatch(action)
+    3. Reducer必须是一个纯函数
+        > 不修改传入的参数，固定输入有固定输出

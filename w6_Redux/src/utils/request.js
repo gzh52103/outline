@@ -7,6 +7,22 @@ export const baseUrl = process.env.NODE_ENV === 'production' ?
 
 export const apiUrl = baseUrl + '/api';
 
+// 解决数据更新后无法获取最新值的问题
+let {userInfo} = store.getState().user;
+store.subscribe(()=>{console.log(666)
+    userInfo = store.getState().user.userInfo
+})
+const unsubscribe = store.subscribe(()=>{console.log(777)
+    
+})
+store.subscribe(()=>{console.log(888)
+    
+})
+
+setTimeout(()=>{
+    unsubscribe()
+},5000)
+
 function request(url,data={},config={}){
     url = (url.startsWith('http') ? '' : apiUrl) + url;
     
@@ -31,7 +47,7 @@ function request(url,data={},config={}){
         if(config.headers === undefined){
             config.headers = {}
         }
-        config.headers['Authorization'] = store.getState().userInfo.authorization;
+        config.headers['Authorization'] = userInfo.authorization
         config.headers['Content-type'] = 'application/json'
     }
 

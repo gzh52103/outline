@@ -14,17 +14,22 @@ function Login(props) {
     //     return state.userInfo;
     // })
     const onFinish = async function(values){
-        console.log('onFinish=',values);
-        const data = await request.post('/login',values);
-        console.log('data',data);
+        // console.log('onFinish=',values);
+        // const data = await request.post('/login',values);
+        // console.log('data',data);
 
-        if(data.code === 200){
-            // localStorage.setItem('userInfo',JSON.stringify(data.data))
-            // store.dispatch({type:'login',user:data.data})
+        // if(data.code === 200){
+        //     // localStorage.setItem('userInfo',JSON.stringify(data.data))
+        //     // store.dispatch({type:'login',user:data.data})
 
-            props.login(data.data)
+        //     props.login(data.data)
+        //     props.history.push('/home');
+        // }
+        const result = await props.login(values);
+        if(result.code === 200){
             props.history.push('/home');
         }
+
     }
     const rules = {
         username:[
@@ -81,7 +86,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch=>({
     login(user){
         // dispatch({type:'login',user})
-        dispatch(userAction.login(user))
+        // dispatch(userAction.login(user))
+        return dispatch(userAction.loginAsync(user));
     }
 })
 

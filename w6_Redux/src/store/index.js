@@ -1,5 +1,6 @@
-import { createStore } from 'redux'
+import { createStore,applyMiddleware } from 'redux'
 import reducer from './reducers'
+import thunk from 'redux-thunk';
 
 // 未模块化的代码
 // let userInfo = localStorage.getItem('userInfo')
@@ -37,7 +38,11 @@ import reducer from './reducers'
 
 
 // 模块化reducer后的代码
-const store = createStore(reducer);
+// const store = createStore(reducer);
+
+// 使用中间件
+const enhancer = applyMiddleware(thunk.withExtraArgument(100))
+const store = createStore(reducer,enhancer);
 
 
 console.log('store=', store);

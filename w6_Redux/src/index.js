@@ -36,11 +36,11 @@ console.log('miniState1=',miniStore.getState())
 miniStore.subscribe(function(){
     console.log('监听ministate')
 })
-const unsubscribe = miniStore.subscribe(function(){
+const unsubscribe = miniStore.subscribe(function(state){
     console.log('再次监听ministate')
 })
 //修改
-miniStore.dispatch({type:'login',user:{username:'tt',authorization:'sjdflasj',role:'vip'}})
+const action = miniStore.dispatch({type:'login',user:{username:'tt',authorization:'sjdflasj',role:'vip'}})
 console.log('miniState2=',miniStore.getState())
 
 // 取消监听

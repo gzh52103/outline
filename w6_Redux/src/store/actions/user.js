@@ -1,3 +1,4 @@
+import request from '@/utils/request'
 
 /**
  * Action Creator
@@ -26,7 +27,25 @@ export function update(user){
     }
 }
 
+export function loginAsync(values){
+    return async function(dispatch,getState,num){
+        // const state = getState();
+        // console.log('loginAsync=',state,num);
+        const data = await request.post('/login',values);
+        console.log('data',data);
+
+        if(data.code === 200){
+            dispatch(login(data.data))
+        }
+
+        return data;
+    }
+}
+
+// dispatch(loginAsync({username:'laoxie',password:123456}))
+
 export default {
     login,
     logout,
+    loginAsync,
 }

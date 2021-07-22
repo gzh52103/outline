@@ -22,13 +22,14 @@ export function createStore(reducer,initState){
         // 有修改才执行listender
 
         listeners.forEach(listener=>{
-            listener();
+            listener(state);
         })
 
         return action;
     }
 
     // 监听state修改
+    // 订阅发布者模式
     const subscribe = function(fn){
         // 保存fn
         listeners.push(fn);

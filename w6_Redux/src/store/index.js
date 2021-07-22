@@ -1,6 +1,9 @@
-import { createStore,applyMiddleware } from 'redux'
+import { createStore,applyMiddleware,compose } from 'redux'
 import reducer from './reducers'
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './saga';
 
 // 未模块化的代码
 // let userInfo = localStorage.getItem('userInfo')
@@ -40,10 +43,19 @@ import thunk from 'redux-thunk';
 // 模块化reducer后的代码
 // const store = createStore(reducer);
 
+const sagaMiddleware = createSagaMiddleware();
+
 // 使用中间件
-const enhancer = applyMiddleware(thunk.withExtraArgument(100))
+const enhancer = compose(
+    applyMiddleware(thunk.withExtraArgument(100)),
+    composeWithDevTools(),
+    applyMiddleware(sagaMiddleware)
+)
+// const enhancer = composeWithDevTools(applyMiddleware(thunk.withExtraArgument(100)))
 const store = createStore(reducer,enhancer);
 
+// 5. 运行saga配置
+sagaMiddleware.run(rootSaga);
 
 console.log('store=', store);
 // store.subscribe(function () {

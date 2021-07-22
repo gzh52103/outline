@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03.生成器函数Generator</title>
+</head>
+<body>
+    <h1>03.生成器函数Generator</h1>
+    <script>
+        /**
+            * 03.生成器函数Generator
+            * 生成器函数
+                > function与函数名间有一个星号`*`，调用生成器函数并不会执行内部的代码，而是返回一个迭代器
+            * 迭代器
+                > 包含一个next方法，调用next方法执行一次迭代，并返回一个对象，格式为：{value,done}
+                    * value： 当前迭代返回值
+                    * done: 是否迭代完成
+                * 自定义数据遍历规则
+                * 状态
+                    * suspended     挂起（迭代未完成）
+                    * close         关闭（迭代完成）
+                
+         */
+
+        //  function create(){
+
+        //  }
+        //  const res1 = create(); // undefined
+        //  const res2 = new create();// object
+        //  console.log('res1',res1)
+        //  console.log('res2',res2)
+
+        //  async function create(){
+        //     return 100;
+        //  }
+        //  const res3 = create();// Promise对象
+        //  console.log(res3)
+
+        // 生成器函数：返回一个迭代器
+         function * create(){
+            console.log('start')
+            yield 10;
+            console.log(1)
+            yield 20;
+            console.log(2)
+            yield setTimeout(()=>console.log('timeout'),2000);
+            console.log(3)
+            return 100
+            console.log('end')
+         }
+         const res4 = create();
+         console.log('res4',res4);
+
+         for(let v of res4){
+             // for...of就是在不断调用next的过程
+             console.log('v=',v);
+         }
+
+         // 利用for...of遍历普通对象
+         const obj = {a:10,b:20,username:'tt',role:'vip'}
+
+          // 解决方案：给对象添加迭代器
+
+        // 利用生成器函数创建一个迭代器
+        function* createIterator(o) {
+			for (var key in o) {
+				yield o[key];
+			}
+		}
+
+        // 自定义迭代器（自定义遍历规则）
+        // function createIterator(o) {
+		// 	var idx = 0;
+		// 	var isArray = Array.isArray(o);
+		// 	var keys = Object.keys(o);
+		// 	return {
+		// 		next() {
+		// 			var end = idx >= ( isArray ? o.length : keys.length);
+		// 			idx = idx++;
+		// 			var val = end ? undefined : (isArray ? o[idx] :[keys[idx],o[keys[idx]]])
+		// 			return {
+		// 				value: val,
+		// 				done: end
+		// 			}
+		// 		}
+		// 	}
+		// }
+       
+        Object.defineProperty(Object.prototype, Symbol.iterator, {
+			configurable:true,
+            value: function () {
+				// this指向person
+				return createIterator(this);
+			}
+		})
+
+         for(let k of obj){
+             console.log('k=',k);
+         }
+    </script>
+</body>
+</html>

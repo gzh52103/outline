@@ -2434,4 +2434,158 @@
 
 ## day6-4
 
+### 面试题
+* props类型校验
+```js
+    // vue
+    <mycomponent :index="10" />
+    
+    {
+        //props:['index'],
+        props:{
+            index:[Number,String],
+            index:{
+                type:[Number,String],
+                validator(val){
+                    return val>=10&val<=20
+                },
+                required:true
+            },
+            index:{
+                default:1,
+                default(){
+                    return {}
+                }
+            }
+        },
+        created(){
+            this.index;// '10'
+        }
+    }
+
+    // React: 
+    <MyComponent index={10} data={{a:10,b:20}} />
+
+    import PropTypes from "prop-types";
+    class MyComponent extends React.Component{
+        static propTypes = {
+
+        }
+        static defaultProps = {
+
+        }
+        render(){
+            this.props.index;// 10
+            return (
+                <div></div>
+            )
+        }
+    }
+    // 添加静态属性：propTypes
+    MyComponent.propTypes = {
+        // index:PropTypes.number,
+        index:PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+        ]),
+        age: function(props, propName, comName){
+            if(props[propsName]<10 || props[propsName]>20){
+                return new Error(propName + "必须在10到20之间");
+            }
+        },
+        // data:PropType.object,
+        data:PropTypes.shape({
+            a: PropTypes.number,
+            b: PropTypes.number.isRequired
+        }),
+    }
+
+    // props默认值
+    MyComponent.defaultProps = {
+        index:1
+    }
+```
+
 ### 知识点
+* redux中间件
+    > 为了解决redux中的异步操作
+    * 工作原理
+    * 使用步骤
+        ```js
+            import {createStore,applyMiddleware} from 'redux'
+            // 1. 引入中间件
+            import thunk from 'redux-thunk'
+            createStore(reducer)
+            createStore(reducer,initState,enhancer)
+
+            // 2. 传入中间件
+            const enhancer = applyMiddleware(thunk)
+            createStore(reducer,enhancer)
+
+            // 3. 编写异步action creator
+            function loginAsync(values){
+                return function(dispatch,getState){
+                    //ajax
+                    // 异步结果返回后触发同步action
+                    dispatch(login(data))
+                }
+            }
+            // 4. 触发异步action
+            dispatch(loginAsync(values))
+        ```
+    * 常用中间件
+        * redux-thunk
+        * redux-devtools-extension
+        * redux-saga
+            * Generator    生成器函数
+            * Iterator     迭代器
+
+* for...of
+    > 能遍历具有迭代器的数据
+
+* redux-saga使用步骤
+    1. 安装
+        ```js
+            npm i -D redux-saga
+        ```
+    2. 引用
+        ```js
+            import createSagaMiddleware from 'redux-saga'
+        ```
+    3. 创建中间件
+        ```js
+            const sagaMiddleware = createSagaMiddleware();
+        ```
+    4. 将 sagaMiddleware 连接至 Store
+        ```js
+            const enhancer = compose(
+                applyMiddleware(thunk),
+                composeWithDevTools(),
+                applyMiddleware(sagaMiddleware)
+            )
+            const store = createStore(reducer,enhancer)
+        ```
+    5. 运行saga配置
+        ```js
+            import rootSaga from './rootSaga.js';
+            sagaMiddleware.run(rootSaga);
+        ```
+
+
+```js
+    // 
+    new Vuex({
+        state,
+        getters,
+        mutations,  // 修改state（同步）
+        actions,    // 异步操作，context.commit(mutation)
+        store.dispatch('login')
+    })
+
+    // redux
+    state
+    reducer //修改state的方法
+        * action.xxx
+    // 异步操作：中间件
+
+```

@@ -1,8 +1,13 @@
 import React,{useState} from 'react';
 
 import UseState from './hooks/UseState'
+import UseReducer from './hooks/UseReducer'
 import UseEffect from './hooks/UseEffect'
 import UseMemo from './hooks/UseMemo'
+import UseCallback from './hooks/UseCallback'
+import UseContext from './hooks/UseContext'
+import UseRef from './hooks/UseRef'
+import UseLayoutEffect from './hooks/UseLayoutEffect'
 
 function Hooks(){
     const [show,changeShow] = useState(true);
@@ -20,7 +25,12 @@ function Hooks(){
                 changeShow(!show);
             }}>销毁/重建</button> */}
 
-            <UseMemo/>
+            {/* <UseMemo/> */}
+            {/* <UseCallback/> */}
+            {/* <UseContext/> */}
+            {/* <UseReducer/> */}
+            {/* <UseRef/> */}
+            <UseLayoutEffect/>
         </div>
     )
 }

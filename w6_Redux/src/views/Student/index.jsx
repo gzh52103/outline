@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect,useHistory,useLocation,useParams,useRouteMatch } from 'react-router-dom';
 import { withStorage, withUser, withStorages, withAuth } from '@/utils/hoc';
 
 import Add from './Add'
@@ -8,6 +8,13 @@ import Edit from './Edit'
 
 function Student(props) {
     console.log('Student.props', props);
+    // Hooks
+    const history = useHistory();
+    const location = useLocation()
+    // 获取路由参数
+    const params = useParams()
+    const route = useRouteMatch('/home')
+
     const {match} = props;
     return (
         <div>

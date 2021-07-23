@@ -2104,6 +2104,7 @@
                         </context.Consumer>
                     ```
                     * Hooks
+                        * useContext
                 * 类组件
                     * Consumer
                         > 一般在JSX中使用
@@ -2651,3 +2652,19 @@
                     return xxx
                 },[])
             ```
+
+    * useCallback
+        > 作用：缓存函数，优化性能
+    * useContext
+        > 作用：简化context的获取
+    * useReducer
+        > 作用：useState的增强版，参考了redux修改数据的方式
+    * useRef
+        > 类似React.createRef()，只在初始化时创建ref对象，组件刷新时从缓存读取（React.createRef()每次都会创建一个新的ref对象）
+    * useLayoutEffect
+        > useEffect的同步版本，等效于类组件中的`componentWillMount`里面的callback函数会在DOM更新完成后立即执行,但是会在浏览器进行任何绘制之前运行完成,阻塞了浏览器的绘制,一般用于节点操作
+
+### 周末练习
+* 利用useReducer实现简化版redux
+* 培养感情，组队
+* 选项目

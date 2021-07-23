@@ -42,6 +42,7 @@ function UseMemo() {
             return prev+item.price*item.qty
         },0)
     },[goodslist])
+    
 
     console.log('UseMemo.end');
     return (

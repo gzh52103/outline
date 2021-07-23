@@ -2589,3 +2589,65 @@
     // 异步操作：中间件
 
 ```
+
+## day6-5
+
+### 知识点
+* React Hook
+    > 一些专门增强函数组件功能的工具函数，有了这些工具函数，能够让函数组件实现类组件的功能
+
+    * useState: 实现class组件状态的功能
+        > 使用：const [state,changeState] = useState(10)
+
+    * useEffect: 实现类组件生命周期函数的功能，在组件渲染完成后执行
+        * 使用方式一
+            > 等效于componentDidMount+componentDidUpdate
+            ```js
+                useEffect(()=>{
+
+                })
+            ```
+        * 使用方式二: 指定依赖
+            > 等效于componentDidMount+shouldComponentUpdate
+            ```js
+                useEffect(()=>{
+
+                },[username,password])
+            ```
+        * 使用方式三: 空依赖
+            > 等效于componentDidMount
+            ```js
+                useEffect(()=>{
+
+                },[])
+            ```
+        * 使用方式四: 返回一个函数
+            > 等效于componentWillUnmount
+            ```js
+                useEffect(()=>{
+
+                },[])
+            ```
+    * useMemo
+        > 一般用于编写一些比较耗费资源且无需重复执行的代码，以达到优化性能的目的，返回值为回调函数的结果（类似于Vue中的computed）
+        * 使用方式一
+            ```js
+                const result useMemo(()=>{
+                    // 初始化与组件刷新时执行
+                    return xxx
+                })
+            ```
+        * 使用方式二: 指定依赖
+            ```js
+                const result useMemo(()=>{
+                    // 初始化与依赖更新时执行
+                    return xxx
+                },[goodslist])
+            ```
+        * 使用方式三: 空依赖
+            ```js
+                const result useMemo(()=>{
+                    // 只在初始化时执行
+                    return xxx
+                },[])
+            ```

@@ -3,6 +3,7 @@ import React from 'react';
 import request from '@/utils/request';
 
 import Lifecycle from '@@/Lifecycle';
+import Hooks from '@@/Hooks';
 
 class App extends React.Component{
     constructor(props){
@@ -15,20 +16,20 @@ class App extends React.Component{
         }
     }
     componentDidMount(){
-        setTimeout(()=>{
-            this.setState({
-                // index:this.state.index+1,
-                qty:this.state.qty+1
-            })
-        },2000);
+        // setTimeout(()=>{
+        //     this.setState({
+        //         // index:this.state.index+1,
+        //         qty:this.state.qty+1
+        //     })
+        // },2000);
     }
     render(){
-        console.log('App.render');
+        // console.log('App.render');
         const {show,index,qty} = this.state;
         return (
             <div>
                 Hello App
-                {
+                {/* {
                     show ? 
                     <Lifecycle index={index}/>
                     :
@@ -42,7 +43,9 @@ class App extends React.Component{
                 }}>show:{show}</button>
                 <button onClick={()=>{
                     this.forceUpdate()
-                }}>强制刷新</button>
+                }}>强制刷新</button> */}
+
+                <Hooks/>
             </div>
         )
     }

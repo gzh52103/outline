@@ -22,7 +22,8 @@ module.exports = {
     devServer:{
         // 设置网站根目录
         // contentBase:'./public', // webpack-dev-server@4不支持
-        // public:'./public',
+        public:'./public',
+        host:'0.0.0.0',
         // hot:true,
         // port:2103,
         // open:true,
@@ -69,6 +70,18 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            // 图片加载器
+            {
+                test:/\.(png|jpe?g|gif|webp|svg)$/i,
+                use:{
+                    loader:'url-loader',
+                    options:{
+                        limit: 8192,// 如果图片小于等于8k，则转成base64
+                        // 大于8K的图片，修改名字并保存到输出目录中的img目录
+                        name: 'img/[name]_[hash:5].[ext]'
+                    }
+                }
             }
         ]
     },
@@ -83,6 +96,11 @@ module.exports = {
         //     // 以什么作为模板声明html文件
         //     template:'./public/index.html',
         //     filename:'login.html',// index.html
+        // }),
+
+        // new copyWebpackPlugin({
+        //     from:'./src/assets',
+        //     to:'./dist/img'
         // })
     ]
 }

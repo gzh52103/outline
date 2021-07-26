@@ -2692,3 +2692,21 @@
 * 利用useReducer实现简化版redux
     > redux设计三项基本原则之**唯一数据源**，但每次使用useReducer都会创建一份数据，要实现简化版redux，必须只能使用一次useReducer
     * 核心：利用自定义组件Provider+Context实现简化版redux
+
+* React项目
+    * 手动配置webpack
+        ```js
+            import xxx from './store'
+            import Home from './views/Home'
+
+            import './style.css'
+            import './style.scss'
+
+            require('./assets/logo.png')
+            import logo from './assets/logo.png'
+        ```
+        * 图片地址
+            * url-loader + file-loader
+                * limit
+                * name
+    * 脚手架：react-create-app

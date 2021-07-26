@@ -2708,5 +2708,23 @@
         * 图片地址
             * url-loader + file-loader
                 * limit
-                * name
-    * 脚手架：react-create-app
+                * namegit 
+    * 脚手架：react-create-app(CRA)
+        * 扩展webpack配置
+            * npm run eject
+            * react-app-rewired（推荐）
+                > 2.0+需要customize-cra模块支持
+                1. 根目录创建`config.overrides.js`
+                    > 配置需要的操作
+                2. 修改package.json中的npm script
+                    ```js
+                        "scripts": {
+                            -   "start": "react-scripts start",
+                            +   "start": "react-app-rewired start",
+                            -   "build": "react-scripts build",
+                            +   "build": "react-app-rewired build",
+                            -   "test": "react-scripts test --env=jsdom",
+                            +   "test": "react-app-rewired test --env=jsdom",
+                                "eject": "react-scripts eject"
+ }
+                    ```

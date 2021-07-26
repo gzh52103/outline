@@ -2668,3 +2668,27 @@
 * 利用useReducer实现简化版redux
 * 培养感情，组队
 * 选项目
+
+## day7-1
+
+### 复习
+* Hooks
+    * 内置hook
+        * useState()
+        * useEffect()  / useLayoutEffect()
+        * useCallback(fn)
+        * useMemo(fn)
+        * useContext()
+        * useRef()
+        * useReducer()
+    * 自定义hook
+        > Hook为一个函数，命名规则以`use`开头
+        * useStorage()
+    * 第三方hook
+        * react-router
+        * react-redux
+        * antd
+        * ...
+* 利用useReducer实现简化版redux
+    > redux设计三项基本原则之**唯一数据源**，但每次使用useReducer都会创建一份数据，要实现简化版redux，必须只能使用一次useReducer
+    * 核心：利用自定义组件Provider+Context实现简化版redux

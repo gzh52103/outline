@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useReducer,useContext} from 'react';
 
 import UseState from './hooks/UseState'
 import UseReducer from './hooks/UseReducer'
@@ -9,11 +9,16 @@ import UseContext from './hooks/UseContext'
 import UseRef from './hooks/UseRef'
 import UseLayoutEffect from './hooks/UseLayoutEffect'
 
+import {context} from '../store'
+
 function Hooks(){
     const [show,changeShow] = useState(true);
+    // const [{goodslist}, dispatch] = useRedux()
+    const {state:{goodslist},dispatch} = useContext(context);
     return (
         <div>
             <h2>React Hooks</h2>
+            {JSON.stringify(goodslist)}
             {/* <UseState/> */}
             {/* {
                 show ?
@@ -28,9 +33,12 @@ function Hooks(){
             {/* <UseMemo/> */}
             {/* <UseCallback/> */}
             {/* <UseContext/> */}
-            {/* <UseReducer/> */}
+            <UseReducer/>
             {/* <UseRef/> */}
-            <UseLayoutEffect/>
+            {/* <UseLayoutEffect/> */}
+            <button onClick={()=>{
+                dispatch({type:'clear'})
+            }}>清空</button>
         </div>
     )
 }

@@ -2726,5 +2726,48 @@
                             -   "test": "react-scripts test --env=jsdom",
                             +   "test": "react-app-rewired test --env=jsdom",
                                 "eject": "react-scripts eject"
- }
+                        }
                     ```
+
+## day7-2
+
+### 知识点
+* javascript的特点
+    * js是世界上最灵活的语言（js没有类型系统：变量类型校验）
+    * js是一门**弱类型**行语言
+    * js是一门**动态类型**语言
+    * 脚本语言：不需要编译，直接运行
+    ```js
+        // type     类型
+        // script
+        
+        let price = 10; // number
+
+        price = '100' // string
+
+        // 隐式转换
+        price = price - 5; // '10'-5=>5
+
+        // Number.prototype.toFixed
+        price.toFixed(2); // '10.00'
+    ````
+* typescript
+    > typescript = javascript + 类型系统 + 新特性
+    * 微软出品，它的出现弥补了js语言的不足
+    * 静态类型：解决了开发者不小心修改了字段类型/字段个数，而导致项目出现问题的痛点
+    * 支持ECMAScript所有特性：始于JavaScript，归于JavaScript
+        > 必须编译成js代码才能在浏览器中运行
+    * 丰富的配置选项：通过配置选项来规避一些隐藏问题和安全隐患
+    * 强大的工具支持：解决了IDE/编辑器无法智能提示的痛点
+
+    ```js
+        let price:number = 10;
+
+        price = '100'; // 在编译阶段报错，在开发工具中提示
+
+        function sum(a:number,b:number):number{
+            return a + b;
+        }
+        sum(10,20);//30
+        sum('10',20);//报错
+    ```

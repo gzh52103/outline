@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// ts测试
+// let price:number = 10;
+// price = '100';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

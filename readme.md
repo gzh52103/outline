@@ -2751,7 +2751,7 @@
         // Number.prototype.toFixed
         price.toFixed(2); // '10.00'
     ````
-* typescript
+* 了解typescript
     > typescript = javascript + 类型系统 + 新特性
     * 微软出品，它的出现弥补了js语言的不足
     * 静态类型：解决了开发者不小心修改了字段类型/字段个数，而导致项目出现问题的痛点
@@ -2771,3 +2771,21 @@
         sum(10,20);//30
         sum('10',20);//报错
     ```
+* 使用ts
+    * 变量类型
+        * 基本类型
+            * string
+            * number
+            * boolean
+            * symbol
+            * enum      枚举类型
+            * never
+            * null
+            * undefined
+            * void      空值
+            * any   
+        * 函数类型
+            * 声明式
+            * 赋值式
+        * 数组类型
+            

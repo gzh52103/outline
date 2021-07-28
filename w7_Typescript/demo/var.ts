@@ -16,8 +16,8 @@ let idx:ns = 1;
 let age:18 = 18; // 等效于：const age:number=18
 // age = 20;
 // let gender:string = '男'; 
-let gender:'男'|'女'|'未知' = '男'; 
-gender = '未知'
+// let gender:'男'|'女'|'未知' = '男'; 
+// gender = '未知'
 
 
 // 5. 类型推论：ts会根据数据自动推断出变量的类型
@@ -30,3 +30,39 @@ let num2; //
 num2 = 1
 num2 = '10'
 num2 = true;
+
+// 7. 特殊类型： void
+function add():void{}
+let a:void = undefined; // undefined
+let b:null = null;
+let c:undefined = undefined;
+
+// let timer:null = null
+// timer = setTimeout(()=>{}) ; // 报错
+function forEach():never{
+    // while(true){
+    // }
+    if(true){
+        throw Error()
+    }
+}
+
+forEach();
+
+// 8. 枚举类型
+
+enum Gender{
+    Male='男',
+    Female='女',
+    Undefined='未知'
+}
+
+
+enum Code{
+    Success=200,
+    Fail=400,
+    NoAccess=401,
+}
+
+let code:Code = Code.Success;
+let gender:Gender

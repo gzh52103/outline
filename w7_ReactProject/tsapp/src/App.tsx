@@ -2,8 +2,12 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+interface IProps{
+  a?:string
+  children?:React.ReactNode
+}
 
-function App() {
+const App:React.FC = (props:IProps):JSX.Element => {
   return (
     <div className="App">
       <header className="App-header">

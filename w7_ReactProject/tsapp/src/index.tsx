@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 // let price:number = 10;
 // price = '100';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -2731,6 +2731,65 @@
 
 ## day7-2
 
+### 面试题
+* hash路由的原理
+    > hash: window的hashchange事件，根据window.location.hash值的不同切换相应的页面
+    > history: HTML5对history进行了增强，添加一个state状态，根据不同的状态切换相应的页面（history路由需要服务器的支持）
+    ```js
+        // Vue
+        new VueRouter({
+            mode:'hash',// history
+        })
+
+        // React
+        <HashRouter/>
+        <BrowserRouter/>
+    ```
+* setState方法的使用
+    ```js
+        state = {
+            qty:1,
+            page:1
+        }
+
+        // setState为异步操作
+        this.setState({
+            page:2
+        },()=>{
+            // 这里的代码在page修改后执行
+            // ajax()
+        })
+        console.log(this.state.page);// 1
+
+        // setState同步操作
+        this.setState((state)=>{
+            return {
+                page:2
+            }
+        })
+        console.log(this.state.page);// 2
+        this.setState((state)=>{
+            return {
+                page:3
+            }
+        })
+        console.log(this.state.page);//3
+
+        // 函数组件
+        function Component(){
+            const [page,setPage] = useState(1);
+            // 合并操作
+            setPage(2)
+            setPage(3)
+            setPage(4)
+
+            // 以下修改不会合并
+            setPage(()=>2)
+            setPage(()=>3)
+            setPage(()=>4)
+        }
+    ```
+
 ### 知识点
 * javascript的特点
     * js是世界上最灵活的语言（js没有类型系统：变量类型校验）
@@ -2790,3 +2849,5 @@
         * 数组类型
         * 对象类型
             > 接口interface
+
+

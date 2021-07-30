@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01.echarts的使用</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.js"></script>
+</head>
+<body>
+    <h1>01.echarts的使用</h1>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        // 创建一个实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 配置参数
+        var option = {
+            title: {
+                // show:false,
+                text: 'ECharts 入门示例',
+                textStyle:{
+                    color:'#58bc58'
+                },
+                left:'50%',
+                textAlign:'center'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量'],
+                right:0
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'line',
+                data: [5, 20, 36, 10, 10, 20],
+                label:{
+                    show:true
+                },
+                smooth: true,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+            }]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

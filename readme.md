@@ -2897,3 +2897,22 @@
                 ]
             }
     ```
+* 数据可视化
+    > 以图形的方式展示数据，实现统计，对比等效果
+    * 实现方式
+        * canvas（位图）
+        * svg
+    * 框架
+        * echarts
+            > 默认采用canvas实现图表效果
+        * highcharts
+            > 默认采用svg实现图表效果
+    * 开发者必备技能
+        * 数据格式化：遍历、创建、删除、匹配
+            ```js
+                let arr = ['a','b','c']
+
+                let data = [{type:'a'},{type:'d'},{type:'c'}]
+
+                let result = data.filter(item=>arr.includes(item.type))
+            ```

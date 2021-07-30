@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { HashRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
 import { Menu, Layout, Breadcrumb, Row, Col, Button, Avatar } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined, HomeOutlined, SolutionOutlined, TeamOutlined, OneToOneOutlined, UserSwitchOutlined, } from '@ant-design/icons'
 import { connect } from 'react-redux'
-import Home from './views/Home'
-import Login from './views/Login'
-import Class from './views/Class'
-import Student from './views/Student'
-import {bindActionCreators} from 'redux'
+
+import { bindActionCreators } from 'redux'
 import userAction from '@/store/actions/user'
 
 import { withUser } from './utils/hoc'
+
+// 传统路由引入方式
+// import Home from './views/Home'
+// import Login from './views/Login'
+// import Class from './views/Class'
+// import Student from './views/Student'
+
+// 路由懒加载
+const Home = lazy(() => import('./views/Home'))
+const Login = lazy(() => import("./views/Login"));
+const Class = lazy(() => import("./views/Class"));
+const Student = lazy(() => import("./views/Student"));
 
 import 'antd/dist/antd.css'
 
@@ -23,18 +32,18 @@ const { SubMenu } = Menu;
 // App = withUser(App);
 // App = withRouter(App)
 // 映射redux中的数据到组件的props
-const mapStateToProps = function(state){
+const mapStateToProps = function (state) {
     // state: redux中的数据
-    console.log('state=',state);
+    console.log('state=', state);
     return {
         // userInfo:state.userInfo,
-        userInfo:state.user.userInfo,
-        role:state.admin.role,
+        userInfo: state.user.userInfo,
+        role: state.admin.role,
     }
 }
 // 映射修改方法到组件的props
 // 如设置该函数，dipatch会自动传入组件的props
-const mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = function (dispatch) {
     // return {
     //     logout(){
     //         // dispatch({type:'logout'})
@@ -46,12 +55,12 @@ const mapDispatchToProps = function(dispatch){
     // }
 
     // 等效于以上代码
-    return bindActionCreators(userAction,dispatch)
+    return bindActionCreators(userAction, dispatch)
 }
 
 @withRouter
 // @withUser
-@connect(mapStateToProps,mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 class App extends React.Component {
     constructor(props) {
         super(props);

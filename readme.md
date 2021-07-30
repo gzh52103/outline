@@ -2851,3 +2851,49 @@
             > 接口interface
 
 
+## day7-5
+
+### 面试题
+* 当超过**安全整数**后如何保证运算的正确性
+    > 安全整数范围：Number.MIN_SAFE_INTEGER - Number.MAX_SAFE_INTEGER（2**53-1）
+    * ES10: BigInt 基本数据类型
+    * 数据类型
+        * Number        
+        * String    
+        * Boolean       true,false
+        * Null          null
+        * Undefined     undefined
+        * Symbol        ES6
+        * BigInt        ES10
+        * Object
+* 如何让v-model在一个组件上生效
+    ```js
+        <mycomponent v-model="qty" />
+        // 原理：<mycomponent v-bind:value="qty" v-on:input="value=$event" />
+
+        // 在组件内部触发
+        this.$emit('input',2)
+    ```
+
+### 知识点
+* 项目优化
+    * 用户体验优化
+    * SEO优化
+    * 性能优化
+        * 路由懒加载
+    ```js
+        // 按需引入
+        import { Button } from 'antd'
+        import 'antd/lib/button/style/index.css'
+
+        // babel插件实现按需加载：.babelrc, babel-loader->options,babel.config.js
+        {
+            "plugins": [
+                ["import", {
+                    "libraryName": "antd",
+                    "libraryDirectory": "es",
+                    "style": "css" // `style: true` 会加载 less 文件
+                    }]
+                ]
+            }
+    ```

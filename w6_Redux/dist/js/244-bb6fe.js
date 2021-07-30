@@ -1,0 +1,1 @@
+(self.webpackChunkw5_reactrouter=self.webpackChunkw5_reactrouter||[]).push([[244],{244:(e,t,r)=>{"use strict";r.r(t),r.d(t,{default:()=>n});var o=r(7294);const n=function(e){return console.log("Home.props",e),o.createElement("div",null,"Home",o.createElement("button",{onClick:()=>{e.history.push("/login")}},"登录"))}}}]);

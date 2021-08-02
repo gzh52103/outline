@@ -2916,3 +2916,7 @@
 
                 let result = data.filter(item=>arr.includes(item.type))
             ```
+
+## day8-1
+
+### 知识点

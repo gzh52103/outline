@@ -14,5 +14,15 @@ Page({
         }
       })
     })
+  },
+
+  // 下拉刷新
+  onPullDownRefresh(){
+    console.log('下拉刷新')
+  },
+
+  // 上拉操作（滚动加载）
+  onReachBottom(){
+    console.log('滚动加载')
   }
 })

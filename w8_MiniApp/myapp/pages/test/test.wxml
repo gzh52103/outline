@@ -1,0 +1,16 @@
+<!--pages/test/test.wxml-->
+<text>pages/test/test.wxml</text>
+<text class="title">hello h1</text>
+
+<rich-text nodes="<strong>hello</strong> <h1>rich-text</h1>"></rich-text>
+
+
+
+<navigator url="/pages/index/index" open-type="switchTab">首页</navigator>
+<navigator url="/pages/list/list" open-type="navigate">列表</navigator>
+<navigator url="/pages/index/index" open-type="reLaunch">reLaunch list</navigator>
+
+<view>数据绑定</view>
+<text bind:tap="changeCount">count:{{count}}</text>
+<view>双向绑定：<input value="{{count}}" bind:input="setCount" /></view>
+<view>model双向绑定：<input model:value="{{count}}" /></view>

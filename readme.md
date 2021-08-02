@@ -2920,3 +2920,45 @@
 ## day8-1
 
 ### 知识点
+* 小程序
+    * 分类
+        * 微信小程序
+        * 支付宝小程序
+        * 百度小程序
+        * 头条（字节跳动）小程序
+        * QQ小程序
+        * 快应用
+        * ...
+    * 特点
+        > 不需要安装，直接使用，速度快
+    * 注册与配置
+    * 开发者工具
+* 小程序开发
+    * 文件类型
+        * .json     配置文件
+        * .wxss     样式文件（类似与web中的css,兼容大部分css语法）
+        * .wxml     结构文件（类似于web中的html）
+        * .js       逻辑文件
+        * .wxs      模块化脚本文件（类似js）
+    * 作用范围
+        * 全局文件
+            * app.json
+            * app.js
+            * app.wxss
+        * 页面文件
+            * [PAGE].json
+            * [PAGE].js
+            * [PAGE].wxss
+    * json配置文件
+        * entryPagePath
+        * pages
+        * window
+        * tabBar
+            > tabbar页面与非tabbar页面
+    * wxss样式文件
+        > 微信小程序兼容大部分css语法
+        * 增加尺寸单位：rpx
+        * 提供了全局的样式和局部样式
+        * WXSS 仅支持部分 CSS 选择器
+    * wxml结构文件
+    * js逻辑文件

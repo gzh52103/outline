@@ -1,2 +1,8 @@
 <!--pages/list/list.wxml-->
 <text>pages/list/list.wxml</text>
+
+<datalist list="{{[10,20,30]}}"/>
+
+<mylist list="{{['laoxie','tiantian','jingjing']}}"/>
+
+<mylist class="abc" />

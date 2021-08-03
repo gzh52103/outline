@@ -8,7 +8,7 @@ Page({
 
   },
 
-  gohome(){
+  gohome() {
     console.log('gohome')
     wx.switchTab({
       url: '/pages/index/index',
@@ -20,14 +20,14 @@ Page({
    */
   onLoad: function (options) {
     // options为跳转页面时传入的参数
-    console.log('Mine.onLoad',options)
+    console.log('Mine.onLoad', options)
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
     console.log('Mine.onReady')
   },
 
@@ -36,6 +36,11 @@ Page({
    */
   onShow: function () {
     console.log('Mine.onShow')
+
+    const current = this.getTabBar();
+    current.setData({
+      current: 1
+    })
   },
 
   /**

@@ -1,7 +1,7 @@
 // pages/test/test.js
 
 const app = getApp();
-console.log('app=',app);
+console.log('app=', app);
 
 // 注册小程序中的一个页面
 Page({
@@ -11,47 +11,54 @@ Page({
    */
   data: {
     count: 10,
-    score:{
-      en:100
+    score: {
+      en: 100
     },
     // userlist:['吴亦凡','吴签','凡凡'],
-    userlist:[{
-      id:1,
-      username:'jingjing',
-      score:[89,130,60]
-    },{
-      id:2,
-      username:'tiantian',
-      score:[129,90,66]
-    },{
-      id:3,
-      username:'laoxie',
-      score:[100,110,1]
+    userlist: [{
+      id: 1,
+      username: 'jingjing',
+      score: [89, 130, 60]
+    }, {
+      id: 2,
+      username: 'tiantian',
+      score: [129, 90, 66]
+    }, {
+      id: 3,
+      username: 'laoxie',
+      score: [100, 110, 1]
     }],
+
+    imgUrls: [
+      'http://desk-fd.zol-img.com.cn/g5/M00/02/05/ChMkJ1bKyZmIWCwZABEwe5zfvyMAALIQABa1z4AETCT730.jpg',
+      'http://desk-fd.zol-img.com.cn/g5/M00/02/05/ChMkJ1bKyZmIWCwZABEwe5zfvyMAALIQABa1z4AETCT730.jpg',
+      'http://desk-fd.zol-img.com.cn/g5/M00/02/05/ChMkJ1bKyZmIWCwZABEwe5zfvyMAALIQABa1z4AETCT730.jpg'
+    ],
+    show: true
   },
-  gohome(){
+  gohome() {
     console.log('gohome')
     // 关闭所有非tabbar页面，并跳到目标页面
     wx.switchTab({
       url: '/pages/index/index',
     })
   },
-  goto(e){
-    console.log('goto',e)
-    const {url} = e.currentTarget.dataset
+  goto(e) {
+    console.log('goto', e)
+    const { url } = e.currentTarget.dataset
     wx.redirectTo({
       url,
     })
   },
   changeCount(e) {
     // this.count++;// vue
-    console.log('chagneCount',e)
+    console.log('chagneCount', e)
     this.setData({
       count: this.data.count + 1
     })
   },
-  setCount(e){
-    console.log('setCount',e)
+  setCount(e) {
+    console.log('setCount', e)
     this.setData({
       count: e.detail.value
     })

@@ -15,6 +15,7 @@
     "backgroundColor":"#f90"
   },
   "tabBar":{
+    "custom": true,
     "color":"#fff",
     "selectedColor":"#ff0",
     "position":"top",
@@ -32,5 +33,10 @@
     }]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents":{
+    "mylist":"/components/list/list",
+    "mp-icon": "weui-miniprogram/icon/icon",
+    "mp-gallery": "weui-miniprogram/gallery/gallery"
+  }
 }

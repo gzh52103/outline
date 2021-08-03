@@ -37,3 +37,12 @@
     <view></view>
     <text></text> -->
 </view>
+
+<!-- 使用组件 -->
+<view>使用组件</view>
+<mylist />
+
+<mp-icon type="field" icon="add" color="black" size="{{25}}" />
+<mp-icon type="field" icon="mike" color="black" size="{{25}}" />
+
+<mp-gallery show="{{show}}" bindchange="change" binddelete="delete" bindhide="hide" img-urls="{{imgUrls}}" delete hide-on-click="{{true}}" current="1"></mp-gallery>

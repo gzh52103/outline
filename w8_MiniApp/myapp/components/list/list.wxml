@@ -1,0 +1,8 @@
+<view>
+    <view>list组件</view>
+    <view wx:for="{{list}}" wx:key="*this">{{item}}</view>
+
+    <view>Count:{{count}}</view>
+    <button bind:tap="changeCount">count++</button>
+    <view>Qty:{{qty}}</view>
+</view>

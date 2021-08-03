@@ -2989,3 +2989,40 @@
             * onLoad
                 * options: 页面参数
 
+* 组件
+    * 内置组件
+    * 自定义组件
+        * 文件
+            * json  配置文件
+            * wxss  样式文件
+            * wxml  结构文件
+            * js    逻辑文件
+                > 通过`Component()`定义一个组件
+                * 配置
+                    * properties
+                    * data
+                    * methods
+                    * observers
+                    * behaviors
+                    * lifetimes
+                    * pageLifetimes
+        * 使用组件
+            1. 局部组件：在页面中配置`usingComponents`
+            2. 全局组件：在app.json中配置`usingComponents`
+
+    * 第三方组件
+        * 使用步骤
+            1. 安装
+                > 在小程序中使用npm模块
+            2. 构建
+                > 工具->构建npm（前提必须有package.json文件）
+            3. 引入样式
+                > 建议在app.wxss中引入样式文件
+            4. 定义`usingComponents`
+
+    * 自定义tabbar
+        >利用自定义组件来实现 tabBar 的可定制化 
+        1. 定义app.json的tabBar.custom属性为true
+            > 虽然tabBar.list属性在自定义 tabBar 中用不到，但还是要正常设置，用户标识tabBar 页面（只有 tabBar 页面才会显示自定义的 tabBar ）
+
+        2. 在根目录下创建custom-tab-bar组件

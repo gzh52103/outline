@@ -2917,7 +2917,7 @@
                 let result = data.filter(item=>arr.includes(item.type))
             ```
 
-## day8-1
+## day8-1~day8-2
 
 ### 知识点
 * 小程序
@@ -2961,4 +2961,31 @@
         * 提供了全局的样式和局部样式
         * WXSS 仅支持部分 CSS 选择器
     * wxml结构文件
+        * 数据绑定
+            * 单向：{{}}
+            * 双向
+                * 单向（value="{{}}"）+事件（bind:input）
+                * model
+        * 事件绑定：bind/catch
+            * event
+            * 传参
+                > 采用自定义属性（`data-*`）的方式
+        * 条件渲染
+            * wx:if
+            * wx:else
+            * wx:elif
+        * 列表渲染
+            * wx:for
+            * wx:for-item
+            * wx:for-index
+            * wx:key
+                > 与Vue和React不同，Vue和React采用属性值作为key,而在小程序中采用属性名作为key，如果没有唯一属性，则使用`*this`作为key值
     * js逻辑文件
+        * 全局文件：`app.js`
+            * onLaunch
+            * onShow
+                > 以上两个生命周期函数都能获取到进入小程序时的场景值与参数
+        * 页面文件：`[PAGE].js`
+            * onLoad
+                * options: 页面参数
+

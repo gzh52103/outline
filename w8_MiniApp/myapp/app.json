@@ -15,7 +15,6 @@
     "backgroundColor":"#f90"
   },
   "tabBar":{
-    "custom":true,
     "color":"#fff",
     "selectedColor":"#ff0",
     "position":"top",

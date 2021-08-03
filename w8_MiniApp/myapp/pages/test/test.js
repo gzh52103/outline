@@ -1,4 +1,9 @@
 // pages/test/test.js
+
+const app = getApp();
+console.log('app=',app);
+
+// 注册小程序中的一个页面
 Page({
 
   /**
@@ -8,7 +13,35 @@ Page({
     count: 10,
     score:{
       en:100
-    }
+    },
+    // userlist:['吴亦凡','吴签','凡凡'],
+    userlist:[{
+      id:1,
+      username:'jingjing',
+      score:[89,130,60]
+    },{
+      id:2,
+      username:'tiantian',
+      score:[129,90,66]
+    },{
+      id:3,
+      username:'laoxie',
+      score:[100,110,1]
+    }],
+  },
+  gohome(){
+    console.log('gohome')
+    // 关闭所有非tabbar页面，并跳到目标页面
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
+  goto(e){
+    console.log('goto',e)
+    const {url} = e.currentTarget.dataset
+    wx.redirectTo({
+      url,
+    })
   },
   changeCount(e) {
     // this.count++;// vue
@@ -49,14 +82,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('Test.onHide')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('Test.onUnload')
   },
 
   /**

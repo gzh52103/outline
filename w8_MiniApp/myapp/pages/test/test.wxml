@@ -1,5 +1,6 @@
 <!--pages/test/test.wxml-->
-<text>pages/test/test.wxml</text>
+<button type="primary" bind:tap="gohome">回到首页</button>
+<button type="default" bind:tap="goto" data-url="/pages/list/list">列表页</button>
 <text class="title">hello h1</text>
 
 <rich-text nodes="<strong>hello</strong> <h1>rich-text</h1>"></rich-text>
@@ -14,3 +15,25 @@
 <text bind:tap="changeCount">count:{{count}}</text>
 <view>双向绑定：<input value="{{count}}" bind:input="setCount" /></view>
 <view>model双向绑定：<input model:value="{{count}}" /></view>
+
+<view>条件渲染：wx:if/wx:elif/wx:else</view>
+<view wx:if="{{count>20}}">count大于20</view>
+<view wx:else>count小于等于20</view>
+
+<view>列表循环：wx:for</view>
+<view wx:for="{{userlist}}" wx:for-index="idx" wx:key="id">
+    {{idx+1}} - {{item.username}}
+    <block wx:for="{{item.score}}" wx:key="*this">
+        <view>{{idx+1}}-{{index+1}} => {{item}}</view>
+        <text>test</text>
+    </block>
+
+    <!-- <view></view>
+    <text></text>
+
+    <view></view>
+    <text></text>
+
+    <view></view>
+    <text></text> -->
+</view>

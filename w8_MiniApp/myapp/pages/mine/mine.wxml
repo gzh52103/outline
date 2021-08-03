@@ -1,2 +1,4 @@
 <!--pages/mine/mine.wxml-->
 <text>pages/mine/mine.wxml</text>
+
+<button bind:tap="gohome">返回首页</button>

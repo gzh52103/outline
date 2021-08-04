@@ -1,4 +1,6 @@
 import request from '../../utils/request'
+// const req = require('../../utils/request')
+// console.log('req',req);
 
 // index.ts
 // 获取应用实例
@@ -76,7 +78,8 @@ Page({
     })
   },
   gotoDetail(e){
-    const {iqid} = e.currentTarget.dataset
+    const {iqid} = e.currentTarget.dataset;
+    console.log('iqid=',iqid)
     wx.navigateTo({
       url:'/pages/iq/iq?iqid='+iqid
     })

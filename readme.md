@@ -3041,3 +3041,27 @@
 * 模块化
     * ESModule
     * commonJS
+
+* api接口
+    > wx.xxx
+    * wx.request()
+
+* wxs模块化脚本语言
+    > 参考了ECMAscript5的脚本语言，目的为了能在wxml结构中使用脚本
+
+    * 使用
+        1. 定义并导出模块
+            ```js
+                <wxs module="tools">
+                    function fromat(){
+                        
+                    }
+                    module.exports = {
+                        format:format
+                    }
+                </wxs>
+            ```
+        2. 通过模块名调用导出的模块
+            ```js
+                {{tools.format}}
+            ```

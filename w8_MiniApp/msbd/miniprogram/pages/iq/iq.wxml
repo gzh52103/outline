@@ -1,0 +1,35 @@
+<view>
+  <view class="title">{{iq.question}}</view>
+  <view>浏览量：{{iq.hot}}</view>
+  <view bind:tap="formatAmount">价格：{{formatAmount(1000)}}</view>
+  <view >价格（wxs）：{{tools.formatMoney(1000)}}</view>
+  <view >价格（wxs）：{{t.formatMoney(100000)}}</view>
+  <view>{{t.formatDate()}}</view>
+  <button bind:tap="{{tools.handleClick}}">wxs绑定事件</button>
+</view>
+
+
+<!-- <script></script> -->
+<!-- <script src=""/> -->
+<wxs module="tools">
+  // 模块化脚本语言编写代码的位置，由于模块化具有独立的作用域，所以外部无法直接访问这里的变量，需要导出
+
+  function formatMoney(money){
+    ///return money.replace(/\B(?=(\d{3})+(?!\d))/g,',')
+    return '1,000'
+  }
+
+  function handleClick(){
+    console.log('hello')
+  }
+
+  // module.exports.formatMoney = formatMoney;
+  module.exports = {
+    // ES6语法
+    //formatMoney
+    formatMoney:formatMoney,
+    handleClick:handleClick
+  }
+</wxs>
+<!-- 可以是相对路径，也可以是绝对路径 -->
+<wxs src="/wxs/tools.wxs" module="t"></wxs>

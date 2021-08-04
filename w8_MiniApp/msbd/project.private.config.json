@@ -1,0 +1,30 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "iq",
+          "pathName": "pages/iq/iq",
+          "query": "iqid=5f8d079449fee04350fd37ee",
+          "scene": null
+        },
+        {
+          "name": "list",
+          "pathName": "pages/list/list",
+          "query": "type=addtime",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

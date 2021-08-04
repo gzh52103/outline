@@ -1,0 +1,24 @@
+function formatMoney(money){
+    //getRegExp(pattern[, flags])// 等效于js中的new RegExp()
+
+    // 在wxs中，正则特殊字符的反斜杠不需要转义
+    var reg = getRegExp('\B(?=(\d{3})+(?!\d))','g')
+    return (money+'').replace(reg,',')
+  }
+
+function formatDate(d){
+    d = d ? getDate(d) : getDate(); // 等效于js中的new Date()
+    var year = d.getFullYear();
+    var month = d.getMonth()+1;
+    var date = d.getDate();
+
+    return year + '-' + month + '-' + date
+}
+
+  // module.exports.formatMoney = formatMoney;
+  module.exports = {
+    // ES6语法
+    //formatMoney
+    formatMoney:formatMoney,
+    formatDate:formatDate,
+  }

@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <mp-cells ext-class="my-cells" title="最新面试题">
-      <mp-cell wx:for="{{newlist}}" value="{{item.question}}" footer="{{item.answer + '回答'}}"></mp-cell>
+      <mp-cell wx:for="{{newlist}}" wx:key="_id" value="{{item.question}}" footer="{{item.answer + '回答'}}" data-iqid="{{item._id}}" bind:tap="gotoDetail"></mp-cell>
       <!-- <mp-cell>
           <view>标题文字（使用slot）</view>
           <view slot="footer">说明文字</view>
@@ -10,8 +10,9 @@
           <mp-cell value="左滑可以删除" footer="说明文字"></mp-cell>
       </mp-slideview> -->
   </mp-cells>
+  <view class="more"><navigator url="/pages/list/list?type=addtime">更多>></navigator></view>
   <mp-cells ext-class="my-cells" title="热门面试题">
-      <mp-cell wx:for="{{hotlist}}" value="{{item.question}}" footer="{{item.answer + '回答'}}" bind:tap="gotoDetail" data-iqid="{{item._id}}"></mp-cell>
+      <mp-cell wx:for="{{hotlist}}" wx:key="_id" value="{{item.question}}" footer="{{item.answer + '回答'}}" data-iqid="{{item._id}}" bind:tap="gotoDetail"></mp-cell>
   </mp-cells>
-
+    <view class="more"><navigator url="/pages/list/list?type=hot">更多>></navigator></view>
 </view>

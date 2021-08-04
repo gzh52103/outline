@@ -3007,22 +3007,37 @@
                     * lifetimes
                     * pageLifetimes
         * 使用组件
-            1. 局部组件：在页面中配置`usingComponents`
-            2. 全局组件：在app.json中配置`usingComponents`
+            1. 局部组件：在`[PAGE].json`中配置`usingComponents`
+            2. 全局组件：在`app.json`中配置`usingComponents`
 
     * 第三方组件
+        * 常用组件库
+            * weui-miniprogram
+            * vant-weapp
         * 使用步骤
+            > 在小程序中使用npm模块
             1. 安装
-                > 在小程序中使用npm模块
             2. 构建
                 > 工具->构建npm（前提必须有package.json文件）
             3. 引入样式
                 > 建议在app.wxss中引入样式文件
             4. 定义`usingComponents`
+            5. 使用
 
     * 自定义tabbar
-        >利用自定义组件来实现 tabBar 的可定制化 
+        > 利用自定义组件来实现 tabBar 的可定制化 
         1. 定义app.json的tabBar.custom属性为true
             > 虽然tabBar.list属性在自定义 tabBar 中用不到，但还是要正常设置，用户标识tabBar 页面（只有 tabBar 页面才会显示自定义的 tabBar ）
-
         2. 在根目录下创建custom-tab-bar组件
+            * index.json
+            * index.wxss
+            * index.wxml
+            * index.js
+* 文件类型
+    * 应用：App()
+    * 页面: Page()
+    * 组件: Component()
+
+* 模块化
+    * ESModule
+    * commonJS

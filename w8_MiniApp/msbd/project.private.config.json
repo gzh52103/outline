@@ -23,6 +23,12 @@
           "pathName": "pages/list/list",
           "query": "type=addtime",
           "scene": null
+        },
+        {
+          "name": "camera",
+          "pathName": "pages/camera/camera",
+          "query": "",
+          "scene": null
         }
       ]
     }

@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/iq/iq",
     "pages/list/list",
+    "pages/camera/camera",
     "pages/logs/logs"
   ],
   "window": {

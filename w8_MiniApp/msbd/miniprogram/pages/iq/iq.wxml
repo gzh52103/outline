@@ -33,3 +33,12 @@
 </wxs>
 <!-- 可以是相对路径，也可以是绝对路径 -->
 <wxs src="/wxs/tools.wxs" module="t"></wxs>
+
+<import src="../../app.wxml"/>
+
+<!-- data属性等效于组件中的data -->
+<!-- <template is="list" data="{{datalist:[10,20,30],title:'最新面试题'}}"></template>
+<template is="list" data="{{datalist:'hello',title:'热门面试题'}}"></template>
+<template is="list"></template> -->
+
+<include src="../../app.wxml"></include>

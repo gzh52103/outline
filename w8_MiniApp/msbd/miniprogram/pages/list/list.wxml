@@ -1,6 +1,8 @@
-<mp-cells ext-class="my-cells" title="{{title}}">
+<import src="../../app.wxml"/>
+<!-- <mp-cells ext-class="my-cells" title="{{title}}">
     <mp-cell wx:for="{{datalist}}" wx:key="_id" value="{{index+1 + '. ' +item.question}}" footer="{{item.answer + '回答'}}" link data-iqid="{{item._id}}" bind:tap="gotoDetail"></mp-cell>
 
     <view wx:if="hasMore">加载中...</view>
     <view wx:else>------------我是有底线的------------</view>
-</mp-cells>
+</mp-cells> -->
+<template is="lazylist" data="{{datalist}}"></template>

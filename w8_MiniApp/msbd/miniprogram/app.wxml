@@ -1,0 +1,37 @@
+<template name="list">
+  <mp-cells ext-class="my-cells" title="{{title}}">
+    <mp-cell wx:for="{{datalist}}" wx:key="_id" value="{{item.question}}" footer="{{item.answer + '回答'}}"
+      data-iqid="{{item._id}}" bind:tap="gotoDetail" link>
+      <!-- <navigator url="/pages/iq/iq?iqid={{item._id}}"></navigator> -->
+      </mp-cell>
+  </mp-cells>
+  <!-- <view>数据 a:{{templateData.a}}, b:{{b}}</view> -->
+ 
+
+</template>
+<template name="morelist">
+  <template is="list" data="{{datalist,title}}"></template>
+  <view class="more" bind:tap="gotoList">
+    <navigator url="/pages/list/list?type=hot">more>></navigator>
+  </view>
+</template>
+<template name="lazylist">
+  <template is="list" data="{{datalist,more:false}}"></template>
+  <view wx:if="hasMore">加载中...</view>
+  <view wx:else>------------我是有底线的------------</view>
+</template>
+
+<view>
+模板以外的内容
+</view>
+<wxs module="tools">
+  module.exports = {
+    format:function(){
+      console.log('format')
+    }
+  }
+</wxs>
+
+<view>
+  hello thankyou
+</view>

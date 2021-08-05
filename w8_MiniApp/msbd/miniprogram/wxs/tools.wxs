@@ -7,6 +7,7 @@ function formatMoney(money){
   }
 
 function formatDate(d){
+    // Date.now()
     d = d ? getDate(d) : getDate(); // 等效于js中的new Date()
     var year = d.getFullYear();
     var month = d.getMonth()+1;

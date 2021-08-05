@@ -9,7 +9,9 @@ Page({
     iq:{},
 
     // 测试数据
-    price:1000
+    price:1000,
+
+    templateData:{a:666,b:888}
   },
 
   formatAmount(amount){

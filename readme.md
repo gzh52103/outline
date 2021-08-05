@@ -3041,27 +3041,58 @@
 * 模块化
     * ESModule
     * commonJS
+    ```js
+        // 利用esModule导入commonJS模块
+        import xxx from 'url'
+        import * as xxx from 'ulr'
+    ```
 
 * api接口
     > wx.xxx
     * wx.request()
+* 下拉刷新与滚动加载
+
 
 * wxs模块化脚本语言
     > 参考了ECMAscript5的脚本语言，目的为了能在wxml结构中使用脚本
+    > wxs不能与js通讯，也不能调用微信接口
 
     * 使用
         1. 定义并导出模块
             ```js
                 <wxs module="tools">
                     function fromat(){
-                        
+
                     }
                     module.exports = {
                         format:format
                     }
                 </wxs>
+                <wxs module="tools" src="/utils/tools.wxs"></wxs>
             ```
         2. 通过模块名调用导出的模块
             ```js
                 {{tools.format}}
             ```
+* wxs语法：基于ECMAScript5
+    * '\n \r'
+
+* wxml模板
+    1. 定义模板
+        ```js
+            // app.wxml
+            <template name="list">
+                // 复用的结构
+            </template>
+        ```
+    2. 引入模板文件
+        ```js
+            <import src="app.wxml"/>
+        ```
+    3. 使用模板
+        ```js
+            <template is="list"></template>
+        ```
+
+* 微信小程序内置组件
+    * audio -> html中的<audio>

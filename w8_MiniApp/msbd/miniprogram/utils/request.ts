@@ -8,7 +8,7 @@
 //   responseType?: string
 // }
 
-export const baseUrl: string = 'http://120.76.247.5:2001'
+export const baseUrl: string = 'https://api.qfh5.cn'
 export const apiUrl: string = baseUrl + '/api'
 export default function request(url: string, data: any, options: any = {}) {
   return new Promise((resove, reject) => {

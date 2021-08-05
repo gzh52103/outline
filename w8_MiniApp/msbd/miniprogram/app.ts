@@ -14,6 +14,19 @@ App<IAppOption>({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       },
     })
+
+    wx.getUserInfo({
+      success(res){
+        console.log('res=',res);
+      }
+    })
+
+    wx.getUserProfile({
+      desc:'就想获取你的信息',
+      success(res){
+        console.log('profile.res',res);
+      }
+    })
   },
   request(){
     console.log(123)

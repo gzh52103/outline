@@ -12,3 +12,6 @@
     <template is="morelist" data="{{datalist:newlist,title:'最新面试题'}}"></template>
     <template is="morelist" data="{{datalist:hotlist,title:'热门面试题'}}"></template>
 </view>
+
+<navigator url="/pages/map/map">地图</navigator>
+<navigator url="/pages/camera/camera">拍照</navigator>

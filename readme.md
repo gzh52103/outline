@@ -3096,3 +3096,15 @@
 
 * 微信小程序内置组件
     * audio -> html中的<audio>
+    * camera
+* 授权
+    1. wx.getSetting()  获取授权信息
+    2. wx.authorize()   请求授权信息
+        > wx.openSetting() 打开授权控制页面（必须伴随用户点击操作才能调用该接口）
+* 获取用户微信信息
+    * wx.getUserProfile()
+        > 必须通过点击事件且用户允许授权后才得到用户信息
+    * `<open-data>`
+* 地图与定位
+    * 显示：`<map>`
+    * 定位：

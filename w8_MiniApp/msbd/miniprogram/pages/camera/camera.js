@@ -14,6 +14,15 @@ Page({
     })
   },
 
+  getUserProfile(){
+    wx.getUserProfile({
+      desc:'就想获取你的信息',
+      success(res){
+        console.log('profile.res',res);
+      }
+    })
+  },
+
   takePhoto() {
     // 创建摄像头对象
     const ctx = wx.createCameraContext()

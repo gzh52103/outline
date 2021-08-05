@@ -4,6 +4,7 @@
     "pages/iq/iq",
     "pages/list/list",
     "pages/camera/camera",
+    "pages/map/map",
     "pages/logs/logs"
   ],
   "window": {
@@ -17,6 +18,11 @@
   "sitemapLocation": "sitemap.json",
   "useExtendedLib":{
     "weui": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "亲，我们想知道你在哪"
+    }
   },
   "usingComponents": {
     "mp-cells": "weui-miniprogram/cells/cells",

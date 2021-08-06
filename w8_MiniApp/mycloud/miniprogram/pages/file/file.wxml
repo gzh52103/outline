@@ -1,0 +1,5 @@
+
+
+<image src="cloud://class-test-cvn29.636c-class-test-cvn29-1302466056/home_active.png" />
+
+<button type="primary" bind:tap="upload">上传图片到存储空间</button>

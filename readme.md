@@ -3158,5 +3158,70 @@
                     // 条件：db.command
                     col.where(query).get()
                 ```
-        * 在后端操作数据库
-        
+        * 在后端操作数据库（云函数）
+            > 在云函数中操作数据库，云函数在后端，无权限问题
+            1. 初始化
+                > 需要依赖官方工具包`wx-server-sdk`
+                ```js
+                    const cloud = require('wx-server-sdk')
+
+                    cloud.init({
+                        // env:''
+                        env:cloud.DYNAMIC_CURRENT_ENV
+                    })
+                ```
+            2. 获取数据库对象
+                ```js
+                    const db = cloud.database()
+                ```
+            3. 获取集合
+                ```js
+                    const col = db.collection(COLNAME)
+                ```
+            4. 数据CRUD
+                ```js
+                    // 1. 查
+                    // 获取单条数据
+                    col.doc(id).get();
+
+                    // 获取所有数据
+                    col.get()
+
+                    // 根据条件查询数据
+                    // 条件：db.command
+                    col.where(query).get()
+
+                    // 2. 增
+                    col.add(data);
+
+                    // 3. 删
+                    col.where({_id}).remove()
+
+                    // 4. 改
+                    col.where({_id}).update({data})
+                ```
+    * 操作云函数
+        * 云函数调试
+        * 云函数部署
+
+        * 小程序端操作云函数
+            ```js
+                // 返回promise对象
+                wx.cloud.callFunction({
+                    name:'xxx',// 云函数名称
+                    data:{}, // 调用时传递的参数
+                })
+            ```
+        * 在云函数中操作其他云函数
+            ```js
+                cloud.callFunction({
+                    name:'xxx',// 云函数名称
+                    data:{}, // 调用时传递的参数
+                })
+            ```
+
+    * 操作存储空间
+        * 上传: wx.cloud.uploadFile()
+        * 下载: wx.cloud.downloadFile()
+        * 删除：wx.cloud.deleteFile()
+        * 获取文件真实链接地址：wx.cloud.getTempFileURL()

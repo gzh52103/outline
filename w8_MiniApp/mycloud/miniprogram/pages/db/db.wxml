@@ -1,2 +1,1 @@
-<!--miniprogram/pages/db/db.wxml-->
-<text>miniprogram/pages/db/db.wxml</text>
+<button bind:tap="getUserlist">获取所有用户</button>

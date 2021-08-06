@@ -8,6 +8,17 @@ Page({
 
   },
 
+  async getUserlist(){
+    // 调用云函数
+    const {result} = await wx.cloud.callFunction({
+      name:'class',
+      data:{
+        a:10,b:20
+      }
+    })
+    console.log('result',result);
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

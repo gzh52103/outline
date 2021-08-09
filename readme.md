@@ -3232,3 +3232,33 @@
 * 跨平台框架
     > 原理：利用**编译器**把一份代码编译到各个平台的代码，让我们只写一份代码就可以生成各个平台的代码
     * uni-app
+        > uni-app 是一个使用 Vue.js 开发所有前端应用的框架
+        * 微信小程序文件与uni-app的对应关系
+        * app.json      pages.json
+        * app.wxss      App.vue
+        * app.js        App.vue
+        * pages/index
+            * index.json    pages.json
+            * index.wxss    index.vue
+            * index.wxml    index.vue
+            * index.js      index.vue
+    * wePY
+        > WePY是小程序上最早的一款类 Vue 语法框架
+        * app.json      app.wpy
+        * app.wxss      app.wpy
+        * app.js        app.wpy
+        * pages/index
+            * index.json    index.wpy
+            * index.wxss    index.wpy
+            * index.wxml    index.wpy
+            * index.js      index.wpy
+
+    * Taro
+        * app.json      app.config.js
+        * app.wxss      app.scss
+        * app.js        app.jsx
+        * pages/index
+            * index.json    index.config.js
+            * index.wxss    index.scss
+            * index.wxml    index.jsx
+            * index.js      index.jsx

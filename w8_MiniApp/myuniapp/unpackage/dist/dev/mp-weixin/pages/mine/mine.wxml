@@ -1,0 +1,1 @@
+<view class="content">我的<view>{{"用户名："+username}}</view><view data-event-opts="{{[['tap',[['changeQty',['$event']]]]]}}" class="qty" bindtap="__e">{{"qty:"+qty}}</view></view>

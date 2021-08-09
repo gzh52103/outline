@@ -3225,3 +3225,10 @@
         * 下载: wx.cloud.downloadFile()
         * 删除：wx.cloud.deleteFile()
         * 获取文件真实链接地址：wx.cloud.getTempFileURL()
+
+
+## day9-1
+
+* 跨平台框架
+    > 原理：利用**编译器**把一份代码编译到各个平台的代码，让我们只写一份代码就可以生成各个平台的代码
+    * uni-app

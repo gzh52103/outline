@@ -3301,3 +3301,27 @@
             * 流畅度高、用户体验强
             * 可以调用设备原生功能
     * HybridApp: 混合App
+        > 原理：底层功能API均由原生容器通过某种方式提供,然后业务逻辑由H5页面完成,最终原生容器加载H5页面,完成整个App
+        * 核心技术：在native中利用**webview**中嵌入H5页面形成半Native半web开发模式
+        ```js
+            btn.onclick = function(){
+                moxiu.camera.paizhao()
+            }
+
+            const paizao = function(){
+                 window.moxiu && moxiu.camera.paizhao()
+            }
+            <Button onClick={paizhao}>打开摄像头</Button>
+        ```
+
+    * 利用DCloud平台实现一个混合开发App
+        > 半native半web的开发模式
+        * 调用硬件接口
+            * 摄像头
+            * 语音
+            * 定位
+            * 通讯录
+            * 相册
+            * webview
+            * ....
+    

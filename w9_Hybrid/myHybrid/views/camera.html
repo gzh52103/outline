@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>摄像头</title>
+		<link rel="stylesheet" href="../css/bootstrap.css">
+		<style>
+			.preview img {
+				width: 120px;
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<button class="btn btn-outline-success btn-sm btnBack">返回</button>
+			</header>
+			<h1>摄像头</h1>
+			<button class="btn btn-success btnPZ">拍照</button>
+			<button class="btn btn-danger btnLX">录像</button>
+			<button class="btn btn-warning btnSM">扫码</button>
+			<div class="preview p-3">
+
+			</div>
+
+		</div>
+		<script>
+			document.addEventListener('plusready', function() {console.log('ready')
+				const btnPZ = document.querySelector('.btnPZ');
+				const btnLX = document.querySelector('.btnLX');
+				const btnBack = document.querySelector('.btnBack');
+				const preview = document.querySelector('.preview');
+
+
+				const imgs = [];
+
+				btnPZ.onclick = function() {
+					const cmr = plus.camera.getCamera(1);
+					console.log('cmr', cmr);
+
+					cmr.captureImage((capturedFile) => {
+						const imgPath = plus.io.convertLocalFileSystemURL(capturedFile)
+						console.log('capturedFile', capturedFile, imgPath);
+
+						const img = document.createElement('img');
+						img.src = imgPath;
+						img.idx = imgs.length;
+						preview.appendChild(img);
+
+						// 保存图片地址
+						imgs.push(capturedFile)
+
+						// 保存到相册
+						plus.gallery.save(capturedFile, () => {
+							plus.nativeUI.toast('成功保存到相册');
+						})
+					})
+				}
+
+				// 点击显示大图
+				preview.onclick = function(e) {
+					if (e.target.tagName === 'IMG') {
+						plus.nativeUI.previewImage(imgs, {
+							current: e.target.idx
+						})
+					}
+				}
+
+				// 返回上一页
+				btnBack.onclick = function() {
+
+					const current = plus.webview.currentWebview()
+					console.log('back', current);
+					plus.webview.close(current)
+				}
+			})
+		</script>
+	</body>
+</html>

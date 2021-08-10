@@ -1,0 +1,5 @@
+$color-brand: #58bc58;
+$color-brand-light: lighten($color-brand,10%);
+$color-brand-dark: darken($color-brand,10%);
+
+@import '~taro-ui/dist/style/index.scss';

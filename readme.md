@@ -3262,3 +3262,42 @@
             * index.wxss    index.scss
             * index.wxml    index.jsx
             * index.js      index.jsx
+
+* 分包
+> 主包与分包之间，或分包与分包之间不能同目录
+
+
+## day9-2
+
+* 应用类型
+    * webApp    web应用（通过浏览器访问）
+        * 技术
+            * html
+            * css
+            * js
+        * 后缀：html
+        * 优点
+            * 跨平台
+            * 移动端页面适配
+            * 开发成本低，使用成本低，更新维护成本低（注意浏览器缓存），
+            * 入口广
+    * nativeApp 原生应用（需要下载安装）
+        * android
+            * xml
+            * java
+            * 后缀：apk
+        * iOS
+            * xml
+            * Objective-C/swift
+            * 后缀：ipa
+        * winPhone
+            * c#
+            * 后缀：apps
+        * ...
+        * 优点
+            * 运行稳定
+            * 安装之后使用较为方便、用户粘度高
+            * 对网络的依赖性不强
+            * 流畅度高、用户体验强
+            * 可以调用设备原生功能
+    * HybridApp: 混合App

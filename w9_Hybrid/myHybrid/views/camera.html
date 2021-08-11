@@ -10,6 +10,10 @@
 				width: 120px;
 				margin: 5px;
 			}
+
+			#player {
+				width: 100%;
+			}
 		</style>
 	</head>
 	<body>
@@ -21,24 +25,33 @@
 			<button class="btn btn-success btnPZ">拍照</button>
 			<button class="btn btn-danger btnLX">录像</button>
 			<button class="btn btn-warning btnSM">扫码</button>
+			<button class="btn btn-warning btnSB">识别图片条码</button>
 			<div class="preview p-3">
 
 			</div>
 
+			<video id="player" poster="../img/mv3.jpg" controls></video>
+
 		</div>
 		<script>
-			document.addEventListener('plusready', function() {console.log('ready')
+			document.addEventListener('plusready', function() {
+				console.log('ready')
 				const btnPZ = document.querySelector('.btnPZ');
 				const btnLX = document.querySelector('.btnLX');
+				const btnSM = document.querySelector('.btnSM');
+				const btnSB = document.querySelector('.btnSB');
 				const btnBack = document.querySelector('.btnBack');
 				const preview = document.querySelector('.preview');
+				const player = document.querySelector('#player');
 
+				// 获取摄像头对象
+				const cmr = plus.camera.getCamera(1);
+				console.log('cmr', cmr);
 
 				const imgs = [];
 
 				btnPZ.onclick = function() {
-					const cmr = plus.camera.getCamera(1);
-					console.log('cmr', cmr);
+
 
 					cmr.captureImage((capturedFile) => {
 						const imgPath = plus.io.convertLocalFileSystemURL(capturedFile)
@@ -57,6 +70,110 @@
 							plus.nativeUI.toast('成功保存到相册');
 						})
 					})
+				}
+
+				// 录像
+				btnLX.onclick = () => {
+					cmr.startVideoCapture((capturedFile) => {
+						const realPath = plus.io.convertLocalFileSystemURL(capturedFile)
+
+						player.src = realPath;
+
+						player.play()
+					})
+				}
+
+				// 扫码
+				const {
+					QR,
+					EAN13,
+					EAN8
+				} = plus.barcode
+				let barcode = null
+				btnSM.onclick = function() {
+					if (!barcode) {
+						barcode = plus.barcode.create('barcode', [QR, EAN13, EAN8], {
+							top: '100px',
+							left: '0px',
+							width: '100%',
+							height: '500px',
+							position: 'static'
+						});
+
+						// 绑定事件，扫码识别成功自动触发
+						barcode.onmarked = function(type, result) {
+							console.log("扫码成功", type, result);
+
+							let p = document.createElement('p')
+							let html = ''
+							switch (type) {
+								case QR:
+									html = `类型：二维码 => ${result}`
+									break;
+								case EAN13:
+									html = `类型：标准码 => ${result}`
+									break;
+								case EAN8:
+									html = `类型：简码 => ${result}`
+									break;
+
+							}
+							p.innerHTML = html;
+
+							preview.appendChild(p);
+
+							// plus.webview.hide('barcode');
+							barcode.close();
+							barcode = null;
+						}
+
+						barcode.onerror = function(error) {
+							console.log('err', error)
+						}
+
+						// 把扫码窗口（webview）添加到当前页面
+						plus.webview.currentWebview().append(barcode);
+
+					}
+
+					barcode.start();
+				}
+
+				// 识别图片条码
+				btnSB.onclick = function() {
+					// 从相册中获取图片
+					plus.gallery.pick((path) => {
+						plus.barcode.scan(path, (type, result, file, charset) => {
+							console.log('==', type, result, file, charset);
+							
+							// 蜂鸣
+							plus.device.beep(2)
+							
+							let p = document.createElement('p')
+							let html = ''
+							switch (type) {
+								case QR:
+									html = `类型：二维码 => ${result}`
+									break;
+								case EAN13:
+									html = `类型：标准码 => ${result}`
+									break;
+								case EAN8:
+									html = `类型：简码 => ${result}`
+									break;
+
+							}
+							p.innerHTML = html;
+
+							preview.appendChild(p);
+						})
+
+					}, (err) => {
+						console.log('err', err)
+					}, {
+						filter: "image"
+					});
+
 				}
 
 				// 点击显示大图

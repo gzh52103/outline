@@ -8,7 +8,8 @@ module.exports = {
     // 入口
     entry: './src/main.js',
     // entry:{
-    //     home:'./src/main.js'
+    //     home:'./src/main.js',
+    //     login:'./src/login.js'
     // }
 
     // 出口：编译文件的输出目录
@@ -90,7 +91,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             // 以什么作为模板声明html文件
             template: './public/index.html',
-            // filename:'login.html',// index.html
+            // filename:'login.html',// index.html,
+            hash:true, // <img src="img/xx.jpg?dfalsdfkjasl"
         }),
         // new HtmlWebpackPlugin({
         //     // 以什么作为模板声明html文件
